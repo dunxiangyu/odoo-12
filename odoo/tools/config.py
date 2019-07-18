@@ -668,4 +668,4 @@ class configmanager(object):
                 self.options['admin_passwd'] = updated_hash
             return True
 
-config = configmanager()
+config = configmanager('odoo.conf')
