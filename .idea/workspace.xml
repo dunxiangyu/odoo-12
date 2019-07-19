@@ -137,16 +137,23 @@
       <option name="project" value="LOCAL" />
       <updated>1563535177326</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="a">
+      <created>1563535572745</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1563535572745</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="2048" height="1152" extended-state="0" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.4990758" visible="true" weight="0.24962999" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.4990758" visible="true" weight="0.24962999" />
       <window_info id="Structure" order="2" sideWeight="0.5009242" side_tool="true" weight="0.24962999" />
-      <window_info anchor="bottom" id="Terminal" order="0" visible="true" weight="0.3271719" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="0" visible="true" weight="0.9722736" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="2" />
       <window_info anchor="bottom" id="Python Console" order="3" />
