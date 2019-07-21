@@ -31,11 +31,28 @@ class Registry(Mapping):
         self.models = {}
         self._sql_error = {}
         self._init = True
+        self._assertion_report = None
+        self._fields_by_model = None
+        self._post_init_queue = None
+
+        self._init_modules = set()
+        self.update_modules = []
+        self.loaded_xmlids = set()
 
         self.db_name = db_name
+        self._db = None
+
+        self.test_cr = None
+        self.test_lock = None
 
         self.loaded = False
         self.ready = False
+
+        self.registry_sequence = None
+        self.cache_sequence = None
+
+        self.registry_invalidated = False
+        self.cache_invalidated = False
 
     @classmethod
     def delete(cls, db_name):
