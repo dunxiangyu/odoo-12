@@ -1,9 +1,21 @@
 import psycopg2.pool
 import threading
+import time
+import logging
+import uuid
+import itertools
+
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT, ISOLATION_LEVEL_READ_COMMITTED, \
     ISOLATION_LEVEL_REPEATABLE_READ
 from werkzeug import urls
 from .tools.config import config
+
+_logger = logging.getLogger(__name__)
+
+import re
+
+re_from = re.compile('.* from "?([a-zA-Z_0-9]+)"? .*$')
+re_into = re.compile('.* into "?([a-zA-Z_0-9]+)"? .*$')
 
 
 class Cursor(object):
@@ -34,11 +46,40 @@ class Cursor(object):
         self._event_handlers = {'commit': [], 'rollback': {}}
 
     def execute(self, query, params=None, log_exceptions=None):
+        if params and not isinstance(params, (tuple, list, dict)):
+            raise ValueError('SQL query parameters should be a tuple, list or dict.')
+
+        if self.sql_log:
+            encoding = psycopg2.extensions.encodings[self.connection.encoding]
+            _logger.debug('query: %s')
+        now = time.time()
         try:
             params = params or None
             res = self._obj.execute(query, params)
         except Exception as e:
             raise
+
+        # simple query count is always computed
+        self.sql_log_count += 1
+        delay = (time.time() - now())
+        if hasattr(threading.current_thread(), 'query_count'):
+            threading.current_thread().query_count += 1
+            threading.current_thread().query_time += delay
+
+        # advanced stats only if sql_log is enabled
+        if self.sql_log:
+            delay *= 1E6
+
+            res_from = re_from.match(query.lower())
+            if res_from:
+                self.sql_from_log.setdefault(res_from.group(1), [0, 0])
+                self.sql_from_log[res_from.group(1)[0]] += 1
+                self.sql_from_log[res_from.group(1)[1]] += delay
+            res_info = re_into.match(query.lower())
+            if res_info:
+                self.sql_into_log.setdefault(res_info.group(1), [0, 0])
+                self.sql_into_log[res_info.group(1)][0] += 1
+                self.sql_into_log[res_info.group(1)][1] += delay
 
         return res
 
@@ -46,11 +87,30 @@ class Cursor(object):
         return self._close(False)
 
     def _close(self, leak=False):
+        global sql_counter
+
         if not self._obj:
             return
+
+        del self.cache
+
+        if self.sql_log:
+            self.__closer = frame_codeinfo(currentframe(), 3)
+
+        # simple query count is always computed
+        sql_counter += self.sql_log_count
+
+        # advanced stats only if sql_log is enabled
+        self.print_log()
+
         self._obj.close()
+
+        del self._obj
         self._closed = True
+
+        # Clean the underlying connection
         self._cnx.rollback()
+
         if leak:
             self._cnx.leadked = True
         else:
@@ -66,14 +126,26 @@ class Cursor(object):
         self._cnx.set_isolation_level(isolation_level)
 
     def after(self, event, func):
-        pass
+        self._event_handlers[event].append(func)
+
+    def _pop_event_handlers(self):
+        # return the current handlers, and reset them on self
+        result = self._event_handlers
+        self._event_handlers = {'commit': [], 'rollback': []}
+        return result
 
     def commit(self):
+        """ Perform an SQL 'COMMIT'. """
         result = self._cnx.commit()
+        for func in self._pop_event_handlers()['commit']:
+            func()
         return result
 
     def rollback(self):
+        """ Perform an SQL 'ROLLBACK' """
         result = self._cnx.rollback()
+        for func in self._pop_event_handlers()['rollback']:
+            func()
         return result
 
     def __enter__(self):
@@ -83,6 +155,94 @@ class Cursor(object):
         if exc_type is None:
             self.commit()
         self.close()
+
+    def savepoint(self):
+        name = uuid.uuid1().hex
+        self.execute('SAVEPOINT "%s"' % name)
+        try:
+            yield
+        except Exception:
+            self.execute('ROLLBACK TO SAVEPOINT "%s"' % name)
+            raise
+        else:
+            self.execute('RELEASE SAVEPOINT "%s"' % name)
+
+    def __getattr__(self, name):
+        return getattr(self._obj, name)
+
+    @property
+    def closed(self):
+        return self._closed
+
+
+class TestCursor(object):
+    _savepoint_seq = itertools.count()
+
+    def __init__(self, cursor, lock):
+        self._closed = False
+        self._cursor = cursor
+        self._lock = lock
+        self._lock.acquire()
+
+        self._savepoint = 'test_cursor_%s' % next(self._savepoint_seq)
+        self._cursor.execute('SAVEPOINT "%s"' % self._savepoint)
+
+    def close(self):
+        if not self._closed:
+            self._closed = True
+            self._cursor.execute('ROLLBACK TO SAVEPOINT "%s"' % self._savepoint)
+            self._lock.release()
+
+    def autocommit(self):
+        pass
+
+    def commit(self):
+        self._cursor.execute('SAVEPOINT "%s"' % self._savepoint)
+
+    def rollback(self):
+        self._cursor.execute('ROLLBACK TO SAVEPOINT "%s"' % self._savepoint)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is None:
+            self.commit()
+        self.close()
+
+    def __getattr__(self, name):
+        value = getattr(self._cursor, name)
+        if callable(value) and self._closed:
+            raise
+        return value
+
+
+class LazyCursor(object):
+    def __init__(self, dbname=None):
+        self._dbname = dbname
+        self._cursor = None
+        self._depth = 0
+
+    @ @property
+    def dbname(self):
+        return self._dbname or threading.current_thread().dbname
+
+    def __getattr__(self, name):
+        cr = self._cursor
+        if cr is None:
+            pass
+        return getattr(cr, name)
+
+    def __enter__(self):
+        self._depth += 1
+        if self._cursor is not None:
+            self._cursor.__enter__()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._depth -= 1
+        if self._cursor is not None:
+            self._cursor.__exit__(exc_type, exc_val, exc_tb)
 
 
 class Connection(object):
