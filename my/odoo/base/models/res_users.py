@@ -233,6 +233,23 @@ class Users(models.Model):
                 self = self.sudo()
         return super(Users, self).read(fields=fields, load=load)
 
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        pass
+
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        pass
+
+    def create(self, vals_list):
+        users = super(Users, self.with_context(default_customer=False)).create(vals_list)
+        for user in users:
+            user.partner_id.active = user.active
+            if user.partner_id.company_id:
+                user.partner_id.write({'company_id': user.company_id.id})
+        return users
+
+    def write(self, vals):
+        pass
+
 
 class GroupsImplied(models.Model):
     _inherit = 'res.groups'
