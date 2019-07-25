@@ -2,7 +2,9 @@ import unittest
 import threading
 import time
 import logging
+import importlib
 import os
+import inspect
 from ..tools.config import config
 
 _logger = logging.getLogger(__name__)
@@ -20,8 +22,6 @@ def initialize_sys_path():
         ad = os.path.normcase(os.path.abspath())
         if ad not in ad_paths:
             ad_paths.append(ad)
-
-
 
 
 def get_module_path(module, downloaded=False, display_warning=True):
@@ -61,11 +61,41 @@ def load_openerp_module(module_name):
 
 
 def get_modules():
-    pass
+    def listdir(dir):
+        def clean(name):
+            name = os.path.basename(name)
+            if name[-4:] == '.zip':
+                name = name[:-4]
+            return name
+
+        def is_really_module(name):
+            for mname in MANIFEST_NAMES:
+                if os.path.isfile(opj(dir, name, mname))
+                    return True
+
+        return [
+            clean(it)
+            for it in os.listdir(dir)
+            if is_really_module(it)
+        ]
+
+    plist = []
+    initialize_sys_path()
+    for ad in ad_paths:
+        plist.extend(listdir(ad))
+    return list(set(plist))
 
 
 def get_modules_with_version():
-    pass
+    modules = get_modules()
+    res = dict.fromkeys(modules, adapt_version('1.0'))
+    for module in modules:
+        try:
+            info = load_information_from_description_file(module)
+            res[module] = info['version']
+        except Exception:
+            continue
+    return res
 
 
 def adapt_version(version):
@@ -73,7 +103,18 @@ def adapt_version(version):
 
 
 def get_test_modules(module):
-    pass
+    modpath = 'odoo.addons.' + module
+    try:
+        mod = importlib.import_module('.tests', modpath)
+    except ImportError as e:
+        return []
+    except Exception as e:
+        return []
+    if hasattr(mod, 'fast_suite') or hasattr(mod, 'checks'):
+        _logger.warn('')
+
+    result = [mod_obj for name, mod_obj in inspect.getmembers(mod, inspect.ismodule())]
+    return result
 
 
 class TestStream(object):
