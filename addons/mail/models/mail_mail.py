@@ -313,11 +313,11 @@ class MailMail(models.Model):
                 ICP = self.env['ir.config_parameter'].sudo()
                 bounce_alias = ICP.get_param("mail.bounce.alias")
                 catchall_domain = ICP.get_param("mail.catchall.domain")
-                if bounce_alias and catchall_domain:
-                    if mail.model and mail.res_id:
-                        headers['Return-Path'] = '%s+%d-%s-%d@%s' % (bounce_alias, mail.id, mail.model, mail.res_id, catchall_domain)
-                    else:
-                        headers['Return-Path'] = '%s+%d@%s' % (bounce_alias, mail.id, catchall_domain)
+                # if bounce_alias and catchall_domain:
+                #     if mail.model and mail.res_id:
+                #         headers['Return-Path'] = '%s+%d-%s-%d@%s' % (bounce_alias, mail.id, mail.model, mail.res_id, catchall_domain)
+                #     else:
+                #         headers['Return-Path'] = '%s+%d@%s' % (bounce_alias, mail.id, catchall_domain)
                 if mail.headers:
                     try:
                         headers.update(safe_eval(mail.headers))
