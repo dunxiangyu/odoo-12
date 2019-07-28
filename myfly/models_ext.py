@@ -1,5 +1,4 @@
-from odoo import models
-from myfly import sql_db_connector
+from odoo import models, sql_db
 
 
 class ExtModel(models.AbstractModel):
@@ -12,10 +11,14 @@ class ExtModel(models.AbstractModel):
 
     _is_ext = False
 
+    _ext_cr = None
+
     def _get_cursor(self):
         if self._is_ext:
-            conn = sql_db_connector.get_db_connection('ext_' + self._ext_system)
-            return conn.cursor()
+            if not self._ext_cr:
+                conn = sql_db.db_connect('ext_' + self._ext_system)
+                self._ext_cr = conn.cursor()
+            return self._ext_cr
         else:
             return super(ExtModel, self)._get_cursor()
 

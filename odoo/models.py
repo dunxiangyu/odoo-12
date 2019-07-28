@@ -3936,7 +3936,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             where_clause, where_params = e.to_sql()
             where_clause = [where_clause] if where_clause else []
         else:
-            where_clause, where_params, tables = [], [], ['"%s"' % self._table]
+            where_clause, where_params, tables = [], [], ['%s' % self._table]
 
         return Query(tables, where_clause, where_params)
 
@@ -4086,7 +4086,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 raise ValueError(_("Sorting field %s not found on model %s") % (order_field, self._name))
 
             if order_field == 'id':
-                order_by_elements.append('"%s"."%s" %s' % (alias, order_field, order_direction))
+                order_by_elements.append('%s.%s %s' % (alias, order_field, order_direction))
             else:
                 if field.inherited:
                     field = field.base_field
@@ -4157,9 +4157,10 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         limit_str = limit and ' limit %d' % limit or ''
         offset_str = offset and ' offset %d' % offset or ''
-        query_str = 'SELECT "%s".id FROM ' % self._table + from_clause + where_str + order_by + limit_str + offset_str
-        self._cr.execute(query_str, where_clause_params)
-        res = self._cr.fetchall()
+        query_str = 'SELECT %s.id FROM ' % self._table + from_clause + where_str + order_by + limit_str + offset_str
+        cr = self._cr
+        cr.execute(query_str, where_clause_params)
+        res = cr.fetchall()
 
         # TDE note: with auto_join, we could have several lines about the same result
         # i.e. a lead with several unread messages; we uniquify the result using

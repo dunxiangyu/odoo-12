@@ -76,6 +76,11 @@ def get_db_config(db_name):
     return db_config[db_name]
 
 
+def is_postgresql(db_name):
+    config = get_db_config(db_name)
+    return config['type'] == 'postgresql'
+
+
 def get_db_connection(db_name):
     db_config = get_db_config(db_name)
     connection_info = db_config['connection_info']

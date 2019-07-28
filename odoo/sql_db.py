@@ -189,7 +189,8 @@ class Cursor(object):
         else:
             self.__caller = False
         self._closed = False  # real initialisation value
-        self.autocommit(False)
+        if sql_db_connector.is_postgresql(self.dbname):
+            self.autocommit(False)
         self.__closer = False
 
         self._default_log_exceptions = True
@@ -233,9 +234,9 @@ class Cursor(object):
             # psycopg2's TypeError is not clear if you mess up the params
             raise ValueError("SQL query parameters should be a tuple, list or dict; got %r" % (params,))
 
-        if self.sql_log:
-            encoding = psycopg2.extensions.encodings[self.connection.encoding]
-            _logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
+        # if self.sql_log:
+        #     encoding = psycopg2.extensions.encodings[self.connection.encoding]
+        #     _logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
         now = time.time()
         try:
             params = params or None
