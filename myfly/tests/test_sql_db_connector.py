@@ -1,10 +1,10 @@
-from myfly.sql_db_connector import db_connect, connection_info_for
+from myfly.sql_db_connector import get_connection, connection_info_for
 import unittest
 
 
 class TestSqlDbConnector(unittest.TestCase):
     db_system1 = 'postgresql://odoo:odoo@localhost:5432/odoo-12'
-    db_system2 = 'mysql://odoo:odoo@localhost:3306/odoo-12'
+    db_system2 = 'mysql://root:mysqlroot@localhost:3306/odoo'
     db_system3 = 'oracle://odoo:odoo@localhost:1521/odoo-12'
 
     def test_connection_info_for_postgresql(self):
@@ -38,7 +38,7 @@ class TestSqlDbConnector(unittest.TestCase):
         self.assertEqual('odoo-12', connection_info['database'])
 
     def test_postgresql(self):
-        conn = db_connect(self.db_system1)
+        conn = get_connection(self.db_system1)
         cursor = conn.cursor()
         cursor.execute('show all')
         rs = cursor.fetchall()
@@ -48,9 +48,9 @@ class TestSqlDbConnector(unittest.TestCase):
         conn.close()
 
     def test_mysql(self):
-        conn = db_connect(self.db_system2)
+        conn = get_connection(self.db_system2)
         cursor = conn.cursor()
-        cursor.execute('show all')
+        cursor.execute('show databases')
         rs = cursor.fetchall()
         for row in rs:
             print(row)
