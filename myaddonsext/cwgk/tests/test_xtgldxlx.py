@@ -10,6 +10,13 @@ class TestXtgldxlx(server_test.ModelTest):
         value = self.Model.default_get(['id', 'dxlxid', 'name', 'value'])
         self.assertIsNotNone(value)
 
+    def test_browse(self):
+        rs = self.Model.browse([1]).read()
+        self.assertIsNotNone(rs)
+
+    def test_exists(self):
+        self.Model.browse([1]).exists()
+
     def test_search(self):
         ids = self.Model.search([])
         self.assertIsNotNone(ids)
@@ -27,3 +34,9 @@ class TestXtgldxlx(server_test.ModelTest):
             'value': '12'
         })
         self.assertIsNotNone(rec)
+
+    def test_write(self):
+        self.Model.browse([2]).write({
+            'id': 2,
+            'value': 123
+        })

@@ -1013,7 +1013,7 @@ class Environment(Mapping):
     def get_ext_cr(self, ext_system=None):
         if ext_system:
             db = 'ext_' + ext_system
-            if not hasattr(self._ext_crs, db):
+            if not self._ext_crs.get(db):
                 self._ext_crs[db] = sql_db.db_connect(db).cursor()
             return self._ext_crs[db]
         else:

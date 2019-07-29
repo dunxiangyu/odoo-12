@@ -3403,7 +3403,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             return True
         self.check_field_access_rights('write', list(vals))
 
-        cr = self._cr
+        cr = self._ext_cr
 
         # determine records that require updating parent_path
         parent_records = self._parent_store_update_prepare(vals)
@@ -4359,8 +4359,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         if not ids:
             return self
         query = """SELECT id FROM "%s" WHERE id IN %%s""" % self._table
-        self._cr.execute(query, [tuple(ids)])
-        ids = [r[0] for r in self._cr.fetchall()]
+        cr = self._ext_cr
+        cr.execute(query, [tuple(ids)])
+        ids = [r[0] for r in cr.fetchall()]
         existing = self.browse(ids + new_ids)
         if len(existing) < len(self):
             # mark missing records in cache with a failed value
