@@ -2398,9 +2398,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         self.pool.post_init(self._reflect)
 
-        # xwh crack
-        # cr = self._cr
-        cr = self.env.cr
+        cr = self._cr
         update_custom_fields = self._context.get('update_custom_fields', False)
         must_create_table = not tools.table_exists(cr, self._table)
         parent_path_compute = False
@@ -3940,7 +3938,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             where_clause, where_params = e.to_sql()
             where_clause = [where_clause] if where_clause else []
         else:
-            where_clause, where_params, tables = [], [], ['%s' % self._table]
+            where_clause, where_params, tables = [], [], ['"%s"' % self._table]
 
         return Query(tables, where_clause, where_params)
 
@@ -4090,7 +4088,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 raise ValueError(_("Sorting field %s not found on model %s") % (order_field, self._name))
 
             if order_field == 'id':
-                order_by_elements.append('%s.%s %s' % (alias, order_field, order_direction))
+                order_by_elements.append('"%s"."%s" %s' % (alias, order_field, order_direction))
             else:
                 if field.inherited:
                     field = field.base_field
@@ -4161,7 +4159,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         limit_str = limit and ' limit %d' % limit or ''
         offset_str = offset and ' offset %d' % offset or ''
-        query_str = 'SELECT %s.id FROM ' % self._table + from_clause + where_str + order_by + limit_str + offset_str
+        query_str = 'SELECT "%s".id FROM ' % self._table + from_clause + where_str + order_by + limit_str + offset_str
         # xwh crack
         #cr = self._cr
         cr = self._ext_cr

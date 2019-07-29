@@ -3,7 +3,6 @@ import mysql.connector
 from werkzeug import urls
 from odoo.tools import config
 
-
 def connection_info_for(uri):
     """
 
@@ -90,5 +89,6 @@ def get_db_connection(db_name):
     elif type == 'oracle':
         conn = None
     else:
-        conn = psycopg2.connect(**connection_info)
+        from odoo.sql_db import PsycoConnection
+        conn = psycopg2.connect(connection_factory=PsycoConnection, **connection_info)
     return conn

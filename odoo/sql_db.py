@@ -189,8 +189,7 @@ class Cursor(object):
         else:
             self.__caller = False
         self._closed = False  # real initialisation value
-        if sql_db_connector.is_postgresql(self.dbname):
-            self.autocommit(False)
+        self.autocommit(False)
         self.__closer = False
 
         self._default_log_exceptions = True
@@ -214,8 +213,7 @@ class Cursor(object):
         return [self.__build_dict(row) for row in self._obj.fetchall()]
 
     def __del__(self):
-        if not self._closed:
-                #and not self._cnx.closed:
+        if not self._closed and not self._cnx.closed:
             # Oops. 'self' has not been closed explicitly.
             # The cursor will be deleted by the garbage collector,
             # but the database connection is not put back into the connection
@@ -599,9 +597,7 @@ class ConnectionPool(object):
                 _logger.info('%r: Free leaked connection to %r', self, cnx.dsn)
 
         for i, (cnx, used) in enumerate(self._connections):
-            # xwh crack
-            # if not used and cnx._original_dsn == connection_info:
-            if not used and cnx.dsn.find('dbname=' + connection_info) > 0:
+            if not used and cnx._original_dsn == connection_info:
                 try:
                     cnx.reset()
                 except psycopg2.OperationalError:
@@ -638,7 +634,7 @@ class ConnectionPool(object):
         except psycopg2.Error:
             _logger.info('Connection to the database failed')
             raise
-        # result._original_dsn = connection_info
+        result._original_dsn = connection_info
         self._connections.append((result, True))
         self._debug('Create new connection')
         return result

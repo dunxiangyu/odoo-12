@@ -1,10 +1,10 @@
 from myfly import server_test
 
 
-class TestUsers(server_test.ModelTest):
+class TestCompany(server_test.ModelTest):
     def setUp(self):
-        super(TestUsers, self).setUp()
-        self.Model = self.env['res.users']
+        super(TestCompany, self).setUp()
+        self.Model = self.env['res.company']
 
     def test_browse(self):
         rs = self.Model.browse([1]).read()
@@ -21,6 +21,8 @@ class TestUsers(server_test.ModelTest):
         ids = self.Model.search([])
         rs = ids.read()
         self.assertIsNotNone(rs)
+        for row in rs:
+            print(row)
 
     def test_write(self):
         self.Model.browse([2]).write({
