@@ -57,6 +57,7 @@ from werkzeug.local import Local, release_local
 
 from odoo.tools import frozendict, classproperty, StackMap, pycompat
 from odoo.exceptions import CacheMiss
+from odoo import sql_db
 
 _logger = logging.getLogger(__name__)
 
@@ -82,6 +83,7 @@ class Params(object):
     def __init__(self, args, kwargs):
         self.args = args
         self.kwargs = kwargs
+
     def __str__(self):
         params = []
         for arg in self.args:
@@ -124,6 +126,7 @@ class Meta(type):
 def attrsetter(attr, value):
     """ Return a function that sets ``attr`` on its argument and returns it. """
     return lambda method: setattr(method, attr, value) or method
+
 
 def propagate(method1, method2):
     """ Propagate decorators from ``method1`` to ``method2``, and return the
@@ -368,6 +371,7 @@ def one(method):
             iterate on the ``self`` recordset or ensure that the recordset
             is a single record with :meth:`~odoo.models.Model.ensure_one`.
     """
+
     def loop(method, self, *args, **kwargs):
         result = [method(rec, *args, **kwargs) for rec in self]
         return aggregate(method, result, self)
@@ -764,7 +768,10 @@ class Environment(Mapping):
 
     @classproperty
     def envs(cls):
-        return cls._local.environments
+        if hasattr(cls._local, 'environments'):
+            return cls._local.environments
+        else:
+            return Environments()
 
     @classmethod
     @contextmanager
@@ -802,9 +809,10 @@ class Environment(Mapping):
         self.registry = Registry(cr.dbname)
         self.cache = envs.cache
         self._cache_key = (cr, uid)
-        self._protected = StackMap()                # {field: ids, ...}
-        self.dirty = defaultdict(set)               # {record: set(field_name), ...}
+        self._protected = StackMap()  # {field: ids, ...}
+        self.dirty = defaultdict(set)  # {record: set(field_name), ...}
         self.all = envs
+        self._ext_crs = {}
         envs.add(self)
         return self
 
@@ -1002,14 +1010,24 @@ class Environment(Mapping):
         """
         return self if field.context_dependent else self._cache_key
 
+    def get_ext_cr(self, ext_system=None):
+        if ext_system:
+            db = 'ext_' + ext_system
+            if not hasattr(self._ext_crs, db):
+                self._ext_crs[db] = sql_db.db_connect(db).cursor()
+            return self._ext_crs[db]
+        else:
+            return self.cr
+
 
 class Environments(object):
     """ A common object for all environments in a request. """
+
     def __init__(self):
-        self.envs = WeakSet()           # weak set of environments
-        self.cache = Cache()            # cache for all records
-        self.todo = {}                  # recomputations {field: [records]}
-        self.mode = False               # flag for draft/onchange
+        self.envs = WeakSet()  # weak set of environments
+        self.cache = Cache()  # cache for all records
+        self.todo = {}  # recomputations {field: [records]}
+        self.mode = False  # flag for draft/onchange
         self.recompute = True
 
     def add(self, env):
@@ -1023,6 +1041,7 @@ class Environments(object):
 
 class Cache(object):
     """ Implementation of the cache of records. """
+
     def __init__(self):
         # {key: {field: {record_id: value}}}
         self._data = defaultdict(lambda: defaultdict(dict))
@@ -1082,8 +1101,10 @@ class Cache(object):
 
     def set_failed(self, records, fields, exception):
         """ Mark ``fields`` on ``records`` with the given exception. """
+
         def getter():
             raise exception
+
         for field in fields:
             for record in records:
                 self.set_special(record, field, getter)

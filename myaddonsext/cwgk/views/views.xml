@@ -39,11 +39,11 @@
         -->
 
         <!-- Top menu item -->
-        <menuitem name="cwgk" id="cwgk_menu_root"/>
+        <menuitem name="财务管控" id="cwgk_menu_root"/>
         <!-- menu categories -->
-        <menuitem name="xtgldxlx" id="cwgk_menu_1" parent="cwgk_menu_root"/>
+        <menuitem name="主数据" id="cwgk_menu_1" parent="cwgk_menu_root"/>
         <!-- actions -->
-        <menuitem name="List" id="cwgk.menu_1_list" parent="cwgk_menu_1"
+        <menuitem name="系统管理对象类型" id="cwgk.menu_1_list" parent="cwgk_menu_1"
                   action="cwgk_action_window"/>
     </data>
 </odoo>

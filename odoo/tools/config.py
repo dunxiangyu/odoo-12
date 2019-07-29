@@ -542,6 +542,10 @@ class configmanager(object):
             'xmlrpc_interface': 'http_interface',
             'xmlrpc': 'http_enable',
         }
+        import os
+        if not os.path.exists(self.rcfile):
+            raise Exception("配置文件不存在：" + self.rcfile)
+
         p = ConfigParser.RawConfigParser()
         try:
             p.read([self.rcfile])
@@ -668,4 +672,4 @@ class configmanager(object):
                 self.options['admin_passwd'] = updated_hash
             return True
 
-config = configmanager('odoo.conf')
+config = configmanager('/etc/odoo.conf')

@@ -2890,6 +2890,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
 
         env = self.env
         cr, user, context = env.args
+        #xwh crack
+        cr = self._ext_cr
 
         # make a query object for selecting ids, and apply security rules to it
         param_ids = object()
@@ -3650,7 +3652,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
     def _create(self, data_list):
         """ Create records from the stored field values in ``data_list``. """
         assert data_list
-        cr = self.env.cr
+        #xwh crack
+        #cr = self.env.cr
+        cr = self._ext_cr
         quote = '"{}"'.format
 
         # set boolean fields to False by default (avoid NULL in database)
@@ -4158,7 +4162,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         limit_str = limit and ' limit %d' % limit or ''
         offset_str = offset and ' offset %d' % offset or ''
         query_str = 'SELECT %s.id FROM ' % self._table + from_clause + where_str + order_by + limit_str + offset_str
-        cr = self._cr
+        # xwh crack
+        #cr = self._cr
+        cr = self._ext_cr
         cr.execute(query_str, where_clause_params)
         res = cr.fetchall()
 
@@ -4740,14 +4746,12 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         return [it for it in self._ids if it]
 
     # backward-compatibility with former browse records
-    #xwh crack
-    #_cr = property(lambda self: self.env.cr)
-    _cr = property(lambda self: self._get_cursor())
-    def _get_cursor(self):
-        return self.env.cr
-
+    _cr = property(lambda self: self.env.cr)
     _uid = property(lambda self: self.env.uid)
     _context = property(lambda self: self.env.context)
+    # 外部数据源
+    _ext_system = None
+    _ext_cr = property(lambda self: self.env.get_ext_cr(self._ext_system))
 
     #
     # Conversion methods

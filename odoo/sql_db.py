@@ -214,7 +214,8 @@ class Cursor(object):
         return [self.__build_dict(row) for row in self._obj.fetchall()]
 
     def __del__(self):
-        if not self._closed and not self._cnx.closed:
+        if not self._closed:
+                #and not self._cnx.closed:
             # Oops. 'self' has not been closed explicitly.
             # The cursor will be deleted by the garbage collector,
             # but the database connection is not put back into the connection
@@ -234,9 +235,9 @@ class Cursor(object):
             # psycopg2's TypeError is not clear if you mess up the params
             raise ValueError("SQL query parameters should be a tuple, list or dict; got %r" % (params,))
 
-        # if self.sql_log:
-        #     encoding = psycopg2.extensions.encodings[self.connection.encoding]
-        #     _logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
+        if self.sql_log:
+            encoding = psycopg2.extensions.encodings[self.connection.encoding]
+            _logger.debug("query: %s", self._obj.mogrify(query, params).decode(encoding, 'replace'))
         now = time.time()
         try:
             params = params or None
