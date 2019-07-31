@@ -18,3 +18,11 @@ class Xtgldxlx(models_ext.ExtModel):
     @api.depends('value')
     def _value_pc(self):
         self.value2 = float(self.value) / 100
+
+    @api.multi
+    def write(self, vals):
+        return super(Xtgldxlx, self).write(vals)
+
+    @api.multi
+    def read(self, fields=None, load='_classic_read'):
+        return super(Xtgldxlx, self).read(fields, load)

@@ -28,15 +28,21 @@ class TestXtgldxlx(server_test.ModelTest):
 
     def test_create(self):
         rec = self.Model.create({
-            'id': 3,
             'dxlxid': '2001',
             'name': 'test lx',
             'value': '12'
         })
         self.assertIsNotNone(rec)
+        rec = self.Model.browse(rec.ids).read()
+        self.assertIsNotNone(rec)
+        self.assertEqual(12, rec[0]['value'])
 
     def test_write(self):
-        self.Model.browse([2]).write({
+        rec = self.Model.browse([2]).write({
             'id': 2,
             'value': 123
         })
+        self.assertTrue(rec)
+        rec = self.Model.browse([2]).read()
+        self.assertEqual(1, len(rec))
+        self.assertEqual(123, rec[0]['value'])

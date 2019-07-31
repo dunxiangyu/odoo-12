@@ -398,6 +398,7 @@ class TransactionCase(BaseCase):
             # rollback and close the cursor, and reset the environments
             self.registry.clear_caches()
             self.registry.reset_changes()
+            self.env.close_ext_crs()
             self.env.reset()
             self.cr.rollback()
             self.cr.close()

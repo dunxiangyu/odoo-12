@@ -280,15 +280,23 @@ class WebRequest(object):
         _request_stack.pop()
 
         if self._cr:
+            _env = self.env
             try:
                 if exc_type is None and not self._failed:
                     self._cr.commit()
+                    #xwh crack
+                    if _env and len(_env._ext_crs):
+                        _env.commit_ext_crs()
                     if self.registry:
                         self.registry.signal_changes()
                 elif self.registry:
                     self.registry.reset_changes()
             finally:
                 self._cr.close()
+                #xwh crack
+                if _env and len(_env._ext_crs):
+                    _env.close_ext_crs()
+
         # just to be sure no one tries to re-use the request
         self.disable_db = True
         self.uid = None

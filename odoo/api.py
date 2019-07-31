@@ -1011,6 +1011,11 @@ class Environment(Mapping):
         return self if field.context_dependent else self._cache_key
 
     def get_ext_cr(self, ext_system=None):
+        """
+        获取扩展数据源Cursor
+        :param ext_system:
+        :return:
+        """
         if ext_system:
             db = 'ext_' + ext_system
             if not self._ext_crs.get(db):
@@ -1018,6 +1023,26 @@ class Environment(Mapping):
             return self._ext_crs[db]
         else:
             return self.cr
+
+    def commit_ext_crs(self):
+        """
+        提交所有外部数据源
+        :return:
+        """
+        for system in self._ext_crs:
+            cr = self._ext_crs[system]
+            if cr and not cr._closed:
+                cr.commit()
+
+    def close_ext_crs(self):
+        """
+        关闭所有外部数据源
+        :return:
+        """
+        for system in self._ext_crs:
+            cr = self._ext_crs[system]
+            if cr and not cr._closed:
+                cr.close()
 
 
 class Environments(object):
