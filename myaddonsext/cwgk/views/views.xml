@@ -17,9 +17,81 @@
 
         <!-- actions opening views on models -->
         <record model="ir.actions.act_window" id="cwgk_action_window">
-            <field name="name">cwgk window</field>
+            <field name="name">系统管理对象类型</field>
             <field name="res_model">cwgk.xtgldxlx</field>
             <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cwgk_department_action_window">
+            <field name="name">部门</field>
+            <field name="res_model">cwgk.department</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cwgk_employee_action_window">
+            <field name="name">员工</field>
+            <field name="res_model">cwgk.employee</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cwgk_xmjjdj_action_window">
+            <field name="name">项目奖金单</field>
+            <field name="res_model">cwgk.xmjj.master</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="cwgk_xmjjmx_action_window">
+            <field name="name">项目奖金表</field>
+            <field name="res_model">cwgk.xmjjmx</field>
+            <field name="view_mode">tree,form,pivot</field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_xmjjmx_list">
+            <field name="name">项目奖金表</field>
+            <field name="model">cwgk.xmjjmx</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="number"/>
+                    <field name="name"/>
+                    <field name="department_name"/>
+                    <field name="sub_department_name"/>
+                    <field name="post"/>
+                    <field name="rz_date"/>
+                    <field name="zz_date"/>
+                    <field name="current_pay"/>
+                    <field name="jj_month"/>
+                    <field name="js_jj"/>
+                    <field name="jj"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_department_list">
+            <field name="name">部门</field>
+            <field name="model">cwgk.department</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="parent_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_employee_list">
+            <field name="name">员工</field>
+            <field name="model">cwgk.employee</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="number"/>
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="parent_department_name"/>
+                    <field name="post"/>
+                    <field name="rz_date"/>
+                    <field name="zz_date"/>
+                    <field name="current_pay"/>
+                </tree>
+            </field>
         </record>
 
         <!-- server action to the one above -->
@@ -42,8 +114,14 @@
         <menuitem name="财务管控" id="cwgk_menu_root"/>
         <!-- menu categories -->
         <menuitem name="主数据" id="cwgk_menu_1" parent="cwgk_menu_root"/>
+        <menuitem name="项目奖金" id="cwgk_menu_2" parent="cwgk_menu_root"/>
         <!-- actions -->
         <menuitem name="系统管理对象类型" id="cwgk.menu_1_list" parent="cwgk_menu_1"
                   action="cwgk_action_window"/>
+        <menuitem name="部门" id="cwgk.menu_1_1_list" parent="cwgk_menu_1" action="cwgk_department_action_window"/>
+        <menuitem name="员工" id="cwgk.menu_3_list" parent="cwgk_menu_1" action="cwgk_employee_action_window"/>
+
+        <menuitem name="奖金单" id="cwgk.menu_2_list" parent="cwgk_menu_2" action="cwgk_xmjjdj_action_window"/>
+        <menuitem name="奖金表" id="cwgk.menu_4_list" parent="cwgk_menu_2" action="cwgk_xmjjmx_action_window"/>
     </data>
 </odoo>

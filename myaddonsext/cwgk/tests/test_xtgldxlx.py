@@ -46,3 +46,7 @@ class TestXtgldxlx(server_test.ModelTest):
         rec = self.Model.browse([2]).read()
         self.assertEqual(1, len(rec))
         self.assertEqual(123, rec[0]['value'])
+
+    def test_read_group(self):
+        res = self.Model.read_group(domain=None, fields=['dxlxid','name'], groupby=['dxlxid'])
+        self.assertIsNotNone(res)

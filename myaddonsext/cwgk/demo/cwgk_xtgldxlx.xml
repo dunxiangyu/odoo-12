@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="cwgk_xtgldxlx_1000" model="cwgk.xtgldxlx">
+            <field name="dxlxid">2001</field>
+            <field name="name">固定资产</field>
+        </record>
+        <record id="cwgk_xtgldxlx_5001" model="cwgk.xtgldxlx">
+            <field name="dxlxid">5001</field>
+            <field name="name">组织</field>
+        </record>
+    </data>
+</odoo>

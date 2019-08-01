@@ -2199,8 +2199,9 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             'limit': prefix_term('LIMIT', int(limit) if limit else None),
             'offset': prefix_term('OFFSET', int(offset) if limit else None),
         }
-        self._cr.execute(query, where_clause_params)
-        fetched_data = self._cr.dictfetchall()
+        cr = self._ext_cr
+        cr.execute(query, where_clause_params)
+        fetched_data = cr.dictfetchall()
 
         if not groupby_fields:
             return fetched_data
