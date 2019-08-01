@@ -94,6 +94,17 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="cwgk_xmjj_master_list">
+            <field name="name">项目奖金单</field>
+            <field name="model">cwgk.xmjj.master</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="department_id"/>
+                    <field name="jj_month"/>
+                </tree>
+            </field>
+        </record>
+
         <!-- server action to the one above -->
         <!--
         <record model="ir.actions.server" id="cwgk.action_server">

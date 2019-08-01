@@ -18,5 +18,20 @@ def start_server():
 class ModelTest(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        start_server()
         super(ModelTest, cls).setUpClass()
+
+
+class HttpCase(common.HttpCase):
+    @classmethod
+    def setUpClass(cls):
+        super(HttpCase, cls).setUpClass()
+
+    def setUp(self):
+        super(HttpCase, self).setUp()
+        self.db = common.get_db_name()
+        self.uid = self.env.ref('base.user_admin').id
+        self.password = 'admin'
+
+    def execute(self, model, method, params, kwargs):
+        return self.xmlrpc_object.execute(self.db, self.uid, self.password,
+                                          model, method, params, kwargs)

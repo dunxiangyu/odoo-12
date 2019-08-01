@@ -76,9 +76,9 @@ class XmjjMaster(models_ext.ExtModel):
     _description = '项目奖金'
     _ext_system = 'system2'
 
-    jj_date = fields.Date('奖金月份')
-    department_id = fields.Many2one('cwgk.department')
-    detail_ids = fields.One2many('cwgk.xmjj.detail', 'master_id')
+    jj_month = fields.Date('奖金月份')
+    department_id = fields.Many2one('cwgk.department', string='部门')
+    detail_ids = fields.One2many('cwgk.xmjj.detail', 'master_id', string='明细')
 
 
 class XmjjDetail(models_ext.ExtModel):
@@ -87,11 +87,11 @@ class XmjjDetail(models_ext.ExtModel):
     _ext_system = 'system2'
 
     master_id = fields.Many2one('cwgk.xmjj.master')
-    employee_id = fields.Many2one('cwgk.employee')
-    employee_name = fields.Char('姓名', related='employee_id.name')
-    partment_name = fields.Char('部门', related='employee_id.department_id.name')
-    post = fields.Char('岗位', related='employee_id.post')
-    current_pay = fields.Float('当前月薪', related='employee_id.current_pay')
+    employee_id = fields.Many2one('cwgk.employee', '员工')
+    employee_name = fields.Char('姓名', related='employee_id.name', store=False)
+    department_name = fields.Char('部门', related='employee_id.department_id.name', store=False)
+    post = fields.Char('岗位', related='employee_id.post', store=False)
+    current_pay = fields.Float('当前月薪', related='employee_id.current_pay', store=False)
     jj = fields.Float('奖金')
 
 

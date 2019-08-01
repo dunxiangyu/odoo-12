@@ -24,3 +24,23 @@ create table cwgk_employee(
 create sequence cwgk_employee_id_seq
 increment 1 minvalue 1;
 
+create table cwgk_xmjj_master(
+    id integer,
+    department_id integer,
+    jj_month integer,
+    primary key(id)
+);
+
+create sequence cwgk_xmjj_master_id_seq
+increment 1 minvalue 1;
+
+create table cwgk_xmjj_detail(
+    id integer,
+    master_id integer,
+    employee_id integer,
+    jj float,
+    primary key(id)
+);
+
+create sequence cwgk_xmjj_detail_id_seq
+increment 1 minvalue 1;
