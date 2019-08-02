@@ -76,7 +76,7 @@ class XmjjMaster(models_ext.ExtModel):
     _description = '项目奖金'
     _ext_system = 'system2'
 
-    jj_month = fields.Date('奖金月份')
+    jj_month = fields.Integer('奖金月份')
     department_id = fields.Many2one('cwgk.department', string='部门')
     detail_ids = fields.One2many('cwgk.xmjj.detail', 'master_id', string='明细')
 

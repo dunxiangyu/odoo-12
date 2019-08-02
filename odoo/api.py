@@ -855,7 +855,9 @@ class Environment(Mapping):
         cr = self.cr if cr is None else cr
         uid = self.uid if user is None else int(user)
         context = self.context if context is None else context
-        return Environment(cr, uid, context)
+        env = Environment(cr, uid, context)
+        env._ext_crs = self._ext_crs
+        return env
 
     def ref(self, xml_id, raise_if_not_found=True):
         """ return the record corresponding to the given ``xml_id`` """

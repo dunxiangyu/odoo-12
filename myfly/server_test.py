@@ -32,6 +32,6 @@ class HttpCase(common.HttpCase):
         self.uid = self.env.ref('base.user_admin').id
         self.password = 'admin'
 
-    def execute(self, model, method, params, kwargs):
+    def execute(self, model, method, params=[], **kwargs):
         return self.xmlrpc_object.execute(self.db, self.uid, self.password,
                                           model, method, params, kwargs)
