@@ -48,5 +48,23 @@ class TestXtgldxlx(server_test.ModelTest):
         self.assertEqual(123, rec[0]['value'])
 
     def test_read_group(self):
-        res = self.Model.read_group(domain=None, fields=['dxlxid','name'], groupby=['dxlxid'])
+        res = self.Model.read_group(domain=None, fields=['dxlxid', 'name'], groupby=['dxlxid'])
         self.assertIsNotNone(res)
+
+    def test_unlink(self):
+        rs = self.Model.create({
+            'dxlxid': '5001',
+            'name': '5001'
+        })
+        deleted = self.Model.browse([rs.id]).unlink()
+        self.assertTrue(deleted)
+
+    def test_export_data(self):
+        rs = self.Model.search([]).export_data(fields_to_export=['id', 'name', 'dxlxid', 'value'])
+        self.assertIsNotNone(rs)
+
+    def test_copy(self):
+        rs = self.Model.search([])
+        self.assertTrue(len(rs.ids) > 0)
+        rs1 = self.Model.browse(rs.ids[0]).copy()
+        self.assertIsNotNone(rs1)

@@ -653,7 +653,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
         if not self:
             return iter([])
 
-        if not self._is_an_ordinary_table():
+        if not self._ext_system and not self._is_an_ordinary_table():
             raise Exception(
                 "You can not export the column ID of model %s, because the "
                 "table %s is not an ordinary table."
@@ -3167,7 +3167,7 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
             self.check_access_rule('unlink')
             self.env['ir.property'].search([('res_id', 'in', refs)]).sudo().unlink()
 
-            cr = self._cr
+            cr = self._ext_cr
             Data = self.env['ir.model.data'].sudo().with_context({})
             Defaults = self.env['ir.default'].sudo()
             Attachment = self.env['ir.attachment']
@@ -3196,8 +3196,8 @@ class BaseModel(MetaModel('DummyModel', (object,), {'_register': False})):
                 # ir_attachment is overridden to hide attachments of deleted
                 # records)
                 query = 'SELECT id FROM ir_attachment WHERE res_model=%s AND res_id IN %s'
-                cr.execute(query, (self._name, sub_ids))
-                attachments = Attachment.browse([row[0] for row in cr.fetchall()])
+                self.env.cr.execute(query, (self._name, sub_ids))
+                attachments = Attachment.browse([row[0] for row in self.env.cr.fetchall()])
                 if attachments:
                     attachments.unlink()
 

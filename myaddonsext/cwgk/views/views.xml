@@ -112,15 +112,18 @@
                 <form>
                     <header></header>
                     <sheet>
-                        <group>
-                            <field name="id"/>
-                            <field name="jj_month"/>
-                            <field name="department_id" can_create="true" can_write="true"/>
+                        <group cols="4">
+                            <group>
+                                <field name="department_id" can_create="true" can_write="true"/>
+                            </group>
+                            <group>
+                                <field name="jj_month"/>
+                            </group>
                         </group>
                         <separator/>
                         <field name="detail_ids">
                             <tree editable="top">
-                                <field name="employee_id"/>
+                                <field name="employee_id" domain="[('department_id','=','2')]"/>
                                 <field name="department_name"/>
                                 <field name="post"/>
                                 <field name="current_pay"/>
