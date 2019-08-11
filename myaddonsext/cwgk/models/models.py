@@ -129,6 +129,17 @@ class XmjjMaster(models_ext.ExtModel):
             vals['name'] = self.env['ir.sequence'].next_by_code('cwgk.xmjjd') or '/'
         return super(XmjjMaster, self).create(vals)
 
+    @api.onchange('department_id')
+    def onchange_department_id(self):
+        result = {}
+        if not self.department_id:
+            return result
+        result['domain'] = {
+            'detail_ids': [
+                ('department_id', '=', self.department_id.id)
+            ]
+        }
+        return result
 
 class XmjjDetail(models_ext.ExtModel):
     _name = 'cwgk.xmjj.detail'
@@ -148,6 +159,11 @@ class XmjjDetail(models_ext.ExtModel):
         result = {}
         if not self.employee_id:
             return result
+        # else:
+        #     result['warning'] = {
+        #         'title': 'warning',
+        #         'message': 'this is a warning.'
+        #     }
         self.employee_name = self.employee_id.name
         self.department_name = self.employee_id.department_id.name
         self.post = self.employee_id.post
