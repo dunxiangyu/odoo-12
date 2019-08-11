@@ -22,8 +22,73 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.internal_layout">
                     <h1>项目奖金单</h1>
+                    <h3>部门:
+                        <span t-field="o.department_id"/>
+                        奖金月份：
+                        <span t-field="o.jj_month"/>
+                    </h3>
+                    <table class="table table-bordered mb64">
+                        <tr>
+                            <td>员工</td>
+                            <td>部门</td>
+                            <td>岗位</td>
+                            <td>薪资</td>
+                            <td>奖金</td>
+                        </tr>
+                        <tr t-foreach="o.detail_ids" t-as="detail">
+                            <td>
+                                <span t-field="detail.employee_id"/>
+                            </td>
+                            <td>
+                                <span t-field="detail.department_name"/>
+                            </td>
+                            <td>
+                                <span t-field="detail.post"/>
+                            </td>
+                            <td>
+                                <span t-field="detail.current_pay"/>
+                            </td>
+                            <td>
+                                <span t-field="detail.jj"/>
+                            </td>
+                        </tr>
+                    </table>
                 </t>
             </t>
+        </t>
+    </template>
+
+    <template id="report_xmjjmx">
+        <t t-call="web.html_container">
+            <h2>项目奖金明细</h2>
+            <table class="table table-bordered mb64" border="1">
+                <tr>
+                    <th>工号</th>
+                    <th>name</th>
+                    <th>部门</th>
+                    <th>项目组</th>
+                    <th>岗位</th>
+                    <th>入职日期</th>
+                    <th>转正日期</th>
+                    <th>当前月薪</th>
+                    <th>奖金月份</th>
+                    <th>奖金基数</th>
+                    <th>奖金</th>
+                </tr>
+                <tr t-foreach="docs" t-as="o">
+                    <td><span t-field="o.number" /></td>
+                    <td><span t-field="o.name" /></td>
+                    <td><span t-field="o.department_name" /></td>
+                    <td><span t-field="o.sub_department_name" /></td>
+                    <td><span t-field="o.post" /></td>
+                    <td><span t-field="o.rz_date" /></td>
+                    <td><span t-field="o.zz_date" /></td>
+                    <td><span t-field="o.current_pay" /></td>
+                    <td><span t-field="o.jj_month" /></td>
+                    <td><span t-field="o.js_jj" /></td>
+                    <td><span t-field="o.jj" /></td>
+                </tr>
+            </table>
         </t>
     </template>
 </odoo>

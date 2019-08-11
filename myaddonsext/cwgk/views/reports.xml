@@ -7,4 +7,7 @@
             report_type="qweb-pdf"
             name="cwgk.report_xmjjd"
             file="cwgk.report_xmjjd"/>
+    <report id="report_cwgk_xmjjmx_lines"
+            string="项目奖金明细" model="cwgk.xmjjmx" report_type="qweb-pdf" name="cwgk.report_xmjjmx"
+            file="cwgk.report_xmjjmx"/>
 </odoo>

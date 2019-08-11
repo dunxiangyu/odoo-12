@@ -73,7 +73,7 @@ class Employee(models_ext.ExtModel):
 
 class XmjjMaster(models_ext.ExtModel):
     _name = 'cwgk.xmjj.master'
-    _description = '项目奖金'
+    _description = '项目奖金单'
     _ext_system = 'system2'
 
     jj_month = fields.Integer('奖金月份')

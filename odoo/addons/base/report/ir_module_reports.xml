@@ -9,6 +9,5 @@
             report_type="qweb-pdf"
             file="base.report_irmodulereference"
             name="base.report_irmodulereference"/>
-
     </data>
 </odoo>
