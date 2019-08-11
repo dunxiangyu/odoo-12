@@ -99,8 +99,12 @@
             <field name="model">cwgk.xmjj.master</field>
             <field name="arch" type="xml">
                 <tree>
+                    <field name="name"/>
                     <field name="department_id"/>
                     <field name="jj_month"/>
+                    <field name="total_pay" sum="月薪总额"/>
+                    <field name="total_jj" sum="奖金总额"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -110,8 +114,20 @@
             <field name="model">cwgk.xmjj.master</field>
             <field name="arch" type="xml">
                 <form>
-                    <header></header>
+                    <header>
+                        <button name="button_done" states="to approve" string="Approve" type="object"
+                                class="oe_highlight"/>
+                        <button name="button_submit" states="draft" string="Submit" type="object" class="oe_highlight"/>
+                        <button name="button_cancel" states="draft,to approve,done" string="Cancel" type="object"/>
+                        <button name="button_draft" states="cancel" string="Draft" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
                     <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
                         <group cols="4">
                             <group>
                                 <field name="department_id" can_create="true" can_write="true"/>
@@ -123,13 +139,17 @@
                         <separator/>
                         <field name="detail_ids">
                             <tree editable="top">
-                                <field name="employee_id" domain="[('department_id','=','2')]"/>
+                                <field name="employee_id"/>
                                 <field name="department_name"/>
                                 <field name="post"/>
-                                <field name="current_pay"/>
-                                <field name="jj"/>
+                                <field name="current_pay" sum="月薪总额"/>
+                                <field name="jj" sum="奖金总额"/>
                             </tree>
                         </field>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="total_pay"/>
+                            <field name="total_jj"/>
+                        </group>
                     </sheet>
                 </form>
             </field>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="seq_cwgk_xmjjd" model="ir.sequence">
+            <field name="name">xmjjd</field>
+            <field name="code">cwgk.xmjjd</field>
+            <field name="prefix">XMJJ</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

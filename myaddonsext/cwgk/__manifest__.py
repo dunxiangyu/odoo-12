@@ -28,6 +28,7 @@
         'views/views.xml',
         'views/templates.xml',
         'views/reports.xml',
+        'data/xmjjd_data.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

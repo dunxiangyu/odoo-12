@@ -27,6 +27,7 @@ class Xtgldxlx(models_ext.ExtModel):
     def read(self, fields=None, load='_classic_read'):
         return super(Xtgldxlx, self).read(fields, load)
 
+
 class Xmjjmx(models.Model):
     _name = 'cwgk.xmjjmx'
     _description = '项目奖金明细'
@@ -43,6 +44,7 @@ class Xmjjmx(models.Model):
     jj_month = fields.Char('月份')
     js_jj = fields.Float('奖金基数')
     jj = fields.Float('奖金')
+
 
 class Department(models_ext.ExtModel):
     _name = 'cwgk.department'
@@ -76,9 +78,56 @@ class XmjjMaster(models_ext.ExtModel):
     _description = '项目奖金单'
     _ext_system = 'system2'
 
+    name = fields.Char('Name', default='New')
     jj_month = fields.Integer('奖金月份')
     department_id = fields.Many2one('cwgk.department', string='部门')
     detail_ids = fields.One2many('cwgk.xmjj.detail', 'master_id', string='明细', copy=True)
+    state = fields.Selection([('draft', '草稿'), ('to approve', 'To Approve'), ('done', '完成'), ('cancel', 'Cancelled')],
+                             string='状态')
+    total_pay = fields.Float(string='月薪总额', store=True, readonly=True, compute='_compute_total_pay')
+    total_jj = fields.Float(string='奖金总额', store=True, readonly=True, compute='_compute_total_jj')
+
+    @api.depends('detail_ids.current_pay')
+    def _compute_total_pay(self):
+        for master in self:
+            total_pay = 0.0
+            for detail in master.detail_ids:
+                total_pay += detail.current_pay
+            master.write({'total_pay': total_pay})
+
+    @api.depends('detail_ids.jj')
+    def _compute_total_jj(self):
+        for master in self:
+            total_jj = 0.0
+            for detail in master.detail_ids:
+                total_jj += detail.jj
+            master.write({'total_jj': total_jj})
+
+    @api.multi
+    def button_cancel(self):
+        self.write({'state': 'cancel'})
+
+    @api.multi
+    def button_done(self):
+        self.write({'state': 'done'})
+
+    @api.multi
+    def button_draft(self):
+        self.write({'state': 'draft'})
+
+    @api.multi
+    def button_submit(self):
+        self.write({'state': 'to approve'})
+
+    @api.multi
+    def button_approve(self):
+        self.write({'state', 'to approve'})
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code('cwgk.xmjjd') or '/'
+        return super(XmjjMaster, self).create(vals)
 
 
 class XmjjDetail(models_ext.ExtModel):
@@ -94,5 +143,13 @@ class XmjjDetail(models_ext.ExtModel):
     current_pay = fields.Float('当前月薪', related='employee_id.current_pay', store=False)
     jj = fields.Float('奖金')
 
-
-
+    @api.onchange('employee_id')
+    def onchange_employee_id(self):
+        result = {}
+        if not self.employee_id:
+            return result
+        self.employee_name = self.employee_id.name
+        self.department_name = self.employee_id.department_id.name
+        self.post = self.employee_id.post
+        self.current_pay = self.employee_id.current_pay
+        return result

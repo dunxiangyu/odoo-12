@@ -26,8 +26,12 @@ increment 1 minvalue 1;
 
 create table cwgk_xmjj_master(
     id integer,
+    name varchar(20),
     department_id integer,
     jj_month integer,
+    state varchar(20),
+    total_pay float,
+    total_jj float,
     primary key(id)
 );
 
