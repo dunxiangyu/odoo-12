@@ -28,7 +28,8 @@
         'views/views.xml',
         'views/templates.xml',
         'views/reports.xml',
-        'data/xmjjd_data.xml'
+        'data/xmjjd_data.xml',
+        'views/magazine_views.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

@@ -5,3 +5,4 @@ access_cwgk_employee,cwgk.employee,model_cwgk_employee,,1,1,1,1
 access_cwgk_xmjj_master,cwgk.xmjj.master,model_cwgk_xmjj_master,,1,1,1,1
 access_cwgk_xmjj_detail,cwgk.xmjj.detail,model_cwgk_xmjj_detail,,1,1,1,1
 access_cwgk_xmjjmx,cwgk.xmjjmx,model_cwgk_xmjjmx,,1,1,1,1
+access_cwgk_magazine,cwgk.magazine,model_cwgk_magazine,,1,1,1,1

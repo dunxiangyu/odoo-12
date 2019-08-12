@@ -34,17 +34,10 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record model="ir.actions.act_window" id="cwgk_xmjjdj_action_window">
-            <field name="name">项目奖金单</field>
-            <field name="res_model">cwgk.xmjj.master</field>
-            <field name="search_view_id" ref="cwgk_xmjj_master_search"/>
-            <field name="view_mode">tree,form</field>
-        </record>
-
         <record model="ir.actions.act_window" id="cwgk_xmjjmx_action_window">
             <field name="name">项目奖金表</field>
             <field name="res_model">cwgk.xmjjmx</field>
-            <field name="view_mode">tree,form,pivot</field>
+            <field name="view_mode">tree,form,pivot,graph</field>
         </record>
 
         <record model="ir.ui.view" id="cwgk_xmjjmx_list">
@@ -64,6 +57,32 @@
                     <field name="js_jj"/>
                     <field name="jj"/>
                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_xmjjmx_graph">
+            <field name="name">Graph 项目奖金表</field>
+            <field name="model">cwgk.xmjjmx</field>
+            <field name="arch" type="xml">
+                <graph>
+                    <field name="department_name" type="row"/>
+                    <field name="current_pay" type="measure"/>
+                    <field name="jj" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_xmjjmx_pivot">
+            <field name="name">Pivot xmjjmx</field>
+            <field name="model">cwgk.xmjjmx</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="department_name" type="row"/>
+                    <field name="sub_department_name" type="row"/>
+                    <field name="jj_month" type="col"/>
+                    <field name="current_pay" type="measure"/>
+                    <field name="jj" type="measure"/>
+                </pivot>
             </field>
         </record>
 
@@ -242,6 +261,13 @@
         </record>
         -->
 
+        <record model="ir.actions.act_window" id="cwgk_xmjjdj_action_window">
+            <field name="name">项目奖金单</field>
+            <field name="res_model">cwgk.xmjj.master</field>
+            <field name="search_view_id" ref="cwgk_xmjj_master_search"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
         <!-- Top menu item -->
         <menuitem name="财务管控" id="cwgk_menu_root"/>
         <!-- menu categories -->
@@ -255,5 +281,6 @@
 
         <menuitem name="奖金单" id="cwgk.menu_2_list" parent="cwgk_menu_2" action="cwgk_xmjjdj_action_window"/>
         <menuitem name="奖金表" id="cwgk.menu_4_list" parent="cwgk_menu_2" action="cwgk_xmjjmx_action_window"/>
+
     </data>
 </odoo>
