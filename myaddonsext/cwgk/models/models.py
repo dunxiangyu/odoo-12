@@ -28,10 +28,10 @@ class Xtgldxlx(models_ext.ExtModel):
         return super(Xtgldxlx, self).read(fields, load)
 
 
-class Xmjjmx(models.Model):
+class Xmjjmx(models_ext.ExtModel):
     _name = 'cwgk.xmjjmx'
     _description = '项目奖金明细'
-    # _ext_system = 'system2'
+    _ext_system = 'system2'
 
     number = fields.Integer('工号')
     name = fields.Char('姓名')
@@ -70,7 +70,9 @@ class Employee(models_ext.ExtModel):
     post = fields.Char('岗位')
     rz_date = fields.Date('入职日期')
     zz_date = fields.Date('转正日期')
-    current_pay = fields.Float('当前月薪')
+    currency_id = fields.Many2one('res.currency', 'Currency',
+                                  default=lambda self: self.env.user.company_id.currency_id.id)
+    current_pay = fields.Monetary('当前月薪')
 
 
 class XmjjMaster(models_ext.ExtModel):
@@ -78,14 +80,16 @@ class XmjjMaster(models_ext.ExtModel):
     _description = '项目奖金单'
     _ext_system = 'system2'
 
-    name = fields.Char('Name', default='New')
-    jj_month = fields.Integer('奖金月份')
+    name = fields.Char('Name', default='New', copy=False)
+    jj_month = fields.Integer('奖金月份', default=201906)
     department_id = fields.Many2one('cwgk.department', string='部门')
     detail_ids = fields.One2many('cwgk.xmjj.detail', 'master_id', string='明细', copy=True)
     state = fields.Selection([('draft', '草稿'), ('to approve', 'To Approve'), ('done', '完成'), ('cancel', 'Cancelled')],
-                             string='状态')
-    total_pay = fields.Float(string='月薪总额', store=True, readonly=True, compute='_compute_total_pay')
-    total_jj = fields.Float(string='奖金总额', store=True, readonly=True, compute='_compute_total_jj')
+                             string='状态', default='draft')
+    currency_id = fields.Many2one('res.currency', 'Currency',
+                                  default=lambda self: self.env.user.company_id.currency_id.id)
+    total_pay = fields.Monetary(string='月薪总额', store=True, readonly=True, compute='_compute_total_pay')
+    total_jj = fields.Monetary(string='奖金总额', store=True, readonly=True, compute='_compute_total_jj')
 
     @api.depends('detail_ids.current_pay')
     def _compute_total_pay(self):
@@ -134,12 +138,15 @@ class XmjjMaster(models_ext.ExtModel):
         result = {}
         if not self.department_id:
             return result
-        result['domain'] = {
-            'detail_ids': [
-                ('department_id', '=', self.department_id.id)
-            ]
-        }
+        # result['domain'] = {
+        #     'detail_ids': [
+        #         ('department_id', '=', self.department_id.id)
+        #     ]
+        # }
+        rs = self.env['cwgk.employee'].search([('department_id', '=', self.department_id.id)])
+        self.detail_ids = [{'employee_id': id} for id in rs.ids]
         return result
+
 
 class XmjjDetail(models_ext.ExtModel):
     _name = 'cwgk.xmjj.detail'
@@ -151,8 +158,9 @@ class XmjjDetail(models_ext.ExtModel):
     employee_name = fields.Char('姓名', related='employee_id.name', store=False)
     department_name = fields.Char('部门', related='employee_id.department_id.name', store=False)
     post = fields.Char('岗位', related='employee_id.post', store=False)
-    current_pay = fields.Float('当前月薪', related='employee_id.current_pay', store=False)
-    jj = fields.Float('奖金')
+    currency_id = fields.Many2one('res.currency', string='Currency', related='employee_id.currency_id')
+    current_pay = fields.Monetary('当前月薪', related='employee_id.current_pay', store=False)
+    jj = fields.Monetary('奖金')
 
     @api.onchange('employee_id')
     def onchange_employee_id(self):
@@ -168,4 +176,5 @@ class XmjjDetail(models_ext.ExtModel):
         self.department_name = self.employee_id.department_id.name
         self.post = self.employee_id.post
         self.current_pay = self.employee_id.current_pay
+        self.currency_id = self.employee_id.currency_id
         return result
