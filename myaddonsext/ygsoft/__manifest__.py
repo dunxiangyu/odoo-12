@@ -20,13 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','contacts','hr','hr_org_chart'],
+    'depends': ['base', 'contacts', 'hr', 'hr_org_chart'],
 
     # always loaded
     'data': [
         'views/views.xml',
         'views/templates.xml',
         'security/ygsoft_security.xml',
+        'data/ir_mail_server_data.xml',
         'data/res_partner_data.xml',
         'data/res_company_data.xml',
         'data/res_users_data.xml',

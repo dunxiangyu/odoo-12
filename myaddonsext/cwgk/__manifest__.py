@@ -36,4 +36,6 @@
         'demo/demo.xml',
         'demo/cwgk_xtgldxlx.xml'
     ],
+    'installable': True,
+    'application': True,
 }

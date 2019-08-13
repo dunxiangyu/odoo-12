@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.mail_server" id="ygsoft_mail_server">
+            <field name="name">ygsoft</field>
+            <field name="smtp_host">mail.ygsoft.com</field>
+            <field name="smtp_port">465</field>
+            <field name="smtp_encryption">ssl</field>
+            <field name="smtp_user">xiangwanhong@ygsoft.com</field>
+            <field name="smtp_pass">XwhSoft0</field>
+        </record>
+    </data>
+</odoo>
