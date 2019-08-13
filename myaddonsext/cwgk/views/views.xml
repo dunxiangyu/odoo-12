@@ -19,25 +19,25 @@
         <record model="ir.actions.act_window" id="cwgk_action_window">
             <field name="name">系统管理对象类型</field>
             <field name="res_model">cwgk.xtgldxlx</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
 
         <record model="ir.actions.act_window" id="cwgk_department_action_window">
             <field name="name">部门</field>
             <field name="res_model">cwgk.department</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
 
         <record model="ir.actions.act_window" id="cwgk_employee_action_window">
             <field name="name">员工</field>
             <field name="res_model">cwgk.employee</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
 
         <record model="ir.actions.act_window" id="cwgk_xmjjmx_action_window">
             <field name="name">项目奖金表</field>
             <field name="res_model">cwgk.xmjjmx</field>
-            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="view_mode">tree,form,pivot,graph,kanban</field>
         </record>
 
         <record model="ir.ui.view" id="cwgk_xmjjmx_list">
@@ -100,8 +100,44 @@
                                 context="{'group_by':'sub_department_name'}"/>
                         <filter name="post" string="Post" domain="[]" context="{'group_by':'post'}"/>
                         <filter name="name" string="Name" domain="[]" context="{'group_by':'name'}"/>
+                        <filter name="jj_month" string="Bonus" domain="[]" context="{'group_by':'jj_month'}"/>
                     </group>
                 </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_xmjjmx_kanban">
+            <field name="name">Kanban xmjjmx</field>
+            <field name="model">cwgk.xmjjmx</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <ul>
+                                        <li>Name:
+                                            <field name="name"/>
+                                        </li>
+                                        <li>Number:
+                                            <field name="number"/>
+                                        </li>
+                                        <li>Department:
+                                            <field name="department_name"/>
+                                        </li>
+                                        <li>Post:
+                                            <field name="post"/>
+                                        </li>
+                                        <li>Bonus:
+                                            <field name="jj"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
 
@@ -178,6 +214,41 @@
                         </group>
                         <separator/>
                         <field name="detail_ids">
+                            <form>
+                                <group>
+                                    <field name="employee_id"/>
+                                    <field name="department_name"/>
+                                    <field name="post"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </group>
+                            </form>
+                            <kanban>
+                                <field name="employee_id"/>
+                                <field name="department_name"/>
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                                            <ul>
+                                                <li>Employee:
+                                                    <field name="employee_id"/>
+                                                </li>
+                                                <li>Department:
+                                                    <field name="department_name"/>
+                                                </li>
+                                                <li>Post:
+                                                    <field name="post"/>
+                                                </li>
+                                                <li>Current Pay:
+                                                    <field name="current_pay"/>
+                                                </li>
+                                                <li>Donus:
+                                                    <field name="jj"/>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
                             <tree editable="top">
                                 <field name="employee_id"/>
                                 <field name="department_name"/>
@@ -213,12 +284,12 @@
         </record>
 
         <record model="ir.ui.view" id="cwgk_xmjj_master_search">
-            <field name="cwgk_xmjj_master_search"></field>
+            <field name="name">cwgk_xmjj_master_search</field>
             <field name="model">cwgk.xmjj.master</field>
             <field name="arch" type="xml">
                 <search string="Search XMJJ master">
                     <field name="name" filter_domain="['|', ('name','ilike',self), ('department_id','ilike',self)]"/>
-                    <!--                    <field name="department_id"/>-->
+                    <field name="department_id" widget="many2one"/>
                     <separator/>
                     <filter name="state" string="Draft" domain="[('state','=','draft')]"/>
                     <filter name="state" string="Done" domain="[('state','=','done')]"/>
@@ -231,6 +302,36 @@
                         <filter name="jj_month" string="Month" domain="[]" context="{'group_by':'jj_month'}"/>
                     </group>
                 </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cwgk_xmjj_master_kanban">
+            <field name="name">cwgk_xmjj_master_kanban</field>
+            <field name="model">cwgk.xmjj.master</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_content">
+                                    <field name="name"/>
+                                    <ul>
+                                        <li>Department:
+                                            <field name="department_id"/>
+                                        </li>
+                                        <li>Month:
+                                            <field name="jj_month"/>
+                                        </li>
+                                        <li>Status:
+                                            <field name="state"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
             </field>
         </record>
 
@@ -265,7 +366,7 @@
             <field name="name">项目奖金单</field>
             <field name="res_model">cwgk.xmjj.master</field>
             <field name="search_view_id" ref="cwgk_xmjj_master_search"/>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,kanban</field>
         </record>
 
         <!-- Top menu item -->
