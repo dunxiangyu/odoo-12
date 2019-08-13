@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="hr.employee" id="xwh_employee">
+            <field name="name">向万红</field>
+            <field name="company_id" ref="ygsoft_company"/>
+            <field name="user_id" ref="xwh_user"/>
+        </record>
+
+        <record model="hr.employee" id="wlj_employee">
+            <field name="name">王令将</field>
+            <field name="company_id" ref="yd_ygsoft_company"/>
+            <field name="user_id" ref="wlj_user"/>
+        </record>
+
+        <record model="hr.employee" id="sxs_employee">
+            <field name="name">宋小松</field>
+            <field name="company_id" ref="ny_ygsoft_company"/>
+            <field name="user_id" ref="sxs_user"/>
+        </record>
+    </data>
+</odoo>

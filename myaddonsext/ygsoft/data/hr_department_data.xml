@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="hr.department" id="ecp_department">
+            <field name="name">ECP平台开发部</field>
+            <field name="manager_id" ref="xwh_employee"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="ecp_tjxmz_department">
+            <field name="name">天擎项目组</field>
+            <field name="parent_id" ref="ecp_department"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="ecp_thxmz_department">
+            <field name="name">天鸿项目组</field>
+            <field name="parent_id" ref="ecp_department"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="gris_department">
+            <field name="name">GRIS事业部</field>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="gris_cpglb_department">
+            <field name="name">产品管理部</field>
+            <field name="parent_id" ref="gris_department"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="gris_sjb_department">
+            <field name="name">设计部</field>
+            <field name="parent_id" ref="gris_department"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.department" id="gris_kf1b_department">
+            <field name="name">开发一部</field>
+            <field name="parent_id" ref="gris_department"/>
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="hr.employee" id="xwh_employee">
+            <field name="department_id" ref="ecp_department"/>
+        </record>
+    </data>
+</odoo>

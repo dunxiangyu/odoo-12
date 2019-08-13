@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="res.partner" id="xwh_partner">
+            <field name="name">向万红</field>
+            <field name="company_id" ref="ygsoft_company"/>
+            <field name="customer" eval="False"/>
+        </record>
+
+        <record model="res.users" id="xwh_user">
+            <field name="partner_id" ref="xwh_partner"/>
+            <field name="company_id" ref="ygsoft_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('ygsoft_company')])]"/>
+            <field name="login">xwh</field>
+            <field name="password">xwh</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('hr.group_hr_user')])]"/>
+        </record>
+
+        <record model="res.partner" id="wlj_partner">
+            <field name="name">王令将</field>
+            <field name="company_id" ref="yd_ygsoft_company"/>
+            <field name="customer" eval="False"/>
+        </record>
+
+        <record model="res.users" id="wlj_user">
+            <field name="partner_id" ref="wlj_partner"/>
+            <field name="company_id" ref="yd_ygsoft_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('yd_ygsoft_company')])]"/>
+            <field name="login">wlj</field>
+            <field name="password">wlj</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        </record>
+
+        <record model="res.partner" id="sxs_partner">
+            <field name="name">宋小松</field>
+            <field name="company_id" ref="ny_ygsoft_company"/>
+            <field name="customer" eval="False"/>
+        </record>
+
+        <record model="res.users" id="sxs_user">
+            <field name="partner_id" ref="sxs_partner"/>
+            <field name="company_id" ref="ny_ygsoft_company"/>
+            <field name="company_ids" eval="[(6, 0, [ref('ny_ygsoft_company')])]"/>
+            <field name="login">sxs</field>
+            <field name="password">sxs</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.rule" id="hr_employee_rule">
+            <field name="name">hr.employee</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="domain_force">[('company_id','=',user.company_id.id)]</field>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="hr_group_user_rule">
+            <field name="name">hr.employee user</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="group_id" ref="hr.group_hr_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+        </record>
+    </data>
+</odoo>

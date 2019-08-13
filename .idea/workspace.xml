@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4c8b2fd9-bae6-494c-897c-1f1ecf945152" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/my/odoo/modules/db.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/my/odoo/modules/module.py" afterDir="false" />
+    <list default="true" id="4c8b2fd9-bae6-494c-897c-1f1ecf945152" name="Default Changelist" comment="手机显示时，自适应屏幕分辨率">
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,84 +16,36 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FavoritesManager">
-    <favorites_list name="odoo-12" />
-  </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/odoo/modules/loading.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1507" />
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/odoo/modules/migration.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-1192" />
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/odoo/modules/module.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="324">
-                  <caret line="132" column="27" lean-forward="true" selection-start-line="132" selection-start-column="27" selection-end-line="132" selection-end-column="27" />
-                  <folding>
-                    <element signature="e#100#110#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/my/odoo/modules/module.py">
-              <provider selected="true" editor-type-id="text-editor" />
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/odoo/modules/registry.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-3457">
-                  <caret line="111" column="39" lean-forward="true" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/my/odoo/modules/registry.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="298">
-                  <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
-                  <folding>
-                    <element signature="e#0#16#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/my/odoo/modules/module.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#0#15#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="399">
+              <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -100,26 +56,48 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>group_product_variant</find>
-      <find>module_stock_barcode</find>
-      <find>enterprise</find>
-      <find>limit-time-cpu</find>
-      <find>sheet</find>
-      <find>min-width</find>
-      <find>650px</find>
-      <find>db_name</find>
-      <find>config</find>
-      <find>test</find>
-      <find>test-en</find>
-      <find>test-enable</find>
-      <find>test_enable</find>
-      <find>doc</find>
+      <find>slides_grid_view</find>
+      <find>performance</find>
+      <find>tests</find>
+      <find>autocom</find>
+      <find>sql_db</find>
+      <find>Models have no table</find>
+      <find>_cr</find>
+      <find>_execute_sql</find>
+      <find>debug</find>
+      <find>._cr</find>
+      <find>&quot;%s&quot;</find>
+      <find>_search</find>
+      <find>leaked</find>
+      <find>write</find>
+      <find>cwgk</find>
+      <find>give_back</find>
+      <find>write(</find>
+      <find>authenticate</find>
+      <find>HttpCase</find>
+      <find>xmlrpc_object</find>
+      <find>xmlrpc_common</find>
+      <find>rpc</find>
+      <find>xmlrpc</find>
+      <find>search_read</find>
+      <find>import</find>
+      <find>load</find>
+      <find>lead</find>
+      <find>po_lead</find>
+      <find>xwh</find>
+      <find>INSERT</find>
     </findStrings>
     <replaceStrings>
       <replace />
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/addons/web/static/src/scss</dir>
+      <dir>$PROJECT_DIR$/odoo/addons/base</dir>
+      <dir>$PROJECT_DIR$/addons/website</dir>
+      <dir>$PROJECT_DIR$/</dir>
+      <dir>$PROJECT_DIR$/odoo</dir>
+      <dir>$PROJECT_DIR$/addons</dir>
+      <dir>$PROJECT_DIR$/odoo/addons</dir>
       <dir>$PROJECT_DIR$</dir>
     </dirStrings>
   </component>
@@ -129,18 +107,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/addons/stock/views/res_config_settings_views.xml" />
-        <option value="$PROJECT_DIR$/odoo.conf" />
-        <option value="$PROJECT_DIR$/my/odoo/tests/test_sql_db.py" />
-        <option value="$PROJECT_DIR$/my/odoo/sql_db.py" />
-        <option value="$PROJECT_DIR$/addons/web/static/src/scss/form_view_extra.scss" />
-        <option value="$PROJECT_DIR$/odoo/addons/base/models/ir_module.py" />
-        <option value="$PROJECT_DIR$/my/odoo/models.py" />
-        <option value="$PROJECT_DIR$/odoo/tests/common.py" />
         <option value="$PROJECT_DIR$/odoo/tools/config.py" />
         <option value="$PROJECT_DIR$/my/odoo/modules/db.py" />
         <option value="$PROJECT_DIR$/my/odoo/modules/module.py" />
+        <option value="$PROJECT_DIR$/my/odoo/sql_db.py" />
+        <option value="$PROJECT_DIR$/my/odoo/base/models/res_partner.py" />
+        <option value="$PROJECT_DIR$/my/odoo/base/views/res_users_views.xml" />
+        <option value="$PROJECT_DIR$/my/odoo/base/models/res_users.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/addons/website_slides/models/slides.py" />
+        <option value="$PROJECT_DIR$/myfly/requirements.txt" />
+        <option value="$PROJECT_DIR$/myfly/README.md" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_oracle.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_postgresql.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_mysql.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db.py" />
+        <option value="$PROJECT_DIR$/myfly/sql_db_connect.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db_connect.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_config.py" />
+        <option value="$PROJECT_DIR$/myfly/sql_db.py" />
+        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db_connector.py" />
+        <option value="$PROJECT_DIR$/myfly/models_ext.py" />
+        <option value="$PROJECT_DIR$/odoo.conf" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/models.sql" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/tests/test_users.py" />
+        <option value="$PROJECT_DIR$/odoo/sql_db.py" />
+        <option value="$PROJECT_DIR$/myfly/sql_db_connector.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/tests/res_company.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/tests/test_xtgldxlx.py" />
+        <option value="$PROJECT_DIR$/odoo/tests/common.py" />
+        <option value="$PROJECT_DIR$/odoo/api.py" />
+        <option value="$PROJECT_DIR$/odoo/http.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/xmjj.sql" />
+        <option value="$PROJECT_DIR$/myfly/server_test.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/tests/test_http_xtgldxlx.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/views/reports.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/views/templates.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/models.py" />
+        <option value="$PROJECT_DIR$/odoo/models.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/security/ir.model.access.csv" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/__manifest__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/__init__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/magazine.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/views/magazine_views.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/cwgk/views/views.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/__manifest__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml" />
       </list>
     </option>
   </component>
@@ -156,7 +173,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -167,45 +183,70 @@
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="my" type="462c0819:PsiDirectoryNode" />
+              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="my" type="462c0819:PsiDirectoryNode" />
+              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
+              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
+              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
+              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
+              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
+              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
+              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
+              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
+              <item name="security" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
+              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
               <item name="odoo" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="my" type="462c0819:PsiDirectoryNode" />
               <item name="odoo" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
               <item name="odoo" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
               <item name="odoo" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="addons" type="462c0819:PsiDirectoryNode" />
+              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/myfly" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/myfly" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -235,7 +276,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/odoo-bin" />
-      <option name="PARAMETERS" value="" />
+      <option name="PARAMETERS" value="-u cwgk,ygsoft --log-sql" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -243,60 +284,60 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_convert.TestEvalXML" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_http_xtgldxlx.TestResUsers" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/odoo/addons/test_convert/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_convert.TestEvalXML&quot;" />
+      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestResUsers&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_http_xtgldxlx.TestResUsers.test_execute" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/odoo/addons/test_convert/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_convert.TestEvalXML.test_function_eval&quot;" />
+      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestResUsers.test_execute&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_float.TestFloatPrecision" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_http_xtgldxlx.TestXtgldxlx" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/odoo/addons/base/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_float.TestFloatPrecision&quot;" />
+      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestXtgldxlx&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for web.tests.test_menu.ActionMungerTest.test_actual_treeview" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in server_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/addons" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myfly" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;web.tests.test_menu.ActionMungerTest.test_actual_treeview&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/myfly/server_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Unittests in test_access_rights" type="tests" factoryName="Unittests" nameIsGenerated="true">
@@ -314,29 +355,41 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests in test_convert.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in test_http_xtgldxlx.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/odoo/addons/test_convert/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/odoo/addons/test_convert/tests/test_convert.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/myaddonsext/cwgk/tests/test_http_xtgldxlx.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.odoo-bin" />
+      <item itemvalue="Python tests.Unittests in test_access_rights" />
+      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers" />
+      <item itemvalue="Python tests.Unittests in test_http_xtgldxlx.py" />
+      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestXtgldxlx" />
+      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers.test_execute" />
+      <item itemvalue="Python tests.Unittests in server_test.py" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for web.tests.test_menu.ActionMungerTest.test_actual_treeview" />
-        <item itemvalue="Python tests.Unittests for test_convert.TestEvalXML.test_function_eval" />
-        <item itemvalue="Python tests.Unittests for test_convert.TestEvalXML" />
-        <item itemvalue="Python tests.Unittests in test_convert.py" />
-        <item itemvalue="Python tests.Unittests for test_float.TestFloatPrecision" />
+        <item itemvalue="Python tests.Unittests in test_http_xtgldxlx.py" />
+        <item itemvalue="Python tests.Unittests in server_test.py" />
+        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers.test_execute" />
+        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers" />
+        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestXtgldxlx" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -384,59 +437,173 @@
       <option name="project" value="LOCAL" />
       <updated>1563778881022</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add partner and user">
+      <created>1563809694301</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1563809694301</updated>
+    </task>
+    <task id="LOCAL-00007" summary="users">
+      <created>1563894813700</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1563894813700</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add theme">
+      <created>1563985239730</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1563985239730</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add mysql">
+      <created>1564242431882</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1564242431882</updated>
+    </task>
+    <task id="LOCAL-00010" summary="del study code">
+      <created>1564242574189</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1564242574189</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add sql db connector, oracle not implement">
+      <created>1564245964521</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1564245964521</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add cwgk ext-module">
+      <created>1564303060997</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1564303060997</updated>
+    </task>
+    <task id="LOCAL-00013" summary="model._cr">
+      <created>1564328021531</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1564328021531</updated>
+    </task>
+    <task id="LOCAL-00014" summary="mysql">
+      <created>1564331757030</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1564331757030</updated>
+    </task>
+    <task id="LOCAL-00015" summary="完善xtgldxlx的单元测试">
+      <created>1564410942590</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1564410942590</updated>
+    </task>
+    <task id="LOCAL-00016" summary="修正多对多bug">
+      <created>1564417292828</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1564417292828</updated>
+    </task>
+    <task id="LOCAL-00017" summary="完善请求关闭时，数据源关闭">
+      <created>1564588214072</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1564588214073</updated>
+    </task>
+    <task id="LOCAL-00018" summary="http test case">
+      <created>1564673886021</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1564673886021</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add onchange for department_id">
+      <created>1565529883127</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1565529883127</updated>
+    </task>
+    <task id="LOCAL-00020" summary="增加图形和透视表视图">
+      <created>1565623060666</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1565623060666</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_test_convert_py - 2019.07.22 at 16h 01m 20s.xml">
-      <configuration name="Unittests in test_convert.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 24m 32s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_convert_py - 2019.07.22 at 16h 04m 23s.xml">
-      <configuration name="Unittests in test_convert.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 24m 43s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_convert_py - 2019.07.22 at 16h 06m 45s.xml">
-      <configuration name="Unittests in test_convert.py" configurationId="tests" />
+    <history-entry file="Unittests_in_server_test_py - 2019.08.01 at 23h 25m 19s.xml">
+      <configuration name="Unittests in server_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML - 2019.07.22 at 16h 07m 41s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 25m 24s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML_test_function_eval - 2019.07.22 at 16h 12m 40s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 25m 54s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML_test_function_eval - 2019.07.22 at 16h 15m 27s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 26m 11s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML_test_function_eval - 2019.07.22 at 16h 15m 53s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 27m 50s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML_test_function_eval - 2019.07.22 at 16h 15m 58s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 28m 19s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_test_convert_TestEvalXML_test_function_eval - 2019.07.22 at 16h 16m 41s.xml">
-      <configuration name="Unittests for test_convert.TestEvalXML.test_function_eval" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 28m 59s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_web_tests_test_menu_ActionMungerTest_test_actual_treeview - 2019.07.22 at 16h 24m 06s.xml">
-      <configuration name="Unittests for web.tests.test_menu.ActionMungerTest.test_actual_treeview" configurationId="tests" />
+    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 36m 30s.xml">
+      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
     </history-entry>
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="0" width="2048" height="1152" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49863014" weight="0.19221604" />
-      <window_info id="Structure" order="1" sideWeight="0.50136983" side_tool="true" weight="0.17871326" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.36419752" visible="true" weight="0.16921559" />
+      <window_info id="Structure" order="1" sideWeight="0.63580245" side_tool="true" weight="0.22779244" />
       <window_info id="Favorites" order="2" sideWeight="0.5009862" side_tool="true" weight="0.2025417" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32876712" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.33424658" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.29020333" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27171904" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32876712" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49960285" weight="0.4479452" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32994455" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32809612" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49960285" weight="0.31885397" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50039715" side_tool="true" weight="0.23287672" />
-      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32994455" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -445,378 +612,464 @@
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="增加调试超时参数" />
     <MESSAGE value="Merge branch 'master' of https://github.com/xwh123807/odoo-12&#10;&#10;# Conflicts:&#10;#&#9;.idea/workspace.xml" />
     <MESSAGE value="add sql_db test" />
     <MESSAGE value="手机显示时，自适应屏幕分辨率" />
-    <option name="LAST_COMMIT_MESSAGE" value="手机显示时，自适应屏幕分辨率" />
+    <MESSAGE value="add partner and user" />
+    <MESSAGE value="users" />
+    <MESSAGE value="add theme" />
+    <MESSAGE value="add mysql" />
+    <MESSAGE value="del study code" />
+    <MESSAGE value="add sql db connector, oracle not implement" />
+    <MESSAGE value="add cwgk ext-module" />
+    <MESSAGE value="model._cr" />
+    <MESSAGE value="mysql" />
+    <MESSAGE value="完善xtgldxlx的单元测试" />
+    <MESSAGE value="修正多对多bug" />
+    <MESSAGE value="完善请求关闭时，数据源关闭" />
+    <MESSAGE value="http test case" />
+    <MESSAGE value="add onchange for department_id" />
+    <MESSAGE value="增加图形和透视表视图" />
+    <option name="LAST_COMMIT_MESSAGE" value="增加图形和透视表视图" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/odoo/addons/base/controllers/rpc.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="262" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>len(_env._ext_crs)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_env._ext_crs</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_env._ext_cs</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_env</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>query</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self._ext_crs.get(db)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self._ext_crs[db]</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>odoo.tools.config</expression-string>
+        <expression-string>hasattr(self._ext_crs, db)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>odoo.tools.config.config</expression-string>
+        <expression-string>query_str</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>odoo.tools.config['db_name']</expression-string>
+        <expression-string>env.items()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>odoo.tools.config[]</expression-string>
+        <expression-string>self._ext_system</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>config.</expression-string>
+        <expression-string>result</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>config.db_name</expression-string>
+        <expression-string>result['_original_dsn']</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>config['a']</expression-string>
+        <expression-string>result._original_dsn</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>config['']</expression-string>
+        <expression-string>dir(result)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>config['d']</expression-string>
+        <expression-string>db_config['connection_info']</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>db_config</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/addons/account_voucher/__init__.py">
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/account_voucher/models/account_voucher.py">
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/reports.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5990">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        <state relative-caret-position="171">
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/account_payment/__manifest__.py">
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_model_report.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/account_payment/models/payment.py">
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_module_report_templates.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="62" column="16" lean-forward="true" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_module_reports.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/addons/account_payment/controllers/payment.py">
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_model_templates.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-623">
-          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+        <state relative-caret-position="204">
+          <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/ir_property.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/tools/misc.py">
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/templates.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="141" column="9" selection-start-line="141" selection-start-column="9" selection-end-line="141" selection-end-column="9" />
+        <state relative-caret-position="921">
+          <caret line="93" column="7" selection-start-line="93" selection-start-column="7" selection-end-line="93" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/importlib/__init__.py">
+    <entry file="file://$PROJECT_DIR$/odoo/fields.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="445">
-          <caret line="115" column="7" lean-forward="true" selection-start-line="115" selection-start-column="7" selection-end-line="115" selection-end-column="7" />
+        <state relative-caret-position="201">
+          <caret line="973" selection-start-line="973" selection-end-line="973" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/ir_module.py">
+    <entry file="file://$USER_HOME$/odoosrc/myaddonsext/cwgk/models/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="419" column="8" lean-forward="true" selection-start-line="419" selection-start-column="8" selection-end-line="419" selection-end-column="8" />
+        <state relative-caret-position="182">
+          <caret line="141" column="21" lean-forward="true" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my/odoo/models.py">
+    <entry file="file://$USER_HOME$/odoosrc/addons/base_import/models/base_import.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1734">
-          <caret line="102" column="36" lean-forward="true" selection-start-line="102" selection-start-column="36" selection-end-line="102" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/test_access_rights/tests/test_ir_rules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/tests/test_float.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/tests/test_acl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/test_convert/tests/test_convert.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/cli/shell.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="58" column="7" lean-forward="true" selection-start-line="58" selection-start-column="7" selection-end-line="58" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/cli/start.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/release.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/netsvc.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/http.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/cli/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/cli/command.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-487">
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/tests/test_menu.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/tests/test_click_everywhere.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/tests/test_js.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#100#109#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/controllers/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="649" column="29" lean-forward="true" selection-start-line="649" selection-start-column="29" selection-end-line="649" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/data/res_company.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/web/doc/module.rst">
-      <provider selected="true" editor-type-id="restructured-text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-160" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo-bin">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/tools/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="222" column="5" selection-start-line="222" selection-start-column="5" selection-end-line="222" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/hr_org_chart/models/hr_employee.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/hr_maintenance/models/equipment.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my/odoo/modules/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my/odoo/sql_db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharmCE2019.1/python_stubs/1692759327/psycopg2/_psycopg/cursor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="62" column="8" lean-forward="true" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/modules/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="123" column="21" selection-start-line="123" selection-start-column="21" selection-end-line="123" selection-end-column="21" />
-          <folding>
-            <element signature="e#100#119#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/service/db.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/service/common.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/sql_db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6664">
-          <caret line="392" column="31" lean-forward="true" selection-start-line="392" selection-start-column="31" selection-end-line="392" selection-end-column="31" />
-          <folding>
-            <element signature="e#292#329#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="602">
+          <caret line="926" lean-forward="true" selection-start-line="926" selection-end-line="926" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/odoo/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8145">
-          <caret line="3296" selection-start-line="3296" selection-end-line="3296" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18660" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/service/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/modules/loading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1507" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/modules/migration.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1192" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/modules/registry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3457">
-          <caret line="111" column="39" lean-forward="true" selection-start-line="111" selection-start-column="39" selection-end-line="111" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/my/odoo/modules/registry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="27" column="23" lean-forward="true" selection-start-line="27" selection-start-column="23" selection-end-line="27" selection-end-column="23" />
+        <state relative-caret-position="330">
+          <caret line="864" column="16" lean-forward="true" selection-start-line="864" selection-start-column="16" selection-end-line="864" selection-end-column="16" />
           <folding>
-            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#708#723#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/tests/common.py">
+    <entry file="file://$PROJECT_DIR$/addons/base_import/models/base_import.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-259">
-          <caret line="1842" lean-forward="true" selection-start-line="1842" selection-end-line="1842" />
+        <state relative-caret-position="159">
+          <caret line="891" lean-forward="true" selection-start-line="891" selection-end-line="891" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/base_import/controllers/main.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/data/xmjjd_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/__manifest__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/security/ir.model.access.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/purchase/views/purchase_views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="123" column="24" lean-forward="true" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/magazine_views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="629">
+          <caret line="42" column="34" lean-forward="true" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-76">
+          <caret line="77" column="42" lean-forward="true" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/magazine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
           <folding>
-            <element signature="e#144#157#0" expanded="true" />
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/modules/module.py">
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/xmjj.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="132" column="27" lean-forward="true" selection-start-line="132" selection-start-column="27" selection-end-line="132" selection-end-column="27" />
-          <folding>
-            <element signature="e#100#110#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="263">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/my/odoo/modules/module.py">
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="13" lean-forward="true" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="275">
+          <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/magazine.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/demo/demo.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_users_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ir.model.access.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/ir.model.access.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/base_groups.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="2" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_partner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_company.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="7" column="54" lean-forward="true" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/hr/models/res_partner.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/hr/models/hr.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="303" column="30" lean-forward="true" selection-start-line="303" selection-start-column="30" selection-end-line="303" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_company_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="54" lean-forward="true" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_demo.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="722">
+          <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-297">
+          <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_bank.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_bank_demo.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_bank_demo.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_currency_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="42" lean-forward="true" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_currency_rate_demo.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_users_demo.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="38" column="112" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/__manifest__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/base_security.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
         </state>
       </provider>
     </entry>

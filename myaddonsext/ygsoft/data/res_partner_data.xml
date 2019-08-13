@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="res.partner" id="ygsoft_partner">
+            <field name="name">远光软件股份有限公司</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+            <field name="website">www.ygsoft.com</field>
+        </record>
+
+        <record model="res.partner" id="yd_ygsoft_partner">
+            <field name="name">远光移动互联网公司</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+        </record>
+
+        <record model="res.partner" id="ny_ygsoft_partner">
+            <field name="name">远光能源互联网公司</field>
+            <field name="company_id" eval="None"/>
+            <field name="customer" eval="False"/>
+            <field name="is_company" eval="True"/>
+        </record>
+    </data>
+</odoo>

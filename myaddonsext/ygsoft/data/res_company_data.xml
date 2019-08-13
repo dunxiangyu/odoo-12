@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="res.company" id="ygsoft_company">
+            <field name="name">远光软件股份有限公司</field>
+            <field name="partner_id" ref="ygsoft_partner"/>
+            <field name="currency_id" ref="base.CNY"/>
+        </record>
+
+        <record model="res.partner" id="ygsoft_partner">
+            <field name="company_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="res.company" id="yd_ygsoft_company">
+            <field name="name">远光移动互联网公司</field>
+            <field name="partner_id" ref="yd_ygsoft_partner"/>
+            <field name="currency_id" ref="base.CNY"/>
+            <field name="parent_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="res.partner" id="yd_ygsoft_partner">
+            <field name="company_id" ref="yd_ygsoft_company"/>
+        </record>
+
+        <record model="res.company" id="ny_ygsoft_company">
+            <field name="name">远光能源互联网公司</field>
+            <field name="partner_id" ref="ny_ygsoft_partner"/>
+            <field name="currency_id" ref="base.CNY"/>
+            <field name="parent_id" ref="ygsoft_company"/>
+        </record>
+
+        <record model="res.partner" id="ny_ygsoft_partner">
+            <field name="company_id" ref="ny_ygsoft_company"/>
+        </record>
+    </data>
+</odoo>
