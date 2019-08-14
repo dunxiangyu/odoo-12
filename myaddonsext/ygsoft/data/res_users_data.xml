@@ -5,6 +5,7 @@
             <field name="name">向万红</field>
             <field name="company_id" ref="ygsoft_company"/>
             <field name="customer" eval="False"/>
+            <field name="email">xiangwanhong@ygsoft.com</field>
         </record>
 
         <record model="res.users" id="xwh_user">
