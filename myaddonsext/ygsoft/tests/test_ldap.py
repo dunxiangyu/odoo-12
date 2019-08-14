@@ -6,8 +6,7 @@ conf = {
     'ldap_server_port': 389,
     'ldap_tls': False,
     'ldap_password': 'mKGIQywIDJYR7Qzv',
-    'ldap_binddn': 'cn=sync_ldap,ou=SysSync,ou=ygsoft,ou=CorpAccounts,dc=ygsoft,dc=com',
-    #'ldap_binddn': 'cn=sync_ldap,ou=SysSync,ou=CorpAccounts,dc=ygsoft,dc=com',
+    'ldap_binddn': 'cn=xiangwanhong,ou=Senior Manager,ou=ZhuHai,ou=ygsoft,ou=CorpUsers,dc=ygsoft,dc=com',
     'ldap_base': 'ou=corpusers,dc=ygsoft,dc=com',
     'ldap_filter': '(objectclass=*)'
 }
