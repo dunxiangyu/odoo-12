@@ -6,7 +6,7 @@ conf = {
     'ldap_server_port': 389,
     'ldap_tls': False,
     'ldap_password': 'mKGIQywIDJYR7Qzv',
-    'ldap_binddn': 'cn=xiangwanhong,ou=Senior Manager,ou=ZhuHai,ou=ygsoft,ou=CorpUsers,dc=ygsoft,dc=com',
+    'ldap_binddn': 'sync_ldap@ygsoft.com',
     'ldap_base': 'ou=corpusers,dc=ygsoft,dc=com',
     'ldap_filter': '(objectclass=*)'
 }
@@ -29,4 +29,6 @@ class TestLdap(unittest.TestCase):
         retrieve_attributes = ['cn', 'mail']
         results = conn.search_st(conf['ldap_base'], ldap.SCOPE_SUBTREE, conf['ldap_filter'], retrieve_attributes,
                                  timeout=60)
+        for item in results:
+            print(item)
         conn.unbind()
