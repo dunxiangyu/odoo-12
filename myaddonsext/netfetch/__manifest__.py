@@ -24,7 +24,9 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'views/netfetch_config_installer.xml',
+        'views/netfetch_config_view.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

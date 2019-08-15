@@ -1,1 +1,1 @@
-import cwgk
+from . import cwgk, netfetch, ygsoft

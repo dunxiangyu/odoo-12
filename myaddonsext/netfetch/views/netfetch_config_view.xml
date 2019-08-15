@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_netfetch_config_installer_form" model="ir.ui.view">
+            <field name="name">netfetch.config.form</field>
+            <field name="model">netfetch.config</field>
+            <field name="arch" type="xml">
+                <form string="Netfetch Configuration">
+                    <group>
+                        <field name="company_id"/>
+                        <newline/>
+                        <group string="Server Information">
+                            <field name="host"/>
+                            <field name="port"/>
+                            <field name="type"/>
+                        </group>
+                        <group string="Login Information">
+                            <field name="user"/>
+                            <field name="password"/>
+                        </group>
+                        <group string="Process Parameter">
+                            <field name="path"/>
+                            <field name="channel_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="netfetch_config_view_tree" model="ir.ui.view">
+            <field name="name">netfetch.config.tree</field>
+            <field name="model">netfetch.config</field>
+            <field name="arch" type="xml">
+                <tree string="Netfetch Configuration">
+                    <field name="company_id"/>
+                    <field name="host"/>
+                    <field name="port"/>
+                    <field name="path"/>
+                    <field name="channel_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_netfetch_config_installer" model="ir.actions.act_window">
+            <field name="name">Setup your Netfetch Config</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">netfetch.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.server" id="netfetch_action_server">
+            <field name="name">Fetch Documents</field>
+            <field name="model_id" ref="netfetch.model_netfetch_config"/>
+            <field name="state">code</field>
+            <field name="binding_model_id" ref="netfetch.model_netfetch_config"/>
+            <field name="binding_type">action</field>
+            <field name="code">
+                records.fetch()
+            </field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem
+                id="myfly_root_menu"
+                name="myfly"
+                parent="base.menu_custom"
+                sequence="4"/>
+
+        <menuitem
+                id="netfetch_config_menu"
+                name="Netfetch Config"
+                parent="myfly_root_menu"
+                action="action_netfetch_config_installer"
+                sequence="10"/>
+    </data>
+</odoo>
