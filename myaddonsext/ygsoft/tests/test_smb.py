@@ -2,7 +2,6 @@ import unittest
 from smb.SMBConnection import SMBConnection
 from nmb.NetBIOS import NetBIOS
 
-
 def getBIOSName(remote_smb_ip, timeout=30):
     try:
         bios = NetBIOS()

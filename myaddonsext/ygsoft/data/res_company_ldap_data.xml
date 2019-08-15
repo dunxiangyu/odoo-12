@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="res.company.ldap" id="ygsoft_ladp_server">
+            <field name="company" ref="ygsoft_company"/>
+            <field name="ldap_server">ad.ygsoft.com</field>
+            <field name="ldap_server_port">389</field>
+            <field name="ldap_tls">False</field>
+            <field name="ldap_binddn">sync_ldap@ygsoft.com</field>
+            <field name="ldap_password">mKGIQywIDJYR7Qzv</field>
+            <field name="ldap_base">ou=corpusers,dc=ygsoft,dc=com</field>
+            <field name="ldap_filter">(mail=%s)</field>
+            <field name="create_user">True</field>
+        </record>
+    </data>
+</odoo>

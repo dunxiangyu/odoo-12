@@ -28,6 +28,7 @@
         'views/templates.xml',
         'security/ygsoft_security.xml',
         'data/ir_mail_server_data.xml',
+        'data/res_company_ldap_data.xml',
         'data/res_partner_data.xml',
         'data/res_company_data.xml',
         'data/res_users_data.xml',

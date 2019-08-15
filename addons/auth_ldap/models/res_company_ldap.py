@@ -169,7 +169,8 @@ class CompanyLDAP(models.Model):
         return {
             'name': ldap_entry[1]['cn'][0],
             'login': login,
-            'company_id': conf['company'][0]
+            'company_id': conf['company'][0],
+            'company_ids': [(6, 0, [conf['company'][0]])]
         }
 
     def _get_or_create_user(self, conf, login, ldap_entry):
