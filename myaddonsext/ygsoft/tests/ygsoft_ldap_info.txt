@@ -1,0 +1,89 @@
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+cn: 向万红
+sn: xiangwanhong
+title: 副总裁
+description: 副总裁(2019)
+physicalDeliveryOfficeName: 珠海
+distinguishedName: CN=向万红,OU=Senior Manager,OU=ZhuHai,OU=ygsoft,OU=CorpUsers,DC=ygsoft,DC=com
+instanceType: 4
+whenCreated: 20090903034335.0Z
+whenChanged: 20190815014011.0Z
+displayName: 向万红
+uSNCreated: 78201
+memberOf: CN=*GRIS事业部经理,OU=FileShare_Server,OU=Authorization,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=研发项目管理组,OU=FileShare_Server,OU=Authorization,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=公司高层,OU=Authorization,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=*部门经理,OU=Authorization,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=JazzAdmins,OU=RDM,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=JazzUsers,OU=RDM,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_ALL,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=M_ZWCL,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=J2EE_OLD,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_wl,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_sub,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_rpt,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_ODS,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_NewShare,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_MKXT,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_JGKF6.0,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_gldx,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_gap,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_FWWorkFlow,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_FMISWeb,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_F24WZZGCMX,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_dianf,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_cw,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+memberOf: CN=G_base,OU=CC,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com
+uSNChanged: 819198998
+department: 总部
+company: 远光软件股份有限公司
+proxyAddresses: sip:xiangwanhong@ygsoft.com
+name: 向万红
+userAccountControl: 66048
+badPwdCount: 0
+codePage: 0
+countryCode: 0
+employeeID: 100096
+badPasswordTime: 132103130570913441
+lastLogoff: 0
+lastLogon: 132103130891603441
+pwdLastSet: 130452831820935549
+primaryGroupID: 513
+accountExpires: 9223372036854775807
+logonCount: 322
+sAMAccountName: xiangwanhong
+sAMAccountType: 805306368
+userPrincipalName: xiangwanhong@ygsoft.com
+lockoutTime: 0
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=ygsoft,DC=com
+dSCorePropagationData: 20170110150802.0Z
+dSCorePropagationData: 16010101000001.0Z
+lastLogonTimestamp: 132103068061293507
+mail: xiangwanhong@ygsoft.com
+mobile: 13926913336
+msRTCSIP-InternetAccessEnabled: TRUE
+msRTCSIP-OptionFlags: 256
+msRTCSIP-PrimaryUserAddress: sip:xiangwanhong@ygsoft.com
+msRTCSIP-UserEnabled: TRUE
+msRTCSIP-PrimaryHomeServer: CN=LC Services,CN=Microsoft,CN=zh-ocspool,CN=Pools,CN=RTC Service,CN=Services,CN=Configuration,DC=ygsoft,DC=com
+msRTCSIP-ArchivingEnabled: 4
+
+
+[{'CN': 'CN=向万红,OU=Senior Manager,OU=ZhuHai,OU=ygsoft,OU=CorpUsers,DC=ygsoft,DC=com', 'objectClass': 'top', 'cn': '向万红',
+'sn': 'xiangwanhong', 'title': '副总裁', 'description': '副总裁(2019)', 'physicalDeliveryOfficeName': '珠海',
+'distinguishedName': 'CN=向万红,OU=Senior Manager,OU=ZhuHai,OU=ygsoft,OU=CorpUsers,DC=ygsoft,DC=com', 'instanceType': '4',
+'whenCreated': '20090903034335.0Z', 'whenChanged': '20190815014011.0Z', 'displayName': '向万红', 'uSNCreated': '78201',
+'memberOf': 'CN=*GRIS事业部经理,OU=FileShare_Server,OU=Authorization,OU=ygsoft,OU=CorpGroups,DC=ygsoft,DC=com',
+ 'uSNChanged': '819198998', 'department': '总部', 'company': '远光软件股份有限公司', 'proxyAddresses': 'sip:xiangwanhong@ygsoft.com',
+ 'name': '向万红', 'userAccountControl': '66048', 'badPwdCount': '0', 'codePage': '0', 'countryCode': '0', 'employeeID': '100096',
+ 'badPasswordTime': '132103130570913441', 'lastLogoff': '0', 'lastLogon': '132103130891603441', 'pwdLastSet': '130452831820935549',
+ 'primaryGroupID': '513', 'accountExpires': '9223372036854775807', 'logonCount': '322', 'sAMAccountName': 'xiangwanhong',
+ 'sAMAccountType': '805306368', 'userPrincipalName': 'xiangwanhong@ygsoft.com', 'lockoutTime': '0',
+  'objectCategory': 'CN=Person,CN=Schema,CN=Configuration,DC=ygsoft,DC=com', 'dSCorePropagationData': '20170110150802.0Z',
+  'lastLogonTimestamp': '132103068061293507', 'mail': 'xiangwanhong@ygsoft.com', 'mobile': '13926913336',
+  'msRTCSIP-InternetAccessEnabled': 'TRUE', 'msRTCSIP-OptionFlags': '256', 'msRTCSIP-PrimaryUserAddress': 'sip:xiangwanhong@ygsoft.com',
+  'msRTCSIP-UserEnabled': 'TRUE', 'msRTCSIP-PrimaryHomeServer': 'CN=LC Services,CN=Microsoft,CN=zh-ocspool,CN=Pools,CN=RTC Service,CN=Services,CN=Configuration,DC=ygsoft,DC=com',
+   'msRTCSIP-ArchivingEnabled': '4'}]

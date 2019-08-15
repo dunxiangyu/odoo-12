@@ -26,6 +26,7 @@
     'data': [
         'views/views.xml',
         'views/templates.xml',
+        'views/res_company_ldap.xml',
         'security/ygsoft_security.xml',
         'data/ir_mail_server_data.xml',
         'data/res_company_ldap_data.xml',
