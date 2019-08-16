@@ -25,6 +25,7 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'data/netfetch_config_data.xml',
         'views/netfetch_config_installer.xml',
         'views/netfetch_config_view.xml',
         'views/views.xml',
@@ -33,5 +34,6 @@
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
+        'demo/netfetch_config_demo.xml'
     ],
 }

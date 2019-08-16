@@ -1,6 +1,5 @@
 from odoo.tests import common
 
-
 class TestNetFetchConfig(common.TransactionCase):
     def setUp(self):
         super(TestNetFetchConfig, self).setUp()

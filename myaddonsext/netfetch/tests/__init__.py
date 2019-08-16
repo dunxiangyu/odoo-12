@@ -1,1 +1,1 @@
-from . import test_slide_slide
+from . import test_netfetch_config

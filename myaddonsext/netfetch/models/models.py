@@ -1,31 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
-import base64
 from odoo import models, fields, api
-import os.path
-
-
-def get_slide_type(file_ext):
-    if file_ext in ['jpg', 'gif', 'bmp']:
-        return 'infographic'
-    elif file_ext in ['pdf', 'word', 'xls', 'ppt']:
-        return 'document'
-    else:
-        return 'document'
-
-
-def get_file_info(rootpath, fullpath):
-    stat = os.stat(fullpath)
-    file_path = fullpath[len(rootpath)]
-    file_ext = os.path.splitext(file_path)[1]
-    return {
-        'fullpath': fullpath,
-        'file_create_date': stat.st_ctime,
-        'file_update_date': stat.st_mtime,
-        'file_ext': file_ext[1] if len(file_ext) > 0 else '',
-        'file_name': file_path[:-len(file_ext)],
-        'name': os.path.split(file_path)[1][:-len(file_ext)]
-    }
+from . import utils
 
 
 class Slide(models.Model):
@@ -62,52 +38,63 @@ class NetfetchConfig(models.Model):
     def fetch(self):
         for conf in self:
             if conf['type'] == 'local':
-                self.fetch_local(conf['path'], conf['channel_id'].id)
+                self.fetch_local(conf['path'], conf)
 
-    def fetch_local(self, rootpath, channel_id):
+    def fetch_local(self, rootpath, conf):
+        model = self.env['slide.slide']
         for parent, dirnames, filenames in os.walk(rootpath):
-            for filename in filenames:  # 输出文件信息
+            for filename in filenames:
                 fullpath = os.path.join(parent, filename)
-                fileinfo = get_file_info(rootpath, fullpath)
+                fileinfo = utils.get_file_info(rootpath, fullpath)
                 print('process %s, %s' % (fullpath, fileinfo))
-                file = open(fullpath, mode='rb')
-                datas = base64.encodestring(file.read())
-                file.close()
-                # self.save_file(parent, filename, datas, channel_id)
+                self.get_or_create_slide(model, fileinfo, conf)
+
+    def get_or_create_category(self, channel_id, category_name):
+        model = self.env['slide.category']
+        rs = model.search([('channel_id', '=', channel_id), ('name', '=', category_name)])
+        if len(rs) == 0:
+            rs = model.create({
+                'channel_id': channel_id,
+                'name': category_name
+            })
+        return rs.id
+
+    def get_or_create_tags(self, tags):
+        model = self.env['slide.tag']
+        result = []
+        for tag in tags:
+            rs = model.search([('name', '=', tag)])
+            if len(rs) == 0:
+                rs = model.create({'name': tag})
+            result.append(rs.id)
+        return result
 
     def get_or_create_slide(self, model, fileinfo, conf):
-        rs = model.search([('name', '=', fileinfo['file_name']), ('channel_id', '=', fileinfo['channel_id'])])
+        channel_id = conf['channel_id'].id
+        rs = model.search([('name', '=', fileinfo['file_name']), ('channel_id', '=', channel_id)])
         vals = {
             'name': fileinfo['file_name'],
             'path': fileinfo['fullpath'],
             'file_create_date': fileinfo['file_create_date'],
             'file_update_date': fileinfo['file_update_date'],
-            'slide_type': get_slide_type(fileinfo['file_ext']),
+            'slide_type': utils.get_slide_type(fileinfo['file_ext']),
             'mime_type': 'application/' + fileinfo['file_ext'],
+            'channel_id': channel_id,
+            'category_id': None,
+            'tag_ids': []
         }
         if len(rs) == 0:
+            vals['datas'] = utils.get_file_content(fileinfo['fullpath'])
+            if len(fileinfo['dirs']) > 0:
+                category_id = self.get_or_create_category(channel_id, fileinfo['dirs'][0])
+                tag_ids = self.get_or_create_tags(fileinfo['dirs'])
+                vals['category_id'] = category_id
+                vals['tag_ids'] = [(6, 0, tag_ids)]
             rec = model.create(vals)
         elif len(rs) == 1:
-            rec = rs.write(vals)
+            if rs[0].file_create_date != vals['file_create_date']:
+                vals['datas'] = utils.get_file_content(fileinfo['fullpath'])
+                rec = rs.write(vals)
         else:
             raise
-        return rec
-
-
-    def save_file(self, parent, filename, datas, channel_id):
-        file_ext = os.path.splitext(filename)[1][1:]
-        vals = {
-            'name': filename,
-            'path': parent,
-            'channel_id': channel_id,
-            'slide_type': self.get_slide_type(file_ext),
-            'mime_type': 'application/' + file_ext,
-            'datas': datas
-        }
-        model = self.env['slide.slide']
-        rs = model.search([('name', '=', vals['name']), ('channel_id', '=', vals['channel_id'])])
-        if len(rs) == 0:
-            rec = model.create(vals)
-        else:
-            rec = model.browse(rs.id).write(vals)
         return rec
