@@ -7,4 +7,4 @@ class TestNetFetchConfig(common.TransactionCase):
         self.model = self.env['netfetch.config']
 
     def test_fetch_local(self):
-        self.model.fetch_local('/Users/xiangwanhong/Documents/mydocs')
+        self.model.search([('type', '=', 'local')]).fetch()

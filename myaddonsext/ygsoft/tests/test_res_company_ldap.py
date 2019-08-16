@@ -8,3 +8,6 @@ class TestLdapSync(common.TransactionCase):
 
     def test_sync_employee(self):
         self.Model.search([]).sync_employees()
+
+    def test_sync_user(self):
+        self.Model.search([]).sync_users()

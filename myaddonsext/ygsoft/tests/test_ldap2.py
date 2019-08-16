@@ -23,7 +23,7 @@ class TestLdap(unittest.TestCase):
                  'physicalDeliveryOfficeName']
         result = self.ldap.search(conf['ldap_binddn'], conf['ldap_password'], conf['ldap_base'],
                                   retrieve_attributes=attrs)
-        for item in [item for item in result if item.get('company')]:
+        for item in [item for item in result if item.get('company') and item.get('mail')]:
             print(item)
 
     def test_search_xiangwanhong(self):
