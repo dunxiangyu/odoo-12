@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" name="my assets" inherit_id="web.assets_backend">
+        <xpath expr=".">
+            <script type="text/javascript" src="/study/static/src/js/myview.js"/>
+            <link rel="stylesheet" type="text/scss" href="/study/static/src/scss/myview.scss"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,6 +1,7 @@
 import base64
 import os.path
 from datetime import datetime
+from PyPDF4 import PdfFileReader
 
 
 def get_slide_type(file_ext):
@@ -38,3 +39,24 @@ def get_file_content(fullpath):
     datas = base64.encodestring(file.read())
     file.close()
     return datas
+
+
+def getPdfContent(filename):
+    pdf = PdfFileReader(open(filename, "rb"))
+    information = pdf.getDocumentInfo()
+    number_of_pages = pdf.getNumPages()
+
+    content = f"""
+            Information about {filename}
+            Author: {information.author}
+            Creator: {information.creator}
+            Producer: {information.producer}
+            Subject: {information.subject}
+            Title: {information.title}
+            Number of pages: {number_of_pages}
+            """
+    for i in range(0, pdf.getNumPages()):
+        pageObj = pdf.getPage(i)
+        extractedText = pageObj.extractText()
+        content += extractedText + "\n"
+    return content

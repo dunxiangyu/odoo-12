@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="map_res_company">
+            <field name="name">Company Map View</field>
+            <field name="model">res.company</field>
+            <field name="type">myview</field>
+            <field name="arch" type="xml">
+                <myview string="Company Map View" display_contacts="1">
+                </myview>
+            </field>
+        </record>
+    </data>
+</odoo>

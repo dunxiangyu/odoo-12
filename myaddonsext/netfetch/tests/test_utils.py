@@ -17,3 +17,23 @@ class TestUtils(unittest.TestCase):
         fileinfo = utils.get_file_info(rootpath,
                                        rootpath + '/netfetch/tests/test_utils.py')
         print(fileinfo)
+
+    def test_getPdfContent(self):
+        file = 'netfetch/tests/docs/国家电网智能化规划总报告-4-4.pdf'
+        content = utils.getPdfContent(file)
+        print(content)
+
+    def test_copydict(self):
+        vals1 = {
+            'name': 'name',
+            'code': 'code'
+        }
+        name_map = {
+            'name': 'name_new',
+        }
+        vals2 = dict(
+            (name if not name_map.get(name) else name_map.get(name), vals1[name]) for name in ['name', 'code'] if
+            vals1.get(name))
+        print(vals2)
+        vals3 = dict((name_map.get(name) or name, vals1[name]) for name in ['name', 'code'])
+        print(vals3)
