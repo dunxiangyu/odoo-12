@@ -1,7 +1,7 @@
 import base64
 import os.path
 from datetime import datetime
-from PyPDF4 import PdfFileReader
+from PyPDF2 import PdfFileReader
 
 
 def get_slide_type(file_ext):

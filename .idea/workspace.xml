@@ -2,13 +2,201 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c8b2fd9-bae6-494c-897c-1f1ecf945152" name="Default Changelist" comment="手机显示时，自适应屏幕分辨率">
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/README.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/data/hr_appraisal_stages.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/models/hr_appraisal_form.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/models/hr_appraisal_survey.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/security/hr_appraisal_security.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/security/ir.model.access.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/appraisal_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/open-hrms-appraisal-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/open-hrms-appraisal-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/open-hrms-appraisal-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/static/description/open-hrms-appraisal-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/views/hr_appraisal_form_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_appraisal/views/hr_appraisal_survey_views.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/models/employee_creation_from_user.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/open-hrms-employee-user-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/static/description/open-hrms-employee-user-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_creation_from_user/views/employee_creation_from_user_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/docs/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/models/employee_documents.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/security/ir.model.access.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/document_form.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/open-hrms-employee-document-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/open-hrms-employee-document-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/static/description/open-hrms-employee-document-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/oh_employee_documents_expiry/views/employee_document_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/README.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/models/hr_general_settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/HRMS_core.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/attendance_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/attendance_regularization.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/banner.gif" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/employee_checklist.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/employee_resignation.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/employee_shift.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/expense_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_custody.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_disciplinary_tracking.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_gratuity.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_insurance.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_lawsuit.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_loan.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_service_request.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/hr_vacation_mgmnt.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/leave-request.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/leave_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-advanced-features.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-announcement.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-appraisal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-custody.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-dashboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-checklist.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-document-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-document-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-form.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-info-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-insurance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-resignation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-employee-transfer.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-legal-action.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-loan.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-mail-aliasing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-multi-company.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-reminder.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-salary-advance.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-shift-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-shift-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-theme.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/open-hrms-core-vaccation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/recruitment_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/uae_wps.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/description/zk.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/src/js/data.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/static/src/xml/link_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/views/hr_config_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/views/menu_arrangement_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_core/views/template_view.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/data/salary_rule_loan.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/models/hr_loan.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/models/hr_payroll.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/security/ir.model.access.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/security/security.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/loan_web.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/static/description/open-hrms-loan-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/views/hr_loan.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/views/hr_loan_seq.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan/views/hr_payroll.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/models/hr_loan_acc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/models/hr_loan_config.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/static/description/open-hrms-loan-6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/views/hr_loan_acc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_loan_accounting/views/hr_loan_config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/__manifest__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/doc/RELEASE_NOTES.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/models/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/models/hr_advance_payslip.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/models/salary_advance.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/models/salary_structure.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/security/ir.model.access.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/security/security.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/HRMS-BUTTON.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/cybro-service.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/cybro_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/oh_icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/open-hrms-salary-advance-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/open-hrms-salary-advance-2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/open-hrms-salary-advance-3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/static/description/open-hrms-salary-advance-4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/views/salary_advance.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/myaddons/ohrms_salary_advance/views/salary_structure.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/myaddonsext/netfetch/models/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/myaddonsext/netfetch/models/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,35 +205,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -56,12 +216,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>slides_grid_view</find>
-      <find>performance</find>
-      <find>tests</find>
-      <find>autocom</find>
-      <find>sql_db</find>
-      <find>Models have no table</find>
       <find>_cr</find>
       <find>_execute_sql</find>
       <find>debug</find>
@@ -79,13 +233,19 @@
       <find>xmlrpc_common</find>
       <find>rpc</find>
       <find>xmlrpc</find>
-      <find>search_read</find>
       <find>import</find>
       <find>load</find>
       <find>lead</find>
       <find>po_lead</find>
       <find>xwh</find>
       <find>INSERT</find>
+      <find>章青</find>
+      <find>create</find>
+      <find>search_read</find>
+      <find>file_size</find>
+      <find>msoffice</find>
+      <find>index_content</find>
+      <find>_inverse_datas</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -99,6 +259,7 @@
       <dir>$PROJECT_DIR$/addons</dir>
       <dir>$PROJECT_DIR$/odoo/addons</dir>
       <dir>$PROJECT_DIR$</dir>
+      <dir>$PROJECT_DIR$/venv/lib/python3.7/site-packages</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -107,28 +268,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/odoo/tools/config.py" />
-        <option value="$PROJECT_DIR$/my/odoo/modules/db.py" />
-        <option value="$PROJECT_DIR$/my/odoo/modules/module.py" />
-        <option value="$PROJECT_DIR$/my/odoo/sql_db.py" />
-        <option value="$PROJECT_DIR$/my/odoo/base/models/res_partner.py" />
-        <option value="$PROJECT_DIR$/my/odoo/base/views/res_users_views.xml" />
-        <option value="$PROJECT_DIR$/my/odoo/base/models/res_users.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/addons/website_slides/models/slides.py" />
-        <option value="$PROJECT_DIR$/myfly/requirements.txt" />
-        <option value="$PROJECT_DIR$/myfly/README.md" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_oracle.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_postgresql.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_mysql.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db.py" />
-        <option value="$PROJECT_DIR$/myfly/sql_db_connect.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db_connect.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_config.py" />
-        <option value="$PROJECT_DIR$/myfly/sql_db.py" />
-        <option value="$PROJECT_DIR$/myfly/tests/test_sql_db_connector.py" />
-        <option value="$PROJECT_DIR$/myfly/models_ext.py" />
-        <option value="$PROJECT_DIR$/odoo.conf" />
         <option value="$PROJECT_DIR$/myaddonsext/cwgk/models/models.sql" />
         <option value="$PROJECT_DIR$/myaddonsext/cwgk/tests/test_users.py" />
         <option value="$PROJECT_DIR$/odoo/sql_db.py" />
@@ -153,17 +292,39 @@
         <option value="$PROJECT_DIR$/myaddonsext/cwgk/views/views.xml" />
         <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml" />
         <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml" />
-        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml" />
-        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/__manifest__.py" />
-        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml" />
         <option value="$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/requirements.txt" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tests/test_smb.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tests/test_ldap.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_ldap_data.xml" />
+        <option value="$PROJECT_DIR$/addons/auth_ldap/models/res_company_ldap.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/__manifest__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/models/__init__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/views/res_company_ldap.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tools/ldap_utils.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tools/smb_utils.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tools/__init__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tests/ygsoft_ldap_info.txt" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tools/ldap.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tests/test_ldap2.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/tests/test_res_company_ldap.py" />
+        <option value="$PROJECT_DIR$/odoo.conf" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/models/res_company_ldap.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml" />
         <option value="$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml" />
+        <option value="$PROJECT_DIR$/myaddonsext/netfetch/__manifest__.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/netfetch/tests/readme.txt" />
+        <option value="$PROJECT_DIR$/myaddonsext/netfetch/tests/test_netfetch_config.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/netfetch/models/models.py" />
+        <option value="$PROJECT_DIR$/myaddonsext/netfetch/models/utils.py" />
+        <option value="$PROJECT_DIR$/myaddons/muk_dms/tests/test_storage.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="width" value="2048" />
-    <option name="height" value="1152" />
+    <option name="width" value="1280" />
+    <option name="height" value="800" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -183,53 +344,11 @@
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
               <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
+              <item name="myaddons" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
-              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
-              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="myaddonsext" type="462c0819:PsiDirectoryNode" />
-              <item name="ygsoft" type="462c0819:PsiDirectoryNode" />
-              <item name="security" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="odoo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="odoo" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="odoo" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="odoo-12" type="b2602c69:ProjectViewProjectNode" />
-              <item name="odoo-12" type="462c0819:PsiDirectoryNode" />
-              <item name="odoo" type="462c0819:PsiDirectoryNode" />
-              <item name="addons" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -262,7 +381,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.odoo-bin">
+  <component name="RunManager" selected="Python tests.Unittests in test_reset_views.py">
     <configuration name="odoo-bin" type="PythonConfigurationType" factoryName="Python">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -276,7 +395,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/odoo-bin" />
-      <option name="PARAMETERS" value="-u cwgk,ygsoft --log-sql" />
+      <option name="PARAMETERS" value="--log-sql" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -284,60 +403,46 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_http_xtgldxlx.TestResUsers" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/netfetch/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestResUsers&quot;" />
+      <option name="_new_target" value="&quot;test_netfetch_config.TestNetFetchConfig.test_fetch_local&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_http_xtgldxlx.TestResUsers.test_execute" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_res_company_ldap.TestLdapSync.test_sync_user" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/ygsoft/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestResUsers.test_execute&quot;" />
+      <option name="_new_target" value="&quot;test_res_company_ldap.TestLdapSync.test_sync_user&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for test_http_xtgldxlx.TestXtgldxlx" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_views.Crawler.test_multi_website_views_retrieving" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/addons/website_theme_install/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;test_http_xtgldxlx.TestXtgldxlx&quot;" />
+      <option name="_new_target" value="&quot;test_views.Crawler.test_multi_website_views_retrieving&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests in server_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="odoo-12" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myfly" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/myfly/server_test.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Unittests in test_access_rights" type="tests" factoryName="Unittests" nameIsGenerated="true">
@@ -355,36 +460,50 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests in test_http_xtgldxlx.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in test_netfetch_config.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="odoo-12" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/cwgk/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/myaddonsext/netfetch/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/myaddonsext/cwgk/tests/test_http_xtgldxlx.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/myaddonsext/netfetch/tests/test_netfetch_config.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_reset_views.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="odoo-12" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/addons/test_website/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/addons/test_website/tests/test_reset_views.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <list>
       <item itemvalue="Python.odoo-bin" />
       <item itemvalue="Python tests.Unittests in test_access_rights" />
-      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers" />
-      <item itemvalue="Python tests.Unittests in test_http_xtgldxlx.py" />
-      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestXtgldxlx" />
-      <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers.test_execute" />
-      <item itemvalue="Python tests.Unittests in server_test.py" />
+      <item itemvalue="Python tests.Unittests for test_res_company_ldap.TestLdapSync.test_sync_user" />
+      <item itemvalue="Python tests.Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" />
+      <item itemvalue="Python tests.Unittests in test_netfetch_config.py" />
+      <item itemvalue="Python tests.Unittests for test_views.Crawler.test_multi_website_views_retrieving" />
+      <item itemvalue="Python tests.Unittests in test_reset_views.py" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests in test_http_xtgldxlx.py" />
-        <item itemvalue="Python tests.Unittests in server_test.py" />
-        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers.test_execute" />
-        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestResUsers" />
-        <item itemvalue="Python tests.Unittests for test_http_xtgldxlx.TestXtgldxlx" />
+        <item itemvalue="Python tests.Unittests in test_reset_views.py" />
+        <item itemvalue="Python tests.Unittests for test_views.Crawler.test_multi_website_views_retrieving" />
+        <item itemvalue="Python tests.Unittests in test_netfetch_config.py" />
+        <item itemvalue="Python tests.Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" />
+        <item itemvalue="Python tests.Unittests for test_res_company_ldap.TestLdapSync.test_sync_user" />
       </list>
     </recent_temporary>
   </component>
@@ -542,39 +661,81 @@
       <option name="project" value="LOCAL" />
       <updated>1565623060666</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="增加ldap测试类">
+      <created>1565754896795</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1565754896795</updated>
+    </task>
+    <task id="LOCAL-00022" summary="test ldap">
+      <created>1565770605252</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1565770605252</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add smb access">
+      <created>1565775176340</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1565775176340</updated>
+    </task>
+    <task id="LOCAL-00024" summary="多单位下ldap用户创建">
+      <created>1565835421749</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1565835421749</updated>
+    </task>
+    <task id="LOCAL-00025" summary="增加从ldap同步员工">
+      <created>1565867639964</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1565867639964</updated>
+    </task>
+    <task id="LOCAL-00026" summary="同步文件到slide">
+      <created>1565952442560</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1565952442560</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 24m 32s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_netfetch_config_TestNetFetchConfig_test_fetch_local - 2019.08.16 at 10h 38m 38s.xml">
+      <configuration name="Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 24m 43s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_netfetch_config_TestNetFetchConfig_test_fetch_local - 2019.08.16 at 10h 42m 06s.xml">
+      <configuration name="Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_server_test_py - 2019.08.01 at 23h 25m 19s.xml">
-      <configuration name="Unittests in server_test.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_netfetch_config_py - 2019.08.16 at 10h 49m 29s.xml">
+      <configuration name="Unittests in test_netfetch_config.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 25m 24s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_netfetch_config_TestNetFetchConfig_test_fetch_local - 2019.08.16 at 17h 10m 18s.xml">
+      <configuration name="Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 25m 54s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_netfetch_config_TestNetFetchConfig_test_fetch_local - 2019.08.16 at 17h 11m 10s.xml">
+      <configuration name="Unittests for test_netfetch_config.TestNetFetchConfig.test_fetch_local" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 26m 11s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_netfetch_config_py - 2019.08.16 at 17h 12m 07s.xml">
+      <configuration name="Unittests in test_netfetch_config.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 27m 50s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_netfetch_config_py - 2019.08.20 at 13h 48m 25s.xml">
+      <configuration name="Unittests in test_netfetch_config.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 28m 19s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_views_Crawler_test_multi_website_views_retrieving - 2019.08.20 at 17h 05m 29s.xml">
+      <configuration name="Unittests for test_views.Crawler.test_multi_website_views_retrieving" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 28m 59s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_for_test_views_Crawler_test_multi_website_views_retrieving - 2019.08.20 at 17h 07m 57s.xml">
+      <configuration name="Unittests for test_views.Crawler.test_multi_website_views_retrieving" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_test_http_xtgldxlx_py - 2019.08.01 at 23h 36m 30s.xml">
-      <configuration name="Unittests in test_http_xtgldxlx.py" configurationId="tests" />
+    <history-entry file="Unittests_in_test_reset_views_py - 2019.08.20 at 17h 10m 11s.xml">
+      <configuration name="Unittests in test_reset_views.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -587,23 +748,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="2048" height="1152" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.36419752" visible="true" weight="0.16921559" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.36419752" visible="true" weight="0.26370135" />
       <window_info id="Structure" order="1" sideWeight="0.63580245" side_tool="true" weight="0.22779244" />
       <window_info id="Favorites" order="2" sideWeight="0.5009862" side_tool="true" weight="0.2025417" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.29020333" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.27171904" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2630137" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.28630137" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32994455" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32809612" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49960285" weight="0.31885397" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32739726" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49960285" weight="0.26027396" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50039715" side_tool="true" weight="0.23287672" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32994455" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32876712" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -642,7 +802,13 @@
     <MESSAGE value="http test case" />
     <MESSAGE value="add onchange for department_id" />
     <MESSAGE value="增加图形和透视表视图" />
-    <option name="LAST_COMMIT_MESSAGE" value="增加图形和透视表视图" />
+    <MESSAGE value="增加ldap测试类" />
+    <MESSAGE value="test ldap" />
+    <MESSAGE value="add smb access" />
+    <MESSAGE value="多单位下ldap用户创建" />
+    <MESSAGE value="增加从ldap同步员工" />
+    <MESSAGE value="同步文件到slide" />
+    <option name="LAST_COMMIT_MESSAGE" value="同步文件到slide" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -651,6 +817,11 @@
           <url>file://$PROJECT_DIR$/odoo/addons/base/controllers/rpc.py</url>
           <line>62</line>
           <option name="timeStamp" value="262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/socket.py</url>
+          <line>672</line>
+          <option name="timeStamp" value="265" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -702,375 +873,324 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>hasattr(self._ext_crs, db)</expression-string>
+        <expression-string>post.keys()</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>query_str</expression-string>
+        <expression-string>dir(post)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>env.items()</expression-string>
+        <expression-string>None == False</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>self._ext_system</expression-string>
+        <expression-string>isinstance(a[key], bool)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result</expression-string>
+        <expression-string>isinstance(a[key])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result['_original_dsn']</expression-string>
+        <expression-string>instance(a[key])</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>result._original_dsn</expression-string>
+        <expression-string>a</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>dir(result)</expression-string>
+        <expression-string>b</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>db_config['connection_info']</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>db_config</expression-string>
+        <expression-string>len(b)</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/reports.xml">
+    <entry file="file://$PROJECT_DIR$/addons/barcodes/models/barcodes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        <state relative-caret-position="-2752">
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_model_report.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_module_report_templates.xml">
+    <entry file="file://$PROJECT_DIR$/addons/crm/tests/common.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="62" column="16" lean-forward="true" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
+        <state relative-caret-position="493">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_module_reports.xml">
+    <entry file="file://$PROJECT_DIR$/addons/crm/tests/test_crm_lead.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/report/ir_model_templates.xml">
+    <entry file="file://$PROJECT_DIR$/addons/crm/tests/test_crm_ui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/document/__manifest__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/inheritance.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/extension.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/delegation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-87" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/__manifest__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/tests/test_delegation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-138">
+          <caret line="16" column="37" lean-forward="true" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/tests/test_extension.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/test_documentation_examples/tests/test_inheritance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/mimetypes.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1234">
+          <caret line="12" column="36" lean-forward="true" selection-start-line="12" selection-start-column="36" selection-end-line="12" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/ir_autovacuum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="40" column="41" lean-forward="true" selection-start-line="40" selection-start-column="41" selection-end-line="40" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/views/ir_attachment_views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="95" column="20" lean-forward="true" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/ir_attachment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/document/models/ir_attachment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-557">
+          <caret line="33" column="12" selection-start-line="33" selection-start-column="12" selection-end-line="33" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_drive/data/google_drive_data.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_drive/data/google_drive_demo.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="11" lean-forward="true" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_drive/models/res_config_settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-35" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_drive/static/src/js/gdrive.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1459" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_drive/static/tests/gdrive_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-420" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_spreadsheet/data/google_spreadsheet_data.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/google_spreadsheet/models/google_drive.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-659" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/iap/__manifest__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="1" lean-forward="true" selection-start-line="4" selection-start-column="1" selection-end-line="4" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/iap/models/iap.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/web_tour/models/tour.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/web_tour/models/ir_http.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/web_tour/static/src/js/tour_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1309" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_google_map/static/src/lib/markerclusterer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1606" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_google_map/views/google_map_templates.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_google_map/controllers/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="57" column="3" selection-start-line="57" selection-start-column="3" selection-end-line="57" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_google_map/static/src/js/website_google_map.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1065" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/myaddonsext/study/static/src/js/myview.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_theme_install/tests/test_theme.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/odoo/tests/common.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-443">
+          <caret line="820" column="24" lean-forward="true" selection-start-line="820" selection-start-column="24" selection-end-line="820" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_theme_install/tests/test_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1886">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_theme_install/views/assets.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_theme_install/views/res_config_settings_views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_theme_install/views/views.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2022" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/website_twitter/models/website_twitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1073" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/test_website/tests/test_reset_views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/theme_default/models/theme_default.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/addons/theme_default/data/theme_default_data.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="58" column="25" lean-forward="true" selection-start-line="58" selection-start-column="25" selection-end-line="58" selection-end-column="25" />
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/templates.xml">
+    <entry file="file://$PROJECT_DIR$/addons/theme_bootswatch/models/theme_bootswatch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="921">
-          <caret line="93" column="7" selection-start-line="93" selection-start-column="7" selection-end-line="93" selection-end-column="7" />
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/fields.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="973" selection-start-line="973" selection-end-line="973" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/odoosrc/myaddonsext/cwgk/models/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="141" column="21" lean-forward="true" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/odoosrc/addons/base_import/models/base_import.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
-          <caret line="926" lean-forward="true" selection-start-line="926" selection-end-line="926" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="864" column="16" lean-forward="true" selection-start-line="864" selection-start-column="16" selection-end-line="864" selection-end-column="16" />
-          <folding>
-            <element signature="e#708#723#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/base_import/models/base_import.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="891" lean-forward="true" selection-start-line="891" selection-end-line="891" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/base_import/controllers/main.py">
+    <entry file="file://$PROJECT_DIR$/addons/theme_bootswatch/views/theme_bootswatch_templates.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/data/xmjjd_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="7" lean-forward="true" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/__manifest__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/security/ir.model.access.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" column="29" selection-start-line="26" selection-start-column="29" selection-end-line="26" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/purchase/views/purchase_views.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="123" column="24" lean-forward="true" selection-start-line="123" selection-start-column="24" selection-end-line="123" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/magazine_views.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="42" column="34" lean-forward="true" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/views/views.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
-          <caret line="77" column="42" lean-forward="true" selection-start-line="77" selection-start-column="42" selection-end-line="77" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/magazine.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#0#36#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/xmjj.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="263">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/cwgk/models/magazine.sql">
+    <entry file="file://$PROJECT_DIR$/addons/theme_bootswatch/data/theme_bootswatch_data.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/demo/demo.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_users_data.xml">
+    <entry file="file://$PROJECT_DIR$/myaddons/hr_reward_warning/models/hr_employee.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
+        <state relative-caret-position="-781" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ir.model.access.csv">
+    <entry file="file://$PROJECT_DIR$/myaddons/hr_reward_warning/models/hr_warning.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
-        </state>
+        <state relative-caret-position="-852" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/ir.model.access.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/base_groups.xml">
+    <entry file="file://$PROJECT_DIR$/myaddons/ohrms_core/__manifest__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="2" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_partner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_company.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="7" column="54" lean-forward="true" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/hr/models/res_partner.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/addons/hr/models/hr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="303" column="30" lean-forward="true" selection-start-line="303" selection-start-column="30" selection-end-line="303" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_company_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="54" lean-forward="true" selection-start-line="6" selection-start-column="54" selection-end-line="6" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_demo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-297">
-          <caret line="9" column="39" lean-forward="true" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_company_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="29" column="17" lean-forward="true" selection-start-line="29" selection-start-column="17" selection-end-line="29" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/models/res_bank.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_bank_demo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_partner_bank_demo.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_currency_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="42" lean-forward="true" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_currency_rate_demo.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/data/res_users_demo.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="38" column="112" lean-forward="true" selection-start-line="38" selection-start-column="12" selection-end-line="38" selection-end-column="112" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/__manifest__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="25" column="13" lean-forward="true" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_department_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/odoo/addons/base/security/base_security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="17" lean-forward="true" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_partner_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/res_users_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/security/ygsoft_security.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/myaddonsext/ygsoft/data/hr_employee_data.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="21" column="7" lean-forward="true" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-        </state>
+        <state relative-caret-position="-229" />
       </provider>
     </entry>
   </component>
