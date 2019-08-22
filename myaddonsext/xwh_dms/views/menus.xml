@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem parent="base.menu_custom" id="xwh_dms_config_menu" name="Document" sequence="100"/>
+        <menuitem name="Tag" action="action_xwh_dms_tag" id="xwh_dms_tag_menu" sequence="10"
+                  parent="xwh_dms_config_menu"/>
+        <menuitem name="Directory" action="action_xwh_dms_directory" id="xwh_dms_directory_menu"
+                  sequence="20" parent="xwh_dms_config_menu"/>
+        <menuitem name="Documents" action="action_xwh_dms_ir_attachment" id="xwh_dms_attachment_menu"
+                  sequence="30" parent="xwh_dms_config_menu"/>
+    </data>
+</odoo>

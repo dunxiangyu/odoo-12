@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <record id="view_document_directory_form" model="ir.ui.view">
+            <field name="name">Directory</field>
+            <field name="model">xwh_dms.directory</field>
+            <field name="arch" type="xml">
+                <form string="Directory">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+<!--                            <button class="oe_stat_button" name="website_publish_button"-->
+<!--                                    type="object" icon="fa-globe">-->
+<!--                                <field name="website_published" widget="website_button"/>-->
+<!--                                <field name="is_published" invisible="1"/>-->
+<!--                            </button>-->
+<!--                            <button name="toggle_active" type="object"-->
+<!--                                    confirm="(Un)archiving a directory automatically (un)archives its attachments. Do you want to proceed?"-->
+<!--                                    class="oe_stat_button" icon="fa-archive">-->
+<!--                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>-->
+<!--                            </button>-->
+                        </div>
+                        <group>
+                            <field name="name"/>
+                            <field name="parent_id"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_document_directory_tree" model="ir.ui.view">
+            <field name="name">Directory</field>
+            <field name="model">xwh_dms.directory</field>
+            <field name="arch" type="xml">
+                <tree string="Directory">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="count_attachments"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_xwh_dms_directory" model="ir.actions.act_window">
+            <field name="name">Directories</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xwh_dms.directory</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Directory
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

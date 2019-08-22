@@ -370,7 +370,7 @@
         </record>
 
         <!-- Top menu item -->
-        <menuitem name="财务管控" id="cwgk_menu_root"/>
+        <menuitem name="财务管控" id="cwgk_menu_root" web_icon="base,static/description/icon.png/>
         <!-- menu categories -->
         <menuitem name="主数据" id="cwgk_menu_1" parent="cwgk_menu_root"/>
         <menuitem name="项目奖金" id="cwgk_menu_2" parent="cwgk_menu_root"/>

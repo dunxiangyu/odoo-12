@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_document_tag_form" model="ir.ui.view">
+            <field name="name">tag.form</field>
+            <field name="model">xwh_dms.tag</field>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                    <field name="name"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_document_tag_tree" model="ir.ui.view">
+            <field name="name">tag.tree</field>
+            <field name="model">xwh_dms.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_xwh_dms_tag" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">xwh_dms.tag</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Tag
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

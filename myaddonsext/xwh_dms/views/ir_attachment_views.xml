@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_xwh_dms_ir_attachment_tree" model="ir.ui.view">
+            <field name="name">Attachment Tree</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <tree string="Attachments">
+<!--                    <field name="name"/>-->
+                    <field name="datas_fname"/>
+<!--                    <field name="res_model"/>-->
+<!--                    <field name="res_field"/>-->
+<!--                    <field name="res_id"/>-->
+<!--                    <field name="type"/>-->
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_xwh_dms_ir_attachment_form" model="ir.ui.view">
+            <field name="name">Attachment Form</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <form string="Attachments">
+                    <sheet>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group colspan="4">
+                                <field name="directory_id" />
+                                <field name="tag_ids" widget="many2many_tags"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="datas" filename="datas_fname" attrs="{'invisible':[('type','=','url')]}"/>
+                                <field name="datas_fname" invisible="1" attrs="{'invisible':[('type','=','url')]}"
+                                       class="oe_inline oe_right"/>
+                                <field name="url" widget="url" attrs="{'invisible':[('type','=','binary')]}"/>
+                                <field name="mimetype" groups="base.group_no_one"/>
+                            </group>
+                            <group string="Attached To" groups="base.group_no_one">
+                                <field name="res_model"/>
+                                <field name="res_field"/>
+                                <field name="res_id"/>
+                                <field name="res_name"/>
+                                <field name="company_id" groups="base.group_multi_company"
+                                       options="{'no_create': True}"/>
+                                <field name="public"/>
+                            </group>
+                            <group string="History" groups="base.group_no_one">
+                                <label for="create_uid" string="Creation"/>
+                                <div name="creation_div">
+                                    <field name="create_uid" readonly="1" class="oe_inline"/>
+                                    on
+                                    <field name="create_date" readonly="1" class="oe_inline"/>
+                                </div>
+                            </group>
+                            <group name="description_group" string="Description" groups="base.group_no_one" colspan="4">
+                                <field name="description" nolabel="1"/>
+                            </group>
+                            <group groups="base.group_no_one" string="Indexed Content" colspan="4">
+                                <field name="index_content" nolabel="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_xwh_dms_ir_attachment_kanban" model="ir.ui.view">
+            <field name="name">Attachment Kanban</field>
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="mimetype"/>
+                    <field name="type"/>
+                    <field name="datas_fname"/>
+                    <field name="create_uid"/>
+                    <field name="url"/>
+                    <field name="type"/>
+                    <field name="create_date"/>
+                    <field name="active"/>
+                    <field name="name"/>
+                    <field name="res_model_name"/>
+                    <field name="res_name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_area o_kanban_attachment oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <div class="o_kanban_image_wrapper">
+                                        <t t-set="webimage"
+                                           t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
+                                        <div t-if="record.type.raw_value == 'url'"
+                                             class="o_url_image fa fa-link fa-3x text-muted"/>
+                                        <img t-elif="webimage"
+                                             t-attf-src="/web/image/#{record.id.raw_value}?field=thumbnail" width="100"
+                                             height="100" alt="Document" class="o_attachment_image"/>
+                                        <div t-else="!webimage" class="o_image o_image_thumbnail"
+                                             t-att-data-mimetype="record.mimetype.value"/>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_details">
+                                    <div class="o_kanban_details_wrapper">
+                                        <div t-att-title="record.datas_fname.raw_value" class="o_kanban_record_title">
+                                            <t t-if="record.type.raw_value == 'url'">
+                                                <field name="name" class="o_text_overflow"/>
+                                            </t>
+                                            <t t-else="">
+                                                <field name="datas_fname" class="o_text_overflow"/>
+                                            </t>
+                                        </div>
+                                        <div class="o_kanban_record_body">
+                                            <t t-if="record.res_model_name.raw_value">
+                                                <strong>
+                                                    <field name="res_model_name"/>
+                                                </strong>
+                                                <t t-if="record.res_name.raw_value">
+                                                    <span t-att-title="record.res_name.raw_value">:
+                                                        <field name="res_name"/>
+                                                    </span>
+                                                </t>
+                                            </t>
+                                            <t t-elif="record.type.raw_value == 'url'">
+                                                <span class="o_document_url">
+                                                    <i class="fa fa-globe"/>
+                                                    <field name="url" widget="url"/>
+                                                </span>
+                                            </t>
+                                            <samp t-else="" class="text-muted"></samp>
+                                        </div>
+                                        <div class="o_kanban_record_bottom">
+                                            <time class="oe_kanban_bottom_left">
+                                                <field name="create_date" widget="date"/>
+                                            </time>
+                                            <div class="oe_kanban_bottom_right">
+                                                <img t-att-src="kanban_image('res.users', 'image_small', record.create_uid.raw_value)"
+                                                     t-att-data-member_id="record.create_uid.raw_value"
+                                                     t-att-alt="record.create_uid.raw_value" width="32" height="32"
+                                                     class="oe_kanban_avatar"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_xwh_dms_attachment_search" model="ir.ui.view">
+            <field name="model">ir.attachment</field>
+            <field name="arch" type="xml">
+                <search string="Attachments">
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('datas_fname','ilike',self)]" string="Attachment"/>
+                    <field name="create_date"/>
+                    <filter name="my_documents_filter"
+                        string="My Document(s)"
+                        domain="[('create_uid','=',uid)]"
+                        help="Filter on my documents"/>
+                    <filter name="url_filter" string="URL" domain="[('type', '=', 'url')]"/>
+                    <filter name="binary_filter" string="Stored" domain="[('type', '=', 'binary')]"/>
+                    <separator/>
+                    <field name="create_uid" string="Created by"/>
+                    <field name="type"/>
+                    <group expand="0" string="Group By">
+                        <filter name="owner" string="Owner" domain="[]" context="{'group_by':'create_uid'}"/>
+                        <filter string="Type" name="type" domain="[]" context="{'group_by':'type'}" groups="base.group_no_one"/>
+                        <filter string="Company" name="company" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <filter string="Creation Date" name="creation_month" domain="[]" context="{'group_by':'create_date'}"/>
+                        <filter string="Attached Document Name" name="attached_document_name" domain="[]" context="{'group_by': 'res_name'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_xwh_dms_ir_attachment" model="ir.actions.act_window">
+            <field name="name">Attachments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.attachment</field>
+            <field name="domain">[('res_model','=',False)]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="search_view_id" ref="view_xwh_dms_attachment_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Attachments
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>
