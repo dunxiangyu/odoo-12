@@ -21,7 +21,12 @@
                         <group>
                             <field name="name"/>
                             <field name="parent_id"/>
+                            <field name="complete_name"/>
                             <field name="tag_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="attachment_ids" />
+                            <field name="child_directory_ids" />
                         </group>
                     </sheet>
                 </form>
@@ -33,6 +38,7 @@
             <field name="model">xwh_dms.directory</field>
             <field name="arch" type="xml">
                 <tree string="Directory">
+                    <field name="complete_name"/>
                     <field name="name"/>
                     <field name="parent_id"/>
                     <field name="count_attachments"/>

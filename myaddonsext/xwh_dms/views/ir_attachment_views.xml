@@ -6,12 +6,12 @@
             <field name="model">ir.attachment</field>
             <field name="arch" type="xml">
                 <tree string="Attachments">
-<!--                    <field name="name"/>-->
+                    <!--                    <field name="name"/>-->
                     <field name="datas_fname"/>
-<!--                    <field name="res_model"/>-->
-<!--                    <field name="res_field"/>-->
-<!--                    <field name="res_id"/>-->
-<!--                    <field name="type"/>-->
+                    <!--                    <field name="res_model"/>-->
+                    <!--                    <field name="res_field"/>-->
+                    <!--                    <field name="res_id"/>-->
+                    <!--                    <field name="type"/>-->
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="create_uid"/>
                     <field name="create_date"/>
@@ -31,7 +31,7 @@
                         </h1>
                         <group>
                             <group colspan="4">
-                                <field name="directory_id" />
+                                <field name="directory_id"/>
                                 <field name="tag_ids" widget="many2many_tags"/>
                             </group>
                             <group>
@@ -75,7 +75,7 @@
             <field name="name">Attachment Kanban</field>
             <field name="model">ir.attachment</field>
             <field name="arch" type="xml">
-                <kanban>
+                <kanban js_class="file_kanban_view">
                     <field name="id"/>
                     <field name="mimetype"/>
                     <field name="type"/>
@@ -91,7 +91,42 @@
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_area o_kanban_attachment oe_kanban_global_click">
-                                <div class="o_kanban_image">
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a class="dropdown-toggle o-no-caret btn" href="#" role="button"
+                                       data-toggle="dropdown" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="row">
+                                            <div class="col-6 mk_file_kanban_operations">
+                                                <h6 class="dropdown-header">Operations</h6>
+                                                <a role="menuitem" class="dropdown-item"
+                                                   t-attf-href="/web/content?id=#{record.id.raw_value}&amp;field=datas&amp;model=ir.attachment&amp;filename_field=datas_fname&amp;download=true">
+                                                    <i class="fa fa-download"/>
+                                                    Download
+                                                </a>
+                                            </div>
+                                            <div class="col-6 border-left mk_file_kanban_actions">
+                                                <h6 class="dropdown-header">Actions</h6>
+                                                <a role="menuitem" type="open" class="dropdown-item">
+                                                    <i class="fa fa-external-link"/>
+                                                    Open
+                                                </a>
+                                                <a role="menuitem" type="edit"
+                                                   class="dropdown-item">
+                                                    <i class="fa fa-pencil-square-o"/>
+                                                    Edit
+                                                </a>
+                                                <a role="menuitem"
+                                                   type="delete" class="dropdown-item">
+                                                    <i class="fa fa-trash-o"/>
+                                                    Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_image ">
                                     <div class="o_kanban_image_wrapper">
                                         <t t-set="webimage"
                                            t-value="new RegExp('image.*(gif|jpeg|jpg|png)').test(record.mimetype.value)"/>
@@ -125,6 +160,13 @@
                                                     </span>
                                                 </t>
                                             </t>
+                                            <t t-elif="record.type.raw_value == 'binary'">
+                                                <a
+                                                   t-attf-href="/web/content?id=#{record.id.raw_value}&amp;field=datas&amp;model=ir.attachment&amp;filename_field=datas_fname&amp;download=true">
+                                                    <i class="fa fa-download"/>
+                                                    Download
+                                                </a>
+                                            </t>
                                             <t t-elif="record.type.raw_value == 'url'">
                                                 <span class="o_document_url">
                                                     <i class="fa fa-globe"/>
@@ -157,12 +199,14 @@
             <field name="model">ir.attachment</field>
             <field name="arch" type="xml">
                 <search string="Attachments">
-                    <field name="name" filter_domain="['|', ('name','ilike',self), ('datas_fname','ilike',self)]" string="Attachment"/>
+                    <field name="name"
+                           filter_domain="['|', '|', ('name','ilike',self), ('datas_fname','ilike',self), ('index_content','ilike',self)]"
+                           string="Attachment"/>
                     <field name="create_date"/>
                     <filter name="my_documents_filter"
-                        string="My Document(s)"
-                        domain="[('create_uid','=',uid)]"
-                        help="Filter on my documents"/>
+                            string="My Document(s)"
+                            domain="[('create_uid','=',uid)]"
+                            help="Filter on my documents"/>
                     <filter name="url_filter" string="URL" domain="[('type', '=', 'url')]"/>
                     <filter name="binary_filter" string="Stored" domain="[('type', '=', 'binary')]"/>
                     <separator/>
@@ -170,10 +214,12 @@
                     <field name="type"/>
                     <group expand="0" string="Group By">
                         <filter name="owner" string="Owner" domain="[]" context="{'group_by':'create_uid'}"/>
-                        <filter string="Type" name="type" domain="[]" context="{'group_by':'type'}" groups="base.group_no_one"/>
-                        <filter string="Company" name="company" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
-                        <filter string="Creation Date" name="creation_month" domain="[]" context="{'group_by':'create_date'}"/>
-                        <filter string="Attached Document Name" name="attached_document_name" domain="[]" context="{'group_by': 'res_name'}"/>
+                        <filter string="Type" name="type" domain="[]" context="{'group_by':'type'}"
+                                groups="base.group_no_one"/>
+                        <filter string="Company" name="company" domain="[]" context="{'group_by':'company_id'}"
+                                groups="base.group_multi_company"/>
+                        <filter string="Creation Date" name="creation_month" domain="[]"
+                                context="{'group_by':'create_date'}"/>
                     </group>
                 </search>
             </field>
