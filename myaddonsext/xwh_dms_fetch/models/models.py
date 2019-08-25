@@ -21,7 +21,7 @@ class FetchConfig(models.Model):
     path = fields.Char('Path')
     user = fields.Char('User')
     password = fields.Char('Password')
-    root_directory_id = fields.Many2one('xwh_dms_directory', 'Root Directory')
+    root_directory_id = fields.Many2one('xwh_dms.directory', 'Root Directory', required=True)
     dir_tags = fields.Boolean('按目录建立标签', default=True)
 
     @api.multi
@@ -31,60 +31,36 @@ class FetchConfig(models.Model):
                 self.fetch_local(conf['path'], conf)
 
     def fetch_local(self, rootpath, conf):
-        model = self.env['slide.slide']
+        model = self.env['ir.attachment']
+        directories = dict()
         for parent, dirnames, filenames in os.walk(rootpath):
             for filename in filenames:
                 fullpath = os.path.join(parent, filename)
                 fileinfo = utils.get_file_info(rootpath, fullpath)
+                directory_id = directories.get(fileinfo['file_path'])
+                if not directory_id:
+                    directory_id = self.env['xwh_dms.directory'].get_or_create_directories(conf['root_directory_id'].id,
+                                                                                           fileinfo['file_path'])
+                    directories.setdefault(fileinfo['file_path'], directory_id)
                 print('process %s, %s' % (fullpath, fileinfo))
-                self.get_or_create_slide(model, fileinfo, conf)
+                self.get_or_create_attachment(model, fileinfo, conf, directory_id)
 
-    def get_or_create_category(self, channel_id, category_name):
-        model = self.env['slide.category']
-        rs = model.search([('channel_id', '=', channel_id), ('name', '=', category_name)])
+    def get_or_create_attachment(self, model, fileinfo, conf, directory_id):
+        rs = model.search([('datas_fname', '=', fileinfo['file_name']), ('directory_id', '=', directory_id)])
         if len(rs) == 0:
-            rs = model.create({
-                'channel_id': channel_id,
-                'name': category_name
+            # file not exists
+            rec = model.create({
+                'name': fileinfo['name'],
+                'datas_fname': fileinfo['file_name'],
+                'directory_id': directory_id,
+                'datas': utils.get_file_content(fileinfo['fullpath']),
+                'company_id': conf['company_id'].id
             })
-        return rs.id
-
-    def get_or_create_tags(self, tags):
-        model = self.env['slide.tag']
-        result = []
-        for tag in tags:
-            rs = model.search([('name', '=', tag)])
-            if len(rs) == 0:
-                rs = model.create({'name': tag})
-            result.append(rs.id)
-        return result
-
-    def get_or_create_slide(self, model, fileinfo, conf):
-        channel_id = conf['channel_id'].id
-        rs = model.search([('name', '=', fileinfo['file_name']), ('channel_id', '=', channel_id)])
-        vals = {
-            'name': fileinfo['file_name'],
-            'path': fileinfo['fullpath'],
-            'file_create_date': fileinfo['file_create_date'],
-            'file_update_date': fileinfo['file_update_date'],
-            'slide_type': utils.get_slide_type(fileinfo['file_ext']),
-            'mime_type': 'application/' + fileinfo['file_ext'],
-            'channel_id': channel_id,
-            'category_id': None,
-            'tag_ids': []
-        }
-        if len(rs) == 0:
-            vals['datas'] = utils.get_file_content(fileinfo['fullpath'])
-            if len(fileinfo['dirs']) > 0:
-                category_id = self.get_or_create_category(channel_id, fileinfo['dirs'][0])
-                tag_ids = self.get_or_create_tags(fileinfo['dirs'])
-                vals['category_id'] = category_id
-                vals['tag_ids'] = [(6, 0, tag_ids)]
-            rec = model.create(vals)
         elif len(rs) == 1:
-            if rs[0].file_create_date != vals['file_create_date']:
-                vals['datas'] = utils.get_file_content(fileinfo['fullpath'])
-                rec = rs.write(vals)
-        else:
-            raise
+            # file exists
+            if rs[0].file_size != fileinfo['file_size']:
+                # file changed, need reupdate
+                rec = model.write({
+                    'datas': utils.get_file_content(fileinfo['fullpath']),
+                })
         return rec

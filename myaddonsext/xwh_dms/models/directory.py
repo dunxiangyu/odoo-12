@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+import os
 
 
 class Directory(models.Model):
@@ -55,3 +56,21 @@ class Directory(models.Model):
     @api.multi
     def name_get(self):
         return [(item.id, item.complete_name) for item in self]
+
+    def get_or_create_directory(self, parent_id, name):
+        rs = self.search([('parent_id', '=', parent_id), ('name', '=', name)])
+        if len(rs) == 1:
+            return rs.id
+        else:
+            rec = self.create({
+                'name': name,
+                'parent_id': parent_id,
+                'company_id': self.env.user.company_id.id,
+            })
+            return rec.id
+
+    def get_or_create_directories(self, parent_id, path):
+        for name in path.split('/'):
+            if len(name) > 0:
+                parent_id = self.get_or_create_directory(parent_id, name)
+        return parent_id

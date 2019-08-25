@@ -13,24 +13,27 @@ def get_slide_type(file_ext):
         return 'document'
 
 
-def get_file_info(rootpath, fullpath):
+def get_file_info(relpah, fullpath):
     stat = os.stat(fullpath)
-    file_path = fullpath[len(rootpath):]
+    path = fullpath[len(relpah):]
+    tmp = os.path.split(path)
+    file_path = tmp[0]
+    file_name = tmp[1]
     if file_path[0] == '/':
         file_path = file_path[1:]
-    file_ext = os.path.splitext(file_path)[1]
-    dirs = os.path.split(file_path)[0].split('/')
-    if len(dirs) > 0 and dirs[0] == '':
-        dirs.pop(0)
+    file_ext = os.path.splitext(file_name)[1]
+    name = file_name[:-len(file_ext)]
+
     return {
+        'relpath': relpah,
         'fullpath': fullpath,
         'file_create_date': datetime.fromtimestamp(stat.st_ctime),
         'file_update_date': datetime.fromtimestamp(stat.st_mtime),
-        'file_ext': file_ext[1:] if len(file_ext) > 0 else '',
+        'file_ext': file_ext,
         'file_path': file_path,
-        'dirs': dirs,
-        'file_name': file_path[:-len(file_ext)],
-        'name': os.path.split(file_path)[1][:-len(file_ext)]
+        'file_name': file_name,
+        'file_size': stat.st_size,
+        'name': name
     }
 
 

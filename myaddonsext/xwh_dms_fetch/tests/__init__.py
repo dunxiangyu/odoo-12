@@ -1,1 +1,1 @@
-from . import test_netfetch_config
+from . import test_fetch_config

@@ -8,15 +8,22 @@ class TestUtils(unittest.TestCase):
         fileinfo = utils.get_file_info('/etc', fullpath)
         print(fileinfo)
         self.assertEqual(fullpath, fileinfo['fullpath'])
-        self.assertEqual('conf', fileinfo['file_ext'])
-        self.assertEqual('/odoo', fileinfo['file_name'])
+        self.assertEqual('.conf', fileinfo['file_ext'])
+        self.assertEqual('odoo.conf', fileinfo['file_name'])
         self.assertEqual('odoo', fileinfo['name'])
+        self.assertTrue(fileinfo['file_size'] > 0)
 
     def test_get_file_info_code(self):
         rootpath = '/xwh.work/git/odoo-12/myaddonsext'
         fileinfo = utils.get_file_info(rootpath,
-                                       rootpath + '/netfetch/tests/test_utils.py')
+                                       rootpath + '/xwh_dms_fetch/tests/test_utils.py')
         print(fileinfo)
+        self.assertEqual('test_utils', fileinfo['name'])
+        self.assertEqual('test_utils.py', fileinfo['file_name'])
+        self.assertEqual('xwh_dms_fetch/tests', fileinfo['file_path'])
+        self.assertEqual('.py', fileinfo['file_ext'])
+        self.assertEqual(rootpath + '/xwh_dms_fetch/tests/test_utils.py', fileinfo['fullpath'])
+        self.assertTrue(fileinfo['file_size'] > 0)
 
     def test_getPdfContent(self):
         file = 'xwh_dms_fetch/tests/docs/国家电网智能化规划总报告-4-4.pdf'
