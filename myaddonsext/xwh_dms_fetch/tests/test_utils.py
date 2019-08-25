@@ -19,7 +19,7 @@ class TestUtils(unittest.TestCase):
         print(fileinfo)
 
     def test_getPdfContent(self):
-        file = 'netfetch/tests/docs/国家电网智能化规划总报告-4-4.pdf'
+        file = 'xwh_dms_fetch/tests/docs/国家电网智能化规划总报告-4-4.pdf'
         content = utils.getPdfContent(file)
         print(content)
 

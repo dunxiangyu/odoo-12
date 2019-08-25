@@ -117,7 +117,7 @@
                                                     <i class="fa fa-pencil-square-o"/>
                                                     Edit
                                                 </a>
-                                                <a role="menuitem"
+                                                <a role="menuitem" href="#"
                                                    type="delete" class="dropdown-item">
                                                     <i class="fa fa-trash-o"/>
                                                     Delete
@@ -165,6 +165,10 @@
                                                    t-attf-href="/web/content?id=#{record.id.raw_value}&amp;field=datas&amp;model=ir.attachment&amp;filename_field=datas_fname&amp;download=true">
                                                     <i class="fa fa-download"/>
                                                     Download
+                                                </a>
+                                                <a class="oe_kanban_file_preview" t-att-data-id="record.id.raw_value">
+                                                    <i class="fa fa-download"/>
+                                                    Preview
                                                 </a>
                                             </t>
                                             <t t-elif="record.type.raw_value == 'url'">

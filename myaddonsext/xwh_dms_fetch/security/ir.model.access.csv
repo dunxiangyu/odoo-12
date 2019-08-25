@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xwh_dms_fetch_config,xwh_dms.fetch.config,model_xwh_dms_fetch_config,base.group_system,1,1,1,1

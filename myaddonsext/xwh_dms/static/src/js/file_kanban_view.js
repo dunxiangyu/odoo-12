@@ -5,19 +5,27 @@ var KanbanController = require('web.KanbanController');
 var KanbanRenderer = require('web.KanbanRenderer');
 var KanbanView = require('web.KanbanView');
 var view_registry = require('web.view_registry');
+var DocumentViewer = require('xwh_dms.DocumentViewer');
 
 var FileKanbanController = KanbanController.extend({
-    renderButtons: function($node){
-        this._super.apply(this, arguments)
-//        debugger
-//        $('<button>Upload</button>').appendTo($node)
-    }
 });
 
 var FileKanbanRenderer = KanbanRenderer.extend({
-    start: function(){
-        this._super.apply(this, arguments)
-    }
+    events: _.extend({}, KanbanRenderer.prototype.events, {
+        'click .oe_kanban_file_preview': '_onFilePreview'
+    }),
+    _onFilePreview: function(event){
+        var id = event.currentTarget.getAttribute('data-id')
+        var datas = this.state.data.map(function(item){return {
+            id: item.data.id,
+            name: item.data.name,
+            filename: item.data.datas_fname,
+            url: item.data.url,
+            mimetype: item.data.mimetype,
+        }});
+        var viewer = new DocumentViewer(this, datas, parseInt(id))
+        viewer.appendTo($('body'))
+    },
 });
 
 var FileKanbanView = KanbanView.extend({
@@ -25,10 +33,6 @@ var FileKanbanView = KanbanView.extend({
         Controller: FileKanbanController,
         Renderer: FileKanbanRenderer
     }),
-
-    init: function (viewInfo, params) {
-        this._super.apply(this, arguments);
-    },
 });
 
 view_registry.add('file_kanban_view', FileKanbanView);

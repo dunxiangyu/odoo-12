@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="xwh_dms.fetch.config" id="xwh_dms_fetch_config_mydocs">
+            <field name="name">mydocs</field>
+            <field name="company_id" ref="ygsoft.ygsoft_company"/>
+            <field name="type">local</field>
+            <field name="path">/Users/xiangwanhong/Documents/mydocs</field>
+            <field name="top_category">True</field>
+            <field name="dir_tags">True</field>
+        </record>
+    </data>
+</odoo>

@@ -4,17 +4,8 @@ from odoo import models, fields, api
 from . import utils
 
 
-class Slide(models.Model):
-    _inherit = 'slide.slide'
-
-    path = fields.Char('Path')
-    file_create_date = fields.Date('File Create Date')
-    file_update_date = fields.Date('File Last Update Date')
-    file_size = fields.Integer('File Size')
-
-
-class NetfetchConfig(models.Model):
-    _name = 'netfetch.config'
+class FetchConfig(models.Model):
+    _name = 'xwh_dms.fetch.config'
     _description = 'net fetch config'
 
     company_id = fields.Many2one('res.company', 'Company', required=True)
@@ -30,8 +21,7 @@ class NetfetchConfig(models.Model):
     path = fields.Char('Path')
     user = fields.Char('User')
     password = fields.Char('Password')
-    channel_id = fields.Many2one('slide.channel', string="Channel", required=True)
-    top_category = fields.Boolean('按一级目录建立分类', defaul=True)
+    root_directory_id = fields.Many2one('xwh_dms_directory', 'Root Directory')
     dir_tags = fields.Boolean('按目录建立标签', default=True)
 
     @api.multi

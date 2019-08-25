@@ -3,16 +3,16 @@
     <data>
         <record id="view_netfetch_config_installer_form" model="ir.ui.view">
             <field name="name">netfetch.config.form</field>
-            <field name="model">netfetch.config</field>
+            <field name="model">xwh_dms.fetch.config</field>
             <field name="arch" type="xml">
                 <form string="Netfetch Configuration">
                     <group>
                         <field name="company_id"/>
                         <newline/>
                         <group string="Server Information">
-                            <field name="host"/>
-                            <field name="port"/>
                             <field name="type"/>
+                            <field name="host" attrs="{'invisible':[('type','==','local')]}"/>
+                            <field name="port" attrs="{'invisible':[('type','==','local')]}"/>
                         </group>
                         <group string="Login Information">
                             <field name="user"/>
@@ -20,7 +20,7 @@
                         </group>
                         <group string="Process Parameter">
                             <field name="path"/>
-                            <field name="channel_id"/>
+                            <field name="root_directory_id"/>
                         </group>
                     </group>
                 </form>
@@ -29,31 +29,31 @@
 
         <record id="netfetch_config_view_tree" model="ir.ui.view">
             <field name="name">netfetch.config.tree</field>
-            <field name="model">netfetch.config</field>
+            <field name="model">xwh_dms.fetch.config</field>
             <field name="arch" type="xml">
                 <tree string="Netfetch Configuration">
                     <field name="company_id"/>
                     <field name="host"/>
                     <field name="port"/>
                     <field name="path"/>
-                    <field name="channel_id"/>
+                    <field name="root_directory_id"/>
                 </tree>
             </field>
         </record>
 
-        <record id="action_netfetch_config_installer" model="ir.actions.act_window">
+        <record id="action_xwh_dms_fetch_config" model="ir.actions.act_window">
             <field name="name">Setup your Netfetch Config</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">netfetch.config</field>
+            <field name="res_model">xwh_dms.fetch.config</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <record model="ir.actions.server" id="netfetch_action_server">
             <field name="name">Fetch Documents</field>
-            <field name="model_id" ref="netfetch.model_netfetch_config"/>
+            <field name="model_id" ref="xwh_dms_fetch.model_xwh_dms_fetch_config"/>
             <field name="state">code</field>
-            <field name="binding_model_id" ref="netfetch.model_netfetch_config"/>
+            <field name="binding_model_id" ref="xwh_dms_fetch.model_xwh_dms_fetch_config"/>
             <field name="binding_type">action</field>
             <field name="code">
                 records.fetch()
@@ -62,16 +62,10 @@
 
         <!-- Menus -->
         <menuitem
-                id="myfly_root_menu"
-                name="myfly"
-                parent="base.menu_custom"
-                sequence="4"/>
-
-        <menuitem
-                id="netfetch_config_menu"
-                name="Netfetch Config"
-                parent="myfly_root_menu"
-                action="action_netfetch_config_installer"
+                id="xwh_dms_fetch_config_menu"
+                name="DMS Fetch Config"
+                parent="xwh_dms.xwh_dms_config_menu"
+                action="action_xwh_dms_fetch_config"
                 sequence="10"/>
     </data>
 </odoo>

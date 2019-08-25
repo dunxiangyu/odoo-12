@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "netfetch",
+    'name': "xwh_dms_fetch",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'document', 'website_slides'],
+    'depends': ['base', 'xwh_dms'],
 
     # always loaded
     'data': [
