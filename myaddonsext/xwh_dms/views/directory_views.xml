@@ -7,16 +7,12 @@
                 <form string="Directory">
                     <sheet>
                         <div class="oe_button_box" name="button_box">
-<!--                            <button class="oe_stat_button" name="website_publish_button"-->
-<!--                                    type="object" icon="fa-globe">-->
-<!--                                <field name="website_published" widget="website_button"/>-->
-<!--                                <field name="is_published" invisible="1"/>-->
-<!--                            </button>-->
-<!--                            <button name="toggle_active" type="object"-->
-<!--                                    confirm="(Un)archiving a directory automatically (un)archives its attachments. Do you want to proceed?"-->
-<!--                                    class="oe_stat_button" icon="fa-archive">-->
-<!--                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>-->
-<!--                            </button>-->
+                            <button class="oe_stat_button" name="sub_directory_tree_view" type="object" icon="fa-archive">
+                                <field string="Sub Directory" name="count_subdirectories" widget="statinfo"/>
+                            </button>
+                            <button class="oe_stat_button" name="attachment_tree_view" type="object" icon="fa-files-o">
+                                <field string="Documents" name="count_attachments" widget="statinfo"/>
+                            </button>
                         </div>
                         <group>
                             <field name="name"/>
@@ -25,8 +21,8 @@
                             <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                         <group>
-                            <field name="attachment_ids" />
-                            <field name="child_directory_ids" />
+                            <field name="attachment_ids"/>
+                            <field name="child_directory_ids"/>
                         </group>
                     </sheet>
                 </form>

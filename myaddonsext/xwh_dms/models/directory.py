@@ -42,20 +42,46 @@ class Directory(models.Model):
         for record in self:
             record.count_subdirectories = len(record.child_directory_ids)
 
-    @api.depends('name', 'parent_id')
+    @api.onchange('name', 'parent_id')
     def _compute_complete_name(self):
         for record in self:
             record.complete_name = self._get_full_name(record)
 
     def _get_full_name(self, record):
         if record.parent_id and record.name:
-            return record.parent_id.complete_name + '/' + record.name
+            parent_name = record.parent_id.complete_name if record.parent_id.complete_name else ''
+            return parent_name + '/' + record.name
         else:
             return record.name
 
     @api.multi
     def name_get(self):
         return [(item.id, item.complete_name) for item in self]
+
+    @api.multi
+    def attachment_tree_view(self):
+        self.ensure_one()
+        domain = [('directory_id', '=', self.id)]
+        return {
+            'name': 'Attachments',
+            'type': 'ir.actions.act_window',
+            'domain': domain,
+            'res_model': 'ir.attachment',
+            'view_mode': 'kanban,form',
+            'view_type': 'form',
+        }
+
+    @api.multi
+    def sub_directory_tree_view(self):
+        self.ensure_one()
+        return {
+            'name': 'Sub Directory',
+            'type': 'ir.actions.act_window',
+            'domain': [('parent_id', '=', self.id)],
+            'res_model': 'xwh_dms.directory',
+            'view_mode': 'tree',
+            # 'view_type': 'form',
+        }
 
     def get_or_create_directory(self, parent_id, name):
         rs = self.search([('parent_id', '=', parent_id), ('name', '=', name)])
