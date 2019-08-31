@@ -672,4 +672,4 @@ class configmanager(object):
                 self.options['admin_passwd'] = updated_hash
             return True
 
-config = configmanager('/etc/odoo.conf')
+config = configmanager('/xwh.work/git/odoo-12/odoo.conf')
