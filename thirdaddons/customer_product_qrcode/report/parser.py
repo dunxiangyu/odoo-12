@@ -7,7 +7,7 @@ class CustomerBadge(models.AbstractModel):
     _name = 'report.customer_product_qrcode.customer_qr_template'
 
     @api.model
-    def get_report_values(self, docids, data=None):
+    def _get_report_values(self, docids, data=None):
         if data['type'] == 'cust':
             dat = [request.env['res.partner'].browse(data['data'])]
             print(dat)

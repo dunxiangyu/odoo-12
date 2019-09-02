@@ -7,7 +7,10 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='toggle_active']" position="before">
-                    <button name="generate_qr" type="object" class="btn-box" icon="fa-qrcode"><field name="sequence" invisible="1"/> Generate QR</button>
+                    <button name="generate_qr" type="object" class="btn-box" icon="fa-qrcode">
+                        <field name="sequence" invisible="1"/>
+                        Generate QR
+                    </button>
                 </xpath>
                 <field name="category_id" position="after">
                     <field name="sequence"/>
@@ -20,7 +23,10 @@
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//button[@name='toggle_active']" position="before">
-                    <button name="generate_qr" type="object" class="btn-box" icon="fa-qrcode"><field name="sequence" invisible="1"/> Generate QR</button>
+                    <button name="generate_qr" type="object" class="btn-box" icon="fa-qrcode">
+                        <field name="sequence" invisible="1"/>
+                        Generate QR
+                    </button>
                 </xpath>
                 <field name="categ_id" position="after">
                     <field name="sequence"/>
@@ -43,16 +49,17 @@
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//div[hasclass('settings')]" position="inside">
-                    <div class="app_settings_block" data-string="General Settings" string="General Settings" data-key="general_settings">
+                    <div class="app_settings_block" data-string="General Settings" string="General Settings"
+                         data-key="general_settings">
                         <div id="setup_qrcode">
                             <h2>Setup QRCode</h2>
                             <div class="row mt16 o_settings_container">
                                 <div class="col-xs-12 col-md-6 o_setting_box">
                                     <div class="o_setting_right_pane">
-                                        <label string="Prefixes"/>
+<!--                                        <label string="Prefixes"/>-->
                                         <span class="fa fa-lg"/>
                                         <div class="text-muted">
-                                            Set your unique prefix.
+                                            <span>Set your unique prefix.</span>
                                         </div>
                                         <div class="content-group">
                                             <div class="mt16 row">
