@@ -1,0 +1,2 @@
+account_standard_report     标准会计报表
+tko_document_ocr            ir.attachment扩展，索引图片、pdf以及pdf中图片
