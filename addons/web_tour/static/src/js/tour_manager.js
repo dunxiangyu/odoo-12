@@ -15,6 +15,8 @@ var _t = core._t;
 
 var RUNNING_TOUR_TIMEOUT = 10000;
 
+var DEFAULT_STEP_DELAY = 3000
+
 var get_step_key = utils.get_step_key;
 var get_running_key = utils.get_running_key;
 var get_running_delay_key = utils.get_running_delay_key;
@@ -32,7 +34,7 @@ return core.Class.extend(mixins.EventDispatcherMixin, ServicesMixin, {
         this.tours = {};
         this.consumed_tours = consumed_tours || [];
         this.running_tour = local_storage.getItem(get_running_key());
-        this.running_step_delay = parseInt(local_storage.getItem(get_running_delay_key()), 10) || 0;
+        this.running_step_delay = parseInt(local_storage.getItem(get_running_delay_key()), DEFAULT_STEP_DELAY) || DEFAULT_STEP_DELAY;
         this.edition = (_.last(session.server_version_info) === 'e') ? 'enterprise' : 'community';
         this._log = [];
         console.log('Tour Manager is ready.  running_tour=' + this.running_tour);

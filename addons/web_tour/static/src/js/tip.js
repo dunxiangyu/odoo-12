@@ -79,6 +79,7 @@ var Tip = Widget.extend({
         this._bind_anchor_events();
 
         this._reposition();
+        this._to_info_mode(true);
         this.$el.css("opacity", 1);
         core.bus.on("resize", this, _.debounce(function () {
             if (this.tip_opened) {
