@@ -10,6 +10,6 @@ class PartnerXlsx(models.AbstractModel):
 
     def generate_xlsx_report(self, workbook, data, partners):
         for obj in partners:
-            sheet = workbook.add_worksheet('Report')
+            sheet = workbook.add_worksheet('Report %s' % (obj.id))
             bold = workbook.add_format({'bold': True})
             sheet.write(0, 0, obj.name, bold)
