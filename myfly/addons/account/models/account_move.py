@@ -782,10 +782,191 @@ class AccountMoveLine(models.Model):
                     elif 'date_maturity' in vals:
                         ctx['date'] = vals['date_maturity']
                     temp['currency_id'] = bank.currency_id.id
-                    temp['amount_currency'] = bank.company_id.currency_id.with_context(ctx).compute(tax_vals['amount'], bank.currency_id, round=True)
+                    temp['amount_currency'] = bank.company_id.currency_id.with_context(ctx).compute(tax_vals['amount'],
+                                                                                                    bank.currency_id,
+                                                                                                    round=True)
                 if vals.get('tax_exigible'):
                     temp['tax_exigible'] = True
                     temp['account_id'] = tax.cash_basis_account.id or account_id
                 tax_line_vals.append(temp)
         return tax_line_vals
 
+    @api.multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            amount = vals.get('debit', 0.0) - vals.get('credit', 0.0)
+            move = self.env['account.move'].browse(vals['move_id'])
+            account = self.env['account.account'].browse(vals['account_id'])
+            if account.deprecated:
+                raise UserError(_('The account %s (%s) is deprecated') % (account.name, account.code))
+            journal = vals.get('journal_id') and self.env['account.journal'].browse(
+                vals['journal_id']) or move.journal_id
+            vals['date_maturity'] = vals.get('date_maturity') or vals.get('date') or move.date
+
+            ok = {
+                (not journal.type_control_ids and not journal.account_control_ids)
+                or account.user_type_id in journal.type_control_ids
+                or account in journal.account_control_ids
+            }
+            if not ok:
+                raise UserError(_('You cannot use this general account in this journal'))
+
+            if account.currency_id and 'amount_currency' not in vals and account.currency_id.id != account.company_id.currency_id.id:
+                vals['currency_id'] = account.currency_id.id
+                date = vals.get('date') or vals.get('date_maturity') or fields.Date.today()
+                vals['amount_currency'] = account.company_id.currency_id._convert(amount, account.currency_id,
+                                                                                  account.company_id, date)
+
+            taxes = False
+            if vals.get('tax_line_id'):
+                taxes = [{'tax_exigibility': self.env['account.tax'].browse(vals['tax_line_id']).tax_exigibility}]
+            if vals.get('tax_ids'):
+                taxes = self.env['account.move.line'].resolve_2many_commands('tax_ids', vals['tax_ids'])
+            if taxes and any([tax['tax_exigibility'] == 'on_payment' for tax in taxes]) and not vals.get(
+                    'tax_exigible'):
+                vals['tax_exigible'] = False
+
+        lines = super(AccountMoveLine, self).create(vals_list)
+
+        if self._context.get('check_move_validity', True):
+            lines.mapped('move_id')._post_validate()
+
+        return lines
+
+    @api.multi
+    def unlink(self):
+        self._update_check()
+        move_ids = set()
+        for line in self:
+            if line.move_id.id not in move_ids:
+                move_ids.add(line.move_id.id)
+        result = super(AccountMoveLine, self).unlink()
+        if self._context.get('check_move_validity', True) and move_ids:
+            self.env['account.move'].browse(list(move_ids))._post_validate()
+        return result
+
+    @api.multi
+    def write(self, vals):
+        if ('account_id' in vals) and self.env['account.account'].browse(vals['account_id']).deprecated:
+            raise UserError(_('You cannot use a deprecated account.'))
+        if any(key in vals for key in ('account_id', 'journal_id', 'date', 'move_id', 'debit', 'credit')):
+            self._update_check()
+        if not self._context.get('allow_amount_currency') and any(
+                key in vals for key in ('amount_currency', 'currency_id')):
+            self._update_check()
+
+        if vals.get('expected_pay_date') and self.invoice_id:
+            str_expected_pay_date = vals['expected_pay_date']
+            if isinstance(str_expected_pay_date, date):
+                str_expected_pay_date = fields.Date.to_string(str_expected_pay_date)
+            msg = _('New expected payment date: ') + str_expected_pay_date + '.\n' + vals.get('internal_note', '')
+            self.invoice_id.message_post(body=msg)
+
+        for record in self:
+            if 'statement_line_id' in vals and record.payment_id:
+                if all(line.statement_id for line in record.payment_id.move_line_ids.filtered(
+                        lambda r: r.id != record.id and r.account_id.internal_type == 'liquidity')):
+                    record.payment_id.state = 'reconciled'
+
+        result = super(AccountMoveLine, self).write(vals)
+        if self._context.get('check_move_validity', True) and any(
+                key in vals for key in ('account_id', 'journal_id', 'date', 'move_id', 'debit', 'credit')):
+            move_ids = set()
+            for line in self:
+                if line.move_id.id not in move_ids:
+                    move_ids.add(line.move_id.id)
+            self.env['account.move'].browse(list(move_ids))._post_validate()
+        return result
+
+    @api.multi
+    @api.depends('ref', 'move_id')
+    def name_get(self):
+        result = []
+        for line in self:
+            if line.ref:
+                result.append((line.id, (line.move_id.name or '') + '(' + line.ref + ')'))
+            else:
+                result.append((line.id, line.move_id.name))
+        return result
+
+    def _get_matched_percentage(self):
+        matched_percentage_per_move = {}
+        for line in self:
+            if not matched_percentage_per_move.get(line.move_id.id, False):
+                lines_to_consider = line.move_id.line_ids.filtered(
+                    lambda x: x.account_id.internal_type in ('receivable', 'payable'))
+                total_amount_currency = 0.0
+                total_reconcile_currency = 0.0
+                all_same_currency = False
+                if lines_to_consider and all(
+                        [x.currency_id.id == lines_to_consider[0].currency_id.id for x in lines_to_consider]):
+                    all_same_currency = lines_to_consider[0].currency_id.id
+                    for line in lines_to_consider:
+                        if all_same_currency:
+                            total_amount_currency += abs(line.amount_currency)
+                            for partial_line in (line.matched_debit_ids + line.matched_credit_ids):
+                                if partial_line.currency_id and partial_line.currency_id.id == all_same_currency:
+                                    total_reconcile_currency += partial_line.amount_currency
+                                else:
+                                    all_same_currency = False
+                                    break
+                    if not all_same_currency:
+                        matched_percentage_per_move[line.move_id.id] = line.move_id.matched_percentage
+                    else:
+                        if total_amount_currency == 0.0:
+                            matched_percentage_per_move[line.move_id.id] = 1.0
+                        else:
+                            matched_percentage_per_move[
+                                line.move_id.id] = total_reconcile_currency / total_amount_currency
+        return matched_percentage_per_move
+
+    @api.multi
+    def _compute_amount_fields(self, amount, src_currency, company_currency):
+        amount_currency = False
+        currency_id = False
+        date = self.env.context.get('date') or fields.Date.today()
+        company = self.env.context.get('company_id')
+        company = self.env['res.company'].browse(company) if company else self.env.user.company_id
+        if src_currency and src_currency != company_currency:
+            amount_currency = amount
+            amount = src_currency._convert(amount, company_currency, company, date)
+            currency_id = src_currency.id
+        debit = amount > 0 and amount or 0.0
+        credit = amount < 0 and -amount or 0.0
+        return debit, credit, amount_currency, currency_id
+
+    def _get_analytic_tag_ids(self):
+        self.ensure_one()
+        return self.analytic_tag_ids.filtered(lambda r: not r.active_analytic_distribution).ids
+
+    @api.multi
+    def create_analytic_lines(self):
+        for obj_line in self:
+            for tag in obj_line.analytic_tag_ids.filtered('active_analytic_distribution'):
+                for distribution in tag.analytic_distribution_ids:
+                    vals_line = obj_line._prepare_analytic_distribution_line(distribution)
+                    self.env['account.analytic.line'].create(vals_line)
+            if obj_line.analytic_account_id:
+                vals_line = obj_line._prepare_analytic_line()[0]
+                self.env['account.analytic.line'].create(vals_line)
+
+    @api.multi
+    def _prepare_analytic_line(self):
+        amount = (self.credit or 0.0) - (self.debit or 0.0)
+        default_name = self.name or (self.ref or '/' + ' -- ' + (self.partner_id and self.partner_id or '/'))
+        return {
+            'name': default_name,
+            'date': self.date,
+            'account_id': self.analytic_account_id.id,
+            'tag_ids': [(6, 0, self._get_analytic_tag_ids())],
+            'unit_amount': self.quantity,
+            'product_id': self.product_id and self.product_id.id or False,
+            'product_uom_id': self.product_uom_id and self.product_uom_id.id or False,
+            'amount': amount,
+            'general_account_id': self.account_id.id,
+            'ref': self.ref,
+            'move_id': self.id,
+            'user_id': self.invoice_id.user_id.id or self._uid,
+            'partner_id': self.partner_id.id,
+            'company_id': self.analytic_account_id.company_id.id or self.env.user.company_id.id,
+        }
