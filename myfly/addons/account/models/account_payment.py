@@ -547,15 +547,17 @@ class account_payment(models.Model):
                             sequence_code = 'account.payment.supplier.refund'
                         if rec.payment_type == 'outbound':
                             sequence_code = 'account.payment.supplier.invoice'
-                rec.name = self.env['ir.sequence'].with_context(ir_sequence_date=rec.payment_date).next_by_code(sequence_code)
+                rec.name = self.env['ir.sequence'].with_context(ir_sequence_date=rec.payment_date).next_by_code(
+                    sequence_code)
                 if not rec.name and rec.payment_type != 'transfer':
-                    raise UserError(_('You have to define a sequence for %s in your company.') % (sequence_code, ))
+                    raise UserError(_('You have to define a sequence for %s in your company.') % (sequence_code,))
 
             amount = rec.amount * (rec.payment_type in ('outbound', 'inbound') and 1 or -1)
             move = rec._create_payment_entry(amount)
 
             if rec.payment_type == 'transfer':
-                transfer_credit_aml = move.line_ids.filtered(lambda r: r.account_id == rec.company_id.transfer_account_id)
+                transfer_credit_aml = move.line_ids.filtered(
+                    lambda r: r.account_id == rec.company_id.transfer_account_id)
                 transfer_debit_aml = rec._create_transfer_entry(amount)
                 (transfer_credit_aml + transfer_debit_aml).reconcile()
 
@@ -573,7 +575,8 @@ class account_payment(models.Model):
 
     def _create_payment_entry(self, amount):
         aml_obj = self.env['account.move.line'].with_context(check_move_validity=False)
-        debit, credit, amount_currency, currency_id = aml_obj.with_context(date=self.payment_date)._compute_amount_fields(amount, self.currency_id, self.company_id.currency_id)
+        debit, credit, amount_currency, currency_id = aml_obj.with_context(
+            date=self.payment_date)._compute_amount_fields(amount, self.currency_id, self.company_id.currency_id)
 
         move = self.env['acount.move'].create(self._get_move_vals())
 
@@ -584,7 +587,9 @@ class account_payment(models.Model):
 
         if self.payment_difference_handling == 'reconcile' and self.payment_difference:
             writeoff_line = self._get_shared_move_line_vals(0, 0, 0, move.id, False)
-            debit_wo, credit_wo, amount_currency_wo, currency_id = aml_obj.with_context(date=self.payment_date)._compute_amount_fields(self.payment_difference, self.currency_id, self.company_id.currency_id)
+            debit_wo, credit_wo, amount_currency_wo, currency_id = aml_obj.with_context(
+                date=self.payment_date)._compute_amount_fields(self.payment_difference, self.currency_id,
+                                                               self.company_id.currency_id)
             writeoff_line['name'] = self.writeoff_label
             writeoff_line['account_id'] = self.writeoff_account_id.id
             writeoff_line['debit'] = debit_wo
@@ -614,4 +619,119 @@ class account_payment(models.Model):
         return move
 
     def _create_transfer_entry(self, amount):
-        pass
+        aml_obj = self.env['account.move.line'].with_context(check_move_valdity=False)
+        debit, credit, amount_currency, dummy = aml_obj.with_context(date=self.payment_date)._compute_amount_fields(
+            amount, self.currency_id, self.company_id.currency_id)
+        amount_currency = self.destination_journal_id.currency_id and self.currency_id._convert(amount,
+                                                                                                self.destination_journal_id.currency_id,
+                                                                                                self.company_id,
+                                                                                                self.payment_date or fields.Date.today()) or 0
+
+        dst_move = self.env['account.move'].create(self._get_move_vals(self.destination_journal_id))
+
+        dst_liquidity_aml_dict = self._get_shared_move_line_vals(debit, credit, amount_currency, dst_move.id)
+        dst_liquidity_aml_dict.update({
+            'name': _('Transfer from %s') % self.journal_id.name,
+            'account_id': self.destination_journal_id.default_credit_account_id.id,
+            'currency_id': self.destination_journal_id.currency_id.id,
+            'journal_id': self.destination_journal_id.id
+        })
+        aml_obj.create(dst_liquidity_aml_dict)
+
+        transfer_debit_aml_dict = self._get_shared_move_line_vals(credit, debit, 0, dst_move.id)
+        transfer_debit_aml_dict.update({
+            'name': self.name,
+            'account_id': self.company_id.transfer_account_id.id,
+            'journal_id': self.destination_journal_id
+        })
+        if self.currency_id != self.company_id.currency_id:
+            transfer_debit_aml_dict.update({
+                'currency_id': self.currency_id.id,
+                'amount_currency': -self.amount,
+            })
+        transfer_debit_aml = aml_obj.create(transfer_debit_aml_dict)
+        if not self.destination_journal_id.post_at_bank_rec:
+            dst_move.post()
+        return transfer_debit_aml
+
+    def _get_move_vals(self, journal=None):
+        journal = journal or self.journal_id
+        move_vals = {
+            'date': self.payment_date,
+            'ref': self.communication or '',
+            'company_id': self.company_id.id,
+            'journal_id': journal.id,
+        }
+        if self.move_name:
+            move_vals['name'] = self.move_name
+        return move_vals
+
+    def _get_shared_move_line_vals(self, debit, credit, amount_currency, move_id, invoice_id=False):
+        return {
+            'partner_id': self.payment_type in ('inbound', 'outbound') and self.env[
+                'res.partner']._find_accounting_partner(self.partner_id).id or False,
+            'invoice_id': invoice_id and invoice_id.id or False,
+            'move_id': move_id,
+            'debit': debit,
+            'credit': credit,
+            'amount_currency': amount_currency or False,
+            'payment_id': self.id,
+            'journal_id': self.journal_id.id,
+        }
+
+    def _get_counterpart_move_line_vals(self, invoice=False):
+        if self.payment_type == 'transfer':
+            name = self.name
+        else:
+            name = ''
+            if self.partner_type == 'customer':
+                if self.payment_type == 'inbound':
+                    name += _('Customer Payment')
+                elif self.payment_type == 'outbound':
+                    name += _('Customer Credit Note')
+            elif self.partner_type == 'supplier':
+                if self.payment_type == 'inbound':
+                    name += _('Vendor Credit Note')
+                elif self.payment_type == 'outbound':
+                    name += _('Vendor Payment')
+            if invoice:
+                name += ': '
+                for inv in invoice:
+                    if inv.move_id:
+                        name += inv.number + ', '
+                name = name[:len(name) - 2]
+        return {
+            'name': name,
+            'account_id': self.destination_account_id.id,
+            'currency_id': self.currency_id != self.company_id.currency_id and self.currency_id.id or False,
+        }
+
+    def _get_liquidity_move_line_vals(self, amount):
+        name = self.name
+        if self.payment_type == 'transfer':
+            name = _('Transfer to %s') % self.destination_journal_id.name
+        vals = {
+            'name': name,
+            'account_id': self.payment_type in ('outbound', 'transfer') and self.journal_id.default_debit_account_id.id \
+                          or self.journal_id.default_credit_account_id.id,
+            'journal_id': self.journal_id.id,
+            'currency_id': self.currency_id != self.company_id.currency_id and self.currency_id.id or False,
+        }
+
+        if self.journal_id.currency_id and self.currency_id != self.journal_id.currency_id:
+            amount = self.currency_id._convert(amount, self.journal_currency_id, self.company_id,
+                                               self.payment_date or fields.Date.today())
+            debit, credit, amount_currency, dummy = self.env['account.move.line'].with_context(
+                date=self.payment_date)._compute_amount_fields(amount, self.journal_id.currency_id,
+                                                               self.company_id.currency_id)
+            vals.update({
+                'amount_currency': amount_currency,
+                'currency_id': self.journal_id.currency_id.id,
+            })
+        return vals
+
+    def _get_invoice_payment_amount(self, inv):
+        self.ensure_one()
+        return sum([
+            data['amount'] for data in inv._get_payments_vals() if data['account_payment_id'] == self.id
+        ])
