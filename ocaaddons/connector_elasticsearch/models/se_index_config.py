@@ -6,7 +6,6 @@ from odoo import api, fields, models
 
 
 class SeIndexConfig(models.Model):
-
     _name = "se.index.config"
     _description = "Elasticsearch index configuration"
 
@@ -32,3 +31,8 @@ class SeIndexConfig(models.Model):
             if rec.body_str:
                 data = json.loads(rec.body_str)
             rec.body = data
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        vals_list[0]['body'] = json.loads(vals_list[0]['body_str'])
+        return super(SeIndexConfig,self).create(vals_list)

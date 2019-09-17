@@ -1,4 +1,5 @@
 from odoo import api, models, fields
+from odoo.exceptions import UserError, ValidationError
 
 
 class AccountMove(models.Model):
@@ -970,3 +971,324 @@ class AccountMoveLine(models.Model):
             'partner_id': self.partner_id.id,
             'company_id': self.analytic_account_id.company_id.id or self.env.user.company_id.id,
         }
+
+    def _prepare_analytic_distribution_line(self, distribution):
+        self.ensure_one()
+        amount = -self.balance * distribution.percentage / 100.0
+        default_name = self.name or (self.ref or '/' + ' -- ' + (self.partner_id and self.partner_id.name or '/'))
+        return {
+            'name': default_name,
+            'date': self.date,
+            'account_id': distribution.account_id.id,
+            'partner_id': self.partner_id,
+            'tag_ids': [(6, 0, [distribution.tag_id.id] + self._get_analytic_tag_ids())],
+            'unit_amount': self.quantity,
+            'product_id': self.product_id and self.product_id.id or False,
+            'product_uom_id': self.product_uom_id and self.product_uom_id.id or False,
+            'amount': self.amount,
+            'general_account_id': self.account_id.id,
+            'ref': self.ref,
+            'move_id': self.id,
+            'user_id': self.invoice_id.user_id.id or self._uid,
+            'company_id': distribution.account_id.company_id.id or self.env.user.company_id.id,
+        }
+
+    @api.model
+    def _query_get(self, domain=None):
+        self.check_access_rights('read')
+
+        context = dict(self._context or {})
+        domain = domain or []
+        if not isinstance(domain, (list, tuple)):
+            domain = safe_eval(domain)
+
+        date_field = 'date'
+        if context.get('aged_balance'):
+            date_field = 'date_maturity'
+        if context.get('date_to'):
+            domain += [(date_field, '<=', context['date_to'])]
+        if context.get('date_from'):
+            if not context.get('strict_range'):
+                domain += ['|', (date_field, '>=', context['date_from']),
+                           ('account_id.user_type_id.include_initial_balance', '=', True)]
+            elif context.get('initial_bal'):
+                domain += [(date_field, '<', context['date_from'])]
+            else:
+                domain += [(date_field, '>=', context['date_from'])]
+
+        if context.get('journal_id'):
+            domain += [('journal_id', 'in', context['journal_ids'])]
+
+        state = context.get('state')
+        if state and state.lower() != 'all':
+            domain += [('move_id.state', '=', state)]
+
+        if context.get('company_id'):
+            domain += [('company_id', '=', context['company_id'])]
+
+        if 'company_ids' in context:
+            domain += [('company_id', 'in', context['company_ids'])]
+
+        if context.get('reconcile_date'):
+            domain += ['|', ('reconcile', '=', False), '|',
+                       ('matched_debit_ids.max_date', '>', context['reconcile_date']),
+                       ('matched_credit_ids.max_date', '>', context['reconcile_date'])]
+
+        if context.get('account_tag_ids'):
+            domain += [('account_id.tag_ids', 'in', context['account_tag_ids'].ids)]
+
+        if context.get('analytic_account_ids'):
+            domain += [('analytic_account_id', 'in', context['analytic_account_ids'].ids)]
+
+        if context.get('partner_ids'):
+            domain += [('partner_id', 'in', context['partner_ids'].ids)]
+
+        if context.get('partner_categories'):
+            domain += [('partner_id.category_id', 'in', context['partner_categories'].ids)]
+
+        where_clause = ""
+        where_clause_params = []
+        tables = ''
+        if domain:
+            query = self._where_calc(domain)
+            self._apply_ir_rules(query)
+            tables, where_clause, where_clause_params = query.get_sql()
+        return tables, where_clause, where_clause_params
+
+    @api.multi
+    def open_reconcile_view(self):
+        [action] = self.env.ref('account.action_account_moves_all_a').read()
+        ids = []
+        for aml in self:
+            if aml.account_id.reconcile:
+                ids.extend(
+                    [r.debit_move_id.id for r in aml.matched_debit_ids] if aml.credit > 0 else [r.credit_move_id.id for
+                                                                                                r in
+                                                                                                aml.matched_credit_ids])
+                ids.append(aml.id)
+        action['domain'] = [('id', 'in', ids)]
+        return action
+
+
+class AccountPartialReconcile(models.Model):
+    _name = 'account.partial.reconcile'
+    _description = 'Partial Reconcile'
+
+    debit_move_id = fields.Many2one('account.move.line', index=True, required=True)
+    credit_move_id = fields.Many2one('account.move.line', index=True, required=True)
+    amount = fields.Monetary(currency_field='company_currency_id', help='')
+    amount_currency = fields.Many2one(string='Amount in Currency')
+    currency_id = fields.Many2one('res.currency', string='Currency')
+    company_currency_id = fields.Many2one('res.currency', string='Company Currency', related='company_id.currency_id',
+                                          readonly=True)
+    company_id = fields.Many2one('res.company', related='debit_move_id.company_id', store=True, string='Company',
+                                 readonly=False)
+    full_reconcile_id = fields.Many2one('account.full.reconcile', string='Full Reconcile', copy=False)
+    max_date = fields.Date(string='Max Date of Matched Lines', compute='_compute_max_date', readonly=True, copy=False,
+                           store=True)
+
+    @api.multi
+    @api.depends('debit_move_id.date', 'credit_move_id.date')
+    def _compute_max_date(self):
+        for rec in self:
+            rec.max_date = max(rec.debit_move_id.date, rec.credit_move_id.date)
+
+    @api.model
+    def _prepare_exchange_diff_partial_reconcile(self, aml, line_to_reconcile, currency):
+        return {
+            'debit_move_id': aml.credit and line_to_reconcile.id or aml.id,
+            'credit_move_id': aml.debit and line_to_reconcile.id or aml.id,
+            'amount': abs(aml.amount_residual),
+            'amount_currency': abs(aml.amount_residual_currency),
+            'currency_id': currency and currency.id or False,
+        }
+
+    @api.model
+    def create_exchange_rate_entry(self, aml_to_fix, move):
+        partial_rec = self.env['account.partial.reconcile']
+        aml_model = self.env['account.move.line']
+
+        created_lines = self.env['account.move.line']
+        for aml in aml_to_fix:
+            line_to_rec = aml_model.with_context(check_move_validity=False).create({
+                'name': _('Currency exchange rate difference'),
+                'debit': aml.amount_residual < 0 and -aml.amount_residual or 0.0,
+                'credit': aml.amount_residual > 0 and aml.amount_residual or 0.0,
+                'account_id': aml.account_id,
+                'move_id': move.id,
+                'currency_id': aml.currency_id.id,
+                'amount_currency': aml.amount_residual_currency and -aml.amount_residual_currency or 0.0,
+                'partner_id': aml.partner_id.id
+            })
+            exchange_journal = move.company_id.currency_exchange_journal_id
+            aml_model.with_context(check_move_validity=False).create({
+                'name': _('Currency exchange rate difference'),
+                'debit': aml.amount_residual > 0 and aml.amount_residual or 0.0,
+                'credit': aml.amount_residual < 0 and -aml.amount_residual or 0.0,
+                'account_id': aml.amount_residual > 0 and exchange_journal.default_debit_account_id.id or exchange_journal.default_debit_account_id.id,
+                'move_id': move.id,
+                'currency_id': aml.currency_id.id,
+                'amount_currency': aml.amount_residual_currency and aml.amount_residual_currency or 0.0,
+                'partner_id': aml.partner_id
+            })
+
+            partial_rec |= self.create(
+                self._prepare_exchange_diff_partial_reconcile(aml=aml, line_to_reconcile=line_to_rec,
+                                                              currency=aml.currency_id or False)
+            )
+            created_lines |= line_to_rec
+        return created_lines, partial_rec
+
+    def _get_tax_cash_basis_base_account(self, line, tax):
+        return tax.cash_basis_base_account_id or line.account_id
+
+    def create_tax_cash_basis_entry(self, percentage_before_rec):
+        self.ensure_one()
+        move_date = self.debit_move_id.date
+        newly_created_move = self.env['account_move']
+        with self.env.norecompute():
+            for move in {self.debit_move_id.move_id, self.credit_move_id.move_id}:
+                if move_date < move.date:
+                    move_date = move.date
+                percentage_before = percentage_before_rec[move.id]
+                percentage_after = move.line_ids[0]._get_matched_percentage()[move.id]
+                percentage_before_rec[move.id] = percentage_after
+
+                for line in move.line_ids:
+                    if not line.tax_exigible:
+                        amount = line.balance * percentage_after - line.balance * percentage_before
+                        rounded_amt = self._get_amount_tax_cash_basis(amount, line)
+                        if float_is_zero(rounded_amt, percision_rounding=line.company_id.currency_id.rounding):
+                            continue
+                        if line.tax_line_id and line.tax_line_id.tax_exigibility == 'on_payment':
+                            if not newly_created_move:
+                                newly_created_move = self._create_tax_basis_move()
+                            to_clear_aml = self.env['account.move.line'].with_context(check_move_validity=False).create(
+                                {
+                                    'name': line.move_id.name,
+                                    'debit': abs(rounded_amt) if rounded_amt < 0 else 0.0,
+                                    'credit': rounded_amt if rounded_amt > 0 else 0.0,
+                                    'account_id': line.account_id.id,
+                                    'analytic_account_id': line.analytic_account_id.id,
+                                    'analytic_tag_ids': line.analytic_tag_ids.id,
+                                    'tax_exigible': True,
+                                    'amount_currency': line.amount_currency and line.currency_id.round(
+                                        -line.amount_currency * amount / line.balance),
+                                    'currency_id': line.currency_id.id,
+                                    'move_id': newly_created_move.id,
+                                    'partner_id': line.partner_id.id,
+                                })
+                            self.env['account.move.line'].with_context(check_move_validity=False).create({
+                                'name': line.name,
+                                'debit': rounded_amt if rounded_amt > 0 else 0.0,
+                                'credit': abs(rounded_amt) if rounded_amt < 0 else 0.0,
+                                'account_id': line.tax_line_id.cash_basis_account_id.id,
+                                'analytic_account_id': line.analytic_account_id.id,
+                                'analytic_tag_ids': line.analytic_tag_ids.ids,
+                                'tax_line_id': line.tax_line_id.id,
+                                'tax_exigible': True,
+                                'amount_currency': line.amount_currency and line.currency_id.round(
+                                    line.amount_currency * amount / line.balance),
+                                'currency_id': line.currency_id.id,
+                                'move_id': newly_created_move,
+                                'partner_id': line.partner_id.id,
+                            })
+                            if line.account_id.reconcile:
+                                to_clear_aml |= line
+                                to_clear_aml.reconcile()
+
+                        if any([tax.tax_exigibility == 'on_payment' for tax in line.tax_ids]):
+                            if not newly_created_move:
+                                newly_created_move = self._create_tax_basis_move()
+                                for tax in line.tax_ids.filtered(lambda t: t.tax_exigibility == 'on_payment'):
+                                    account_id = self._get_tax_cash_basis_base_account(line, tax)
+                                    self.env['amount.move.line'].with_context(check_move_validity=False).create({
+                                        'name': line.name,
+                                        'debit': rounded_amt > 0 and rounded_amt or 0.0,
+                                        'credit': rounded_amt < 0 and abs(rounded_amt) or 0.0,
+                                        'account_id': account_id.id,
+                                        'tax_exigible': True,
+                                        'tax_ids': [(6, 0, [tax.ids])],
+                                        'move_id': newly_created_move,
+                                        'currency_id': line.currency_id.id,
+                                        'amount_currency': self.amount_currency and line.currency_id.round(
+                                            line.amount_currency * amount / line.balance) or 0.0,
+                                        'partner_id': line.partner_id.id,
+                                    })
+                                    self.evn['account.move.line'].with_context(check_move_validity=False).create({
+                                        'name': line.name,
+                                        'credit': rounded_amt > 0 and rounded_amt or 0.0,
+                                        'debit': rounded_amt < 0 and abs(rounded_amt) or 0.0,
+                                        'account_id': account_id.id,
+                                        'tax_exigible': True,
+                                        'move_id': newly_created_move,
+                                        'currency_id': line.currency_id.id,
+                                        'amount_currency': self.amount_currency and line.currency_id.round(
+                                            -line.amount_currency * amount / line.balance),
+                                        'partner_id': line.partner_id.id,
+                                    })
+        self.recompute()
+        if newly_created_move:
+            if move_date > (self.company_id.period_lock_date or date.min) and newly_created_move != move_date:
+                newly_created_move.write({'date': move_date})
+            newly_created_move.post()
+
+    def _create_tax_basis_move(self):
+        if not self.company_id.tax_cash_basis_journal_id:
+            raise UserError(_('There is no tax cash basis journal defined'))
+        move_vals = {
+            'journal_id': self.company_id.tax_cash_basis_journal_id.id,
+            'tax_cash_basis_rec_id': self.id,
+            'ref': self.credit_move_id.move_id.name if self.credit_move_id.payment_id else self.debit_move_id.move_id.name,
+        }
+        return self.env['account.move'].create(move_vals)
+
+    @api.multi
+    def unlink(self):
+        full_to_unlink = self.env['account.full.reconcile']
+        for rec in self:
+            if rec.full_reconcile_id:
+                full_to_unlink |= rec.full_reconcile_id
+        for move in self.env['account.move'].search([('tax_cash_basis_rec_id', 'in', 'self._ids')]):
+            if move.date > (move.company_id.period_lock_date or date.min):
+                move.reverse_moves(date=move.date)
+            else:
+                move.reverse_moves()
+        res = super(AccountPartialReconcile, self).unlink()
+        if full_to_unlink:
+            full_to_unlink.unlink()
+        return res
+
+
+class AccountFullReconcile(models.Model):
+    _name = 'account.full.reconcile'
+    _description = 'Full Reconcile'
+
+    name = fields.Char(string='Number', required=True, copy=False,
+                       default=lambda self: self.env['ir.sequence'].next_by_code('account.reconcile'))
+    partial_reconcile_ids = fields.One2many('account.partial.reconcile', 'full_reconcile_id',
+                                            string='Reconcilition Parts')
+    reconcile_line_ids = fields.One2many('account.move.line', 'full_reconcile_id', string='Matched Journal Items')
+    exchange_move_id = fields.Many2one('account.move')
+
+    @api.multi
+    def unlink(self):
+        for rec in self:
+            if rec.exchange_move_id:
+                to_reverse = rec.exchange_move_id
+                rec.exchange_move_id = False
+                to_reverse.reverse_moves()
+        return super(AccountFullReconcile, self).unlink()
+
+    @api.model
+    def _prepare_exchange_diff_move(self, move_date, company):
+        if not company.currency_exchange_journal_id:
+            raise UserError(_(''))
+        if not company.income_currency_exchange_account_id.id:
+            raise UserError(_(''))
+        if not company.expense_currency_exchange_account_id.id:
+            raise UserError(_(''))
+        res = {'journal_id': company.currency_exchange_journal_id.id}
+        if move_date > (company.fiscalyear_lock_date or date.min):
+            res['date'] = move_date
+        return res
