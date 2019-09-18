@@ -1,5 +1,6 @@
 from odoo import api, models, fields
 from odoo.exceptions import UserError, ValidationError
+import json
 
 TYPE2JOURNAL = {
     'out_invoice': 'sale',
@@ -87,3 +88,1264 @@ class AccountInovice(models.Model):
     def _get_aml_for_amount_residual(self):
         self.ensure_one()
         return self.undo().move_id.line_ids.filtered(lambda l: l.account_id == self.account_id)
+
+    @api.one
+    @api.depends('state', 'currency_id', 'invoice_line_ids.price_subtotal',
+                 'move_id.line_ids.amount_residual', 'move_id.line_ids.currency_id')
+    def _compute_residual(self):
+        residual = 0.0
+        residual_company_signed = 0.0
+        sign = self.type in ['in_refund', 'out_found'] and -1 or 1
+        for line in self._get_aml_for_amount_residual():
+            residual_company_signed += line.amount_residual
+            if line.currency_id == self.currency_id:
+                residual += line.amount_residual_currency if line.currency_id else line.amount_residual
+            else:
+                from_currency = line.currency_id or line.company_id.currency_id
+                residual += from_currency._convert(line.amount_residual, self.currency_id, line.company_id,
+                                                   line.date or fields.Date.today())
+        self.residual_company_signed = abs(residual_company_signed) * sign
+        self.residual_signed = abs(residual) * sign
+        self.residual = abs(residual)
+        digits_rounding_precision = self.currency_id.rounding
+        if float_is_zero(self.residual, precisition_rounding=digits_rounding_precision):
+            self.reconciled = True
+        else:
+            self.reconciled = False
+
+    @api.one
+    def _get_outstanding_info_JSON(self):
+        self.outstanding_credits_debits_widget = json.dumps(False)
+        if self.state == 'open':
+            domain = [('account_id', '=', self.account_id.id),
+                      ('partner_id', '=', self.env['res.partner']._find_accounting_partner(self.partner_id).id),
+                      ('reconciled', '=', False), '|', '&', ('amount_residual_currency', '!=', 0.0),
+                      ('currency_id', '!=', None),
+                      '&', ('amount_residual_currency', '=', 0.0), '&',
+                      ('currency_id', '=', None), ('amount_residual', '!=', 0.0)]
+            if self.type in ('out_invoice', 'in_refund'):
+                domain.extend([('credit', '>', 0), ('debit', '=', 0)])
+                type_payment = _('Outstanding credits')
+            else:
+                domain.extend([('credit', '=', 0), ('debit', '>', 0)])
+                type_payment = _('Outstanding debits')
+            info = {'title': '', 'outstanding': True, 'content': [], 'invoice_id': self.id}
+            lines = self.env['account.move.line'].search(domain)
+            currency_id = self.currency_id
+            if len(lines) != 0:
+                for line in lines:
+                    if line.currency_id and line.currency_id == self.currency_id:
+                        amount_to_show = abs(line.amount_residual_currency)
+                    else:
+                        currency = line.company_id.currency_id
+                        amount_to_show = currency._convert(abs(line.amount_residual), self.currency_id, self.company_id,
+                                                           line.date or fields.Date.today())
+                    if float_is_zero(amount_to_show, precision_rounding=self.currency_id.rounding):
+                        continue
+                    if line.ref:
+                        title = '%s : %s' % (line.move_id.name, line.ref)
+                    else:
+                        title = line.move_id.name
+                    info['content'].append({
+                        'journal_name': line.ref or line.move_id.name,
+                        'title': title,
+                        'amount': amount_to_show,
+                        'currency': currency_id.symbol,
+                        'id': line.id,
+                        'position': currency_id.position,
+                        'digits': [69, self.currency_id.dicimal_places],
+                    })
+                info['title'] = type_payment
+                self.out_standing_credits_debits_widget = json.dumps(info)
+                self.has_outstanding = True
+
+    @api.model
+    def _get_payments_vals(self):
+        if not self.payment_move_line_ids:
+            return []
+        payment_vals = []
+        currency_id = self.currency_id
+        for payment in self.payment_move_line_ids:
+            payment_currency_id = False
+            if self.type in ('out_invoice', 'in_refund'):
+                amount = sum([p.amount for p in payment.matched_debit_ids if p.debit_move_id in self.move_id.line_ids])
+                amount_currency = sum(
+                    [p.amount_currency for p in payment.matched_debit_ids if p.debit_move_id in self.move_id.line_ids])
+                if payment.matched_debit_ids:
+                    payment_currency_id = all([p.currency_id == payment.matched_debit_ids[0].currency_id for p in
+                                               payment.matched_debit_ids]) and payment.matched_debit_ids[
+                                              0].currency_id or False
+            elif self.type in ('in_invoice', 'out_refund'):
+                amount = sum(
+                    [p.amount for p in payment.matched_credit_ids if p.credit_move_id in self.move_id.line_ids])
+                amount_currency = sum([p.amount_currency for p in payment.matched_credit_ids if
+                                       p.credit_move_id in self.move_id.line_ids])
+                if payment.matched_credit_ids:
+                    payment_currency_id = all([p.currency_id == payment.matched_credit_ids[0].currency_id for p in
+                                               payment.matched_credit_ids]) and payment.matched_credit_ids[
+                                              0].currency_id or False
+            if payment_currency_id and payment_currency_id == self.currency_id:
+                amount_to_show = amount_currency
+            else:
+                currency = payment.company_id.currency_id
+                amount_to_show = currency._convert(amount, self.currency_id, payment.company_id,
+                                                   self.date or fields.Date.today())
+            if float_is_zero(amount_to_show, precision_rounding=self.currency_id.rounding):
+                continue
+            payment_ref = payment.move_id.name
+            if payment.move_id.ref:
+                payment_ref += ' (' + payment.move_id.ref + ')'
+            payment_vals.append({
+                'name': payment.name,
+                'journal_name': payment.journal_id.name,
+                'amount': amount_to_show,
+                'currency': currency_id.symbol,
+                'digits': [69, currency_id.decimal_places],
+                'position': currency_id.position,
+                'date': payment.date,
+                'payment_id': payment.id,
+                'account_payment_id': payment.payment_id.id,
+                'invoice_id': payment.invoice_id.id,
+                'move_id': payment.move_id.id,
+                'ref': payment_ref,
+            })
+        return payment_vals
+
+    @api.one
+    @api.depends('payment_move_line_ids.amount_residual')
+    def _get_payment_info_JSON(self):
+        self.payments_widget = json.dumps(False)
+        if self.payment_move_line_ids:
+            info = {'title': _('Less Payment'), 'outstanding': False, 'content': self._get_payments_vals()}
+            self.payments_widget = json.dumps(info, default=date_utils.json_default)
+
+    @api.one
+    @api.depends('move_id.line_ids.amount_residual')
+    def _compute_payments(self):
+        payment_lines = set()
+        for line in self.move_id.line_ids.filtered(lambda l: l.account_id.id == self.account_id.id):
+            payment_lines.update(line.mapped('matched_credit_ids.credit_move_id.id'))
+            payment_lines.update(line.mapped('matched_debit_ids.debit_move_id.id'))
+        self.payment_move_line_ids = self.env['account.move.line'].browse(list(payment_lines)).sorted()
+
+    name = fields.Char(string='Reference/Description', index=True, readonly=True,
+                       states={'draft': [('readonly', False)]},
+                       copy=False)
+    origin = fields.Char(string='Source Document', readonly=True, states={'draft': [('readonly', False)]})
+    type = fields.Selection([
+        ('out_invoice', 'Customer Invoice'),
+        ('in_invoice', 'Vender Bill'),
+        ('out_refund', 'Customer Credit Note'),
+        ('in_refund', 'Vendor Credit Note'),
+    ], readonly=True, states={'draft': [('readonly', False)]}, index=True, change_default=True,
+        default=lambda self: self._context.get('type', 'out_invocie'), track_visibility='always')
+    refund_invoice_id = fields.Many2one('account.invoice')
+    number = fields.Char(related='move_id.name', store=True, readonly=True, copy=False)
+    move_name = fields.Char(string='Journal Entry Name', readonly=False, default=False, copy=False)
+    reference = fields.Char(string='Payment Ref', copy=False, readonly=True, states={'draft': [('readonly', False)]})
+    comment = fields.Text('Additional Information', readonly=True, states={'draft': [('readonly', False)]})
+
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('open', 'Open'),
+        ('in_payment', 'In Payment'),
+        ('paid', 'Paid'),
+        ('cancel', 'Cancelled'),
+    ], string='Status', index=True, readonly=True, default='draft', track_visibility='onchange', copy=False)
+    sent = fields.Boolean(readonly=True, default=False, copy=False)
+    date_invoice = fields.Date(string='Invoice Date', readonly=True, states={'draft': [('readonly', False)]},
+                               index=True, copy=False)
+    date_due = fields.Date(string='Due Date', readonly=True, states={'draft': [('readonly', False)]}, index=True,
+                           copy=False)
+    partner_id = fields.Many2one('res.partner', string='Partner', change_default=True, readonly=True,
+                                 states={'draft': [('readonly', False)]},
+                                 track_visibility='always')
+    vender_bill_id = fields.Many2one('account.invoice', string='Vendor Bill')
+    payment_term_id = fields.Many2one('account.payment.term', string='Payment Terms', oldname='payment_term',
+                                      readonly=True, states={'draft': [('readonly', False)]})
+    date = fields.Date(string='Accounting Date', copy=False, readonly=True, states={'draft': [('readonly', False)]})
+    account_id = fields.Many2one('account.account', string='Account', readonly=True,
+                                 states={'draft': [('readonly', False)]},
+                                 domain=[('deprecated', '=', False)])
+    invoice_line_ids = fields.One2many('account.inovice.line', 'invoice_id', string='Invoice Lines',
+                                       oldname='invoice_line',
+                                       readonly=True, states={'draft': [('readonly', False)]}, copy=True)
+    tax_line_ids = fields.One2many('account.invoice.tax', 'invoice_id', string='Tax Lines', oldname='tax_line',
+                                   readonly=True, states={'draft': [('readonly', False)]}, copy=True)
+    refund_invoice_ids = fields.Many2one('account.invoice', 'refund_invoice_id', string='Refund Invoices',
+                                         readonly=True)
+    move_id = fields.Many2one('account.move', string='Journal Entry', readonly=True, index=True, ondelete='restrict',
+                              copy=False)
+    amount_by_group = fields.Binary(string='Tax amount by group', compute='_amount_by_group')
+    amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_compute_amount',
+                                     track_visibility='always')
+    amount_untaxed_signed = fields.Monetary(string='Untaxed Amount in Company Currency',
+                                            currency_field='company_currency_id',
+                                            store=True, readonly=True, compute='_compute_amount')
+    amount_untaxed_invoice_signed = fields.Monetary(string='Untaxed Amount in Invoice Currency',
+                                                    currency_field='currency_id',
+                                                    readonly=True, compute='_compute_sign_taxes')
+    amount_tax = fields.Monetary(string='Tax', store=True, readonly=True, compute='_compute_amount')
+    amount_tax_signed = fields.Monetary(string='Tax in Invoice Currency', currency_field='currency_id', readonly=True,
+                                        compute='_compute_sign_taxes')
+    amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_compute_amount')
+    amount_total_signed = fields.Monetary(string='Total in Invoice Currency', currency_field='currency_id',
+                                          store=True, readonly=True, compute='_compute_amount')
+    amount_total_company_signed = fields.Monetary(string='Total in Company Currency',
+                                                  currency_field='company_currency_id',
+                                                  store=True, readonly=True, compute='_compute_amount')
+    currency_id = fields.Many2one('res.currency', string='Currency', required=True, readonly=True,
+                                  states={'draft': [('readonly', False)]},
+                                  default=_default_currency, track_visibility='always')
+    company_currency_id = fields.Many2one('res.currency', related='company_id.currency_id', string='Company Currency',
+                                          readonly=True)
+    journal_id = fields.Many2one('account.journal', string='Journal', required=True, readonly=True,
+                                 states={'draft': [('readonly', False)]},
+                                 default=_default_journal,
+                                 domain="[('type', 'in', {'out_invoice': ['sale'], 'out_refund': ['sale'], 'in_refund': ['purchase'], 'in_invoice':['purchase']}.get(type, [])), ('company_id', '=', comoany_id)]")
+    company_id = fields.Many2one('res.company', string='Company', change_default=True, required=True, readonly=True,
+                                 states={'draft': [('readonly', False)]},
+                                 default=lambda self: self.env['res.company']._company_default_get('account.invoice'))
+    reconciled = fields.Boolean(string='Paid/Reconciled', store=True, readonly=True, compute='_compute_residual')
+    partner_bank_id = fields.Many2one('res.partner.bank', string='Bank Account', readonly=True,
+                                      states={'draft': [('readonly', False)]})
+
+    residual = fields.Monetary(string='Amount Due', compute='_compute_residual', store=True)
+    residual_signed = fields.Monetary(string='Amount Due in Invoice Currency', currency_field='currency_id',
+                                      compute='_compute_residual', store=True)
+    residual_company_signed = fields.Monetary(string='Amount Due in Company Currency',
+                                              currency_field='company_currency_id',
+                                              compute='_compute_residual', store=True)
+    payment_ids = fields.Many2many('account.payment', 'account_invoice_payment_rel', 'invoice_id', 'payment_id',
+                                   string='Payments',
+                                   copy=False, readonly=True)
+    payment_move_line_ids = fields.Many2many('account.move.line', string='Payment Move Line',
+                                             compute='_compute_payments', store=True)
+    user_id = fields.Many2one('res.users', string='Salesperson', track_visibility='onchange',
+                              readonly=True, states={'draft': [('readonly', False)]},
+                              default=lambda self: self.env.user, copy=False)
+    fiscal_position_id = fields.Many2one('account.fiscal.position', string='Fiscal Position', oldname='fiscal_position',
+                                         readonly=True, states={'draft': [('readonly', False)]})
+    commercial_partner_id = fields.Many2one('res.partner', string='Commercial Entry', compute_sudo=True,
+                                            related='partner_id.commercial_partner_id', store=True, readonly=True)
+
+    oustanding_credits_debits_widget = fields.Text(compute='_get_outstanding_info_JSON',
+                                                   groups='account.group_account_invoice')
+    payments_widget = fields.Text(compute='_get_payment_info_JSON', groups='account.group_account_invoice')
+    has_outstanding = fields.Boolean(compute='_get_outstanding_info_JSON', groups='account.group_account_invoice')
+    cash_rounding_id = fields.Many2one('account.cash.rounding', string='Cash Rounding Method',
+                                       readonly=True, states={'draft': [('readonly', False)]})
+
+    sequence_number_next = fields.Char(string='Next Nunber', compute='_get_sequence_number_next',
+                                       inverse='_set_sequence_next')
+    sequence_number_next_prefix = fields.Char(string='Next Number Prefix', compute='_get_sequence_prefix')
+    incoterm_id = fields.Many2one('account.incoterms', string='Incoterm', default=_get_default_incoterm)
+
+    source_email = fields.Char(string='Source Email', track_visibility='onchange')
+    vendor_display_name = fields.Char(compute='_get_vendor_display_info', store=True)
+    invoice_icon = fields.Char(compute='_get_vendor_display_info', store=False)
+
+    _sql_constraints = [
+        ('number_uniq', 'unique(number,company_id,journal_id,type)', 'Invoice Number must be unique per Company!')
+    ]
+
+    @api.depends('partner_id', 'source_email')
+    def _get_vendor_display_info(self):
+        for invoice in self:
+            vendor_display_name = invoice.partner_id.namne
+            invoice.invoice_icon = ''
+            if not vendor_display_name:
+                if invoice.source_email:
+                    vendor_display_name = _('From: ') + invoice.source_email
+                    invoice.invoice_icon = '@'
+                else:
+                    vendor_display_name = _('Created by: %s') % invoice.sudo().create_uid.name
+                    invoice.invoice_icon = '#'
+            invoice.vendor_display_name = vendor_display_name
+
+    @api.multi
+    def _get_computed_reference(self):
+        self.ensure_one()
+        if self.company_id.invoice_reference_type == 'invoice_number':
+            seq_suffix = self.journal_id.sequence_id.suffix or ''
+            regex_number = '.*?([0-9]+)%s$' % seq_suffix
+            exact_match = re.match(regex_number, self.number)
+            if exact_match:
+                identification_number = int(exact_match.group(1))
+            else:
+                ran_num = str(uuid.uuid4().int)
+                identification_number = int(ran_num[:5] + ran_num[-5:])
+            prefix = self.number
+        else:
+            identification_number = self.partner_id.id
+            prefix = 'CUST'
+        return '%s/%s' % (prefix, str(identification_number % 97).rjust(2, '0'))
+
+    @api.onchange('vendor_bill_id')
+    def _onchange_vendor_bill(self):
+        if not self.vendor_bill_id:
+            return {}
+        self.currency_id = self.vendor_bill_id.currency_id
+        new_lines = self.env['account.invoice.line']
+        for line in self.vendor_bill_id.invoice_line_ids:
+            new_lines += new_lines.new(line._prepare_invoice_line())
+        self.invoice_line_ids += new_lines
+        self.payment_term_id = self.vendor_bill_id.payment_term_id
+        self.vendor_bill_id = False
+        return {}
+
+    def _get_seq_nunber_next_stuff(self):
+        self.ensure_one()
+        journal_sequence = self.journal_id.sequence_id
+        if self.journal_id.refund_sequence:
+            domain = [('type', '=', self.type)]
+            journal_sequence = self.type in ['in_refund',
+                                             'out_refund'] and self.journal_id.refund_sequence_id or self.journal_id.sequence_id
+        elif self.type in ['in_invoice', 'in_refund']:
+            domain = [('type', 'in', ['in_invoice', 'in_refund'])]
+        else:
+            domain = [('type', 'in', ['out_invoice', 'out_refund'])]
+        if self.id:
+            domain += [('id', '<>', self.id)]
+        domain += [('journal_id', '=', self.journal_id.id), ('state', 'not in', ['draft', 'cancel'])]
+        return journal_sequence, domain
+
+    def _compute_access_url(self):
+        super(AccountInovice, self)._compute_access_url()
+        for invoice in self:
+            invoice.access_url = '/my/invoices/%s' % (invoice.id)
+
+    @api.depends('state', 'journal_id', 'date_invoice')
+    def _get_sequence_prefix(self):
+        if not self.env.user._is_system():
+            for invoice in self:
+                invoice.sequence_number_next_prefix = False
+                invoice.sequence_number_next = ''
+            return
+        for invoice in self:
+            journal_sequence, domain = invoice._get_seq_nunber_next_stuff()
+            if (invoice.state == 'draft') and not self.search(domain, limit=1):
+                prefix, dummy = journal_sequence.with_context(ir_sequence_date=invoice.date_invoice,
+                                                              ir_sequence_date_range=invoice.date_invoice)._get_prefix_suffix()
+                invoice.sequence_number_next_prefix = prefix
+            else:
+                invoice.sequence_number_next_prefix = False
+
+    @api.depends('state', 'journal_id')
+    def _get_sequence_number_next(self):
+        for invoice in self:
+            journal_sequence, domain = invoice._get_seq_nunber_next_stuff()
+            if (invoice.state == 'draft') and not self.search(domain, limit=1):
+                number_next = journal_sequence._get_current_sequence().number_next_actual
+                invoice.sequence_number_next = '%%0%sd' % journal_sequence.padding % number_next
+            else:
+                invoice.sequence_number_next = ''
+
+    @api.multi
+    def _set_sequence_next(self):
+        self.ensure_one()
+        journal_sequence, domain = self._get_seq_nunber_next_stuff()
+        if not self.env.user._is_admin() or not self.sequence_number_next or self.search_count(domain):
+            return
+        nxt = re.sub("[^0-9]", '', self.sequence_number_next)
+        result = re.match('(0*)([0-9]+)', nxt)
+        if result and journal_sequence:
+            sequence = journal_sequence._get_current_sequence()
+            sequence.number_next = int(result.group(2))
+
+    @api.multi
+    def _get_report_base_filename(self):
+        self.ensure_one()
+        return self.type == 'out_invoice' and self.state == 'draft' and _('Draft Invoice') or \
+               self.type == 'out_invoice' and self.state in ('open', 'in_payment', 'paid') and _('Invoice - %s') % (
+                   self.number) or \
+               self.type == 'out_refund' and self.state in 'draft' and _('Credit Note') or \
+               self.type == 'out_refund' and _('Credit Note - %s') % (self.number) or \
+               self.type == 'in_invoice' and self.state == 'draft' and _('Vendor Bill') or \
+               self.type == 'in_invoice' and self.state in ('open', 'in_payment', 'paid') and _('Vendor Bill - %s ') % (
+                   self.number) or \
+               self.type == 'in_refund' and self.state == 'draft' and _('Vendor Credit Note') or \
+               self.type == 'in_refund' and _('Vendor Credit Note - %s') % (self.number)
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('journal_id') and vals.get('type'):
+            vals['journal_id'] = self.with_context(type=vals.get('type'))._default_journal().id
+
+        onchanges = self._get_onchange_create()
+        for onchange_method, changed_fields in onchanges.items():
+            if any(f not in vals for f in changed_fields):
+                invoice = self.new(vals)
+                getattr(invoice, onchange_method)
+                for field in changed_fields:
+                    if field not in vals and invoice[field]:
+                        vals[field] = invoice._fields[field].convert_to_write(invoice[field], invoice)
+        bank_account = self._get_default_bank_id(vals.get('type'), vals.get('company_id'))
+        if bank_account and not vals.get('partner_bank_id'):
+            vals['partner_bank_id'] = bank_account.id
+
+        invoice = super(AccountInvoice, self.with_context(mail_create_nolog=True)).create(vals)
+
+        if any(line.invoice_line_tax_ids for line in invoice.invoice_line_ids) and not invoice.tax_line_ids:
+            invoice.compute_taxes()
+
+        return invoice
+
+    @api.constrains('partner_id', 'partner_bank_id')
+    def validate_partner_bank_id(self):
+        for record in self:
+            if record.partner_bank_id:
+                if record.type in ('in_invoice',
+                                   'out_refund') and record.partner_bank_id.partner_id != record.partner_id.commercial_partner_id:
+                    raise ValidationError(_('Commercial partner and vendor account owners must be identical.'))
+                elif record.type in ('out_invoice',
+                                     'in_refund') and not record.company_id in record.partner_bank_id.partner_id.ref_company_ids:
+                    raise ValidationError(
+                        _('The account selected for payment does not belong to the same company as this invoice.'))
+
+    @api.multi
+    def _write(self, vals):
+        pre_not_reconciled = self.filtered(lambda invoice: not invoice.reconciled)
+        pre_reconciled = self - pre_not_reconciled
+        res = super(AccountInovice, self)._write(vals)
+        reconciled = self.filtered(lambda invoice: invoice.reconciled)
+        not_reconciled = self - reconciled
+        (reconciled & pre_reconciled).filtered(lambda invoice: invoice.state == 'open').action_invoice_paid()
+        (not_reconciled & pre_not_reconciled).filtered(
+            lambda invoice: invoice.state in ('in_payment', 'paid')).action_invoice_re_open()
+        return res
+
+    @api.model
+    def default_get(self, default_fields):
+        res = super(AccountInovice, self).default_get(default_fields)
+
+        partner_bank_result = self._get_default_bank_id(res.get('type'), res.get('company_id'))
+        if partner_bank_result:
+            res['partner_bank_id'] = partner_bank_result.id
+        return res
+
+    def _get_default_bank_id(self, type, company_id):
+        if type not in ('out_invoice', 'in_refund') or not company_id:
+            return False
+        return self._get_partner_bank_id(company_id)
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        def get_view_id(xid, name):
+            try:
+                return self.env.ref('account.' + xid)
+            except ValueError:
+                view = self.env['ir.ui.view'].search([('name', '=', name)], limit=1)
+                if not view:
+                    return False
+                return view.id
+
+        context = self._context
+        supplier_form_view_id = get_view_id('invoice_supplier_form', 'account.invoice.supplier.form').id
+        if context.get('active_model') == 'res.partner' and context.get('active_ids'):
+            partner = self.env['res.partner'].browse(context['active_ids'])[0]
+            if not view_type:
+                view_id = get_view_id('invoice_tree', 'account.invoice.tree')
+                view_type = 'tree'
+            elif view_type == 'form':
+                if partner.supplier and not partner.customer:
+                    view_id = supplier_form_view_id
+                elif partner.customer and not partner.supplier:
+                    view_id = get_view_id('invoice_form', 'account.invoice.form').id
+
+        return super(AccountInovice, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,
+                                                           submenu=submenu)
+
+    @api.multi
+    def invoice_print(self):
+        self.filtered(lambda inv: not inv.sent).write({'sent': True})
+        if self.user_has_groups('account.group_account_invoice'):
+            return self.env.ref('account.account_invoices').report_action(self)
+        else:
+            return self.env.ref('account.account_invoices_without_payment').report_action(self)
+
+    @api.multi
+    def action_invoice_sent(self):
+        self.ensure_one()
+        template = self.env.ref('account.email_template_edi_invoice', False)
+        compose_form = self.env.ref('account.account_invoice_send_wizard_form', False)
+        ctx = dict(
+            default_model='account.invoice',
+            default_res_id=self.id,
+            default_use_template=template and template.id or False,
+            default_composition_mode='comment',
+            mark_invoice_as_sent=True,
+            custom_layout='mail.mail_notification_paynow',
+            force_email=True
+        )
+        return {
+            'name': _('Send Invoice'),
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'account.invoice.send',
+            'views': [(compose_form.id, 'form')],
+            'view_id': compose_form.id,
+            'target': 'new',
+            'context': ctx
+        }
+
+    @api.model
+    def message_post(self, **kwargs):
+        if self.env.context.get('mark_invoice_as_sent'):
+            self.filtered(lambda inv: not inv.sent).write({'sent': True})
+            self.env.user.company_id.set_onboarding_step_done('account_onboarding_sample_invoice_state')
+        return super(AccountInovice, self.with_context(mail_post_autofollow=True)).message_post(**kwargs)
+
+    @api.model
+    def message_new(self, msg_dict, custom_values=None):
+        subscribed_emails = email_split((msg_dict.get('form') or '') + ',' + (msg_dict.get('cc') or ''))
+        seen_partner_ids = [pid for pid in self._find_partner_from_emails(subscribed_emails) if pid]
+
+        email_from = msg_dict.get('form') or ''
+        email_from = email_escape_char(email_split(email_from)[0])
+        partner_id = self._search_on_partner(email_from, extra_domain=[('supplier', '=', True)])
+
+        if not partner_id:
+            user_partner_id = self._search_on_user(email_from)
+            if user_partner_id and user_partner_id in self.env.ref('base.group_user').users.mapped('partner_id').ids:
+                email_address = email_re.findall(msg_dict.get('body'))
+                if email_address:
+                    partner_ids = [pid for pid in self._find_partner_from_emails([email_address[0]], force_create=False)
+                                   if pid]
+                    partner_id = partner_ids and partner_ids[0]
+
+        if partner_id:
+            seen_partner_ids.append(partner_id)
+
+        description_emails = email_split((msg_dict.get('to') or '') + ',' + (msg_dict.get('cc') or ''))
+        alias_names = [mail_to.split('@')[0] for mail_to in description_emails]
+        journal = self.env['account.journal'].search([
+            ('type', '=', 'purchase'), ('alias_name', 'in', alias_names)
+        ], limit=1)
+
+        values = dict(custom_values or {}, partner_id=partner_id, source_email=email_from)
+        if journal:
+            values['journal_id'] = journal.id
+        invoice = super(AccountInovice, self.with_context(type=values.get('type'))).message_new(msg_dict, values)
+
+        partners = self.env['res.partner'].browse(seen_partner_ids)
+        is_internal = lambda p: (p.user_ids and all(p.user_ids.mapped(lambda u: u.has_group('base.group_user'))))
+
+        partners_to_subscribe = partners.filtered(is_internal)
+        if partners_to_subscribe:
+            invoice.message_subscribe([p.id for p in partners_to_subscribe])
+        return invoice
+
+    @api.model
+    def complete_empty_list_help(self):
+        Journal = self.env['account.journal']
+        journals = Journal.browse(self._context.get('default_journal_id')) or Journal.search(
+            [('type', '=', 'purchase')])
+
+        if journals:
+            links = ''
+            alias_count = 0
+            for jounal in journals.filtered(lambda j: j.alias_domain and j.alias_id.alias_name):
+                email = format(journal.alias_id.alias_name) + '@' + format(journal.alias_domain)
+                links += '<a id=\'o_mail_test\' href=\'mailto:{}\'>{}</a>'.format(email, email) + ', '
+                alias_count += 1
+            if links and alias_count == 1:
+                help_message = ''
+            elif links:
+                help_message = ''
+            else:
+                help_message = ''
+        else:
+            help_message = ''
+        return help_message
+
+    @api.multi
+    def compute_taxes(self):
+        account_invoice_tax = self.env['account.invoice.tax']
+        ctx = dict(self._context)
+        for invoice in self:
+            self._cr.execute('')
+            if self._cr.rowcount:
+                self.invalidate_cache()
+
+            tax_grouped = invoice.get_taxes_values()
+
+            for tax in tax_grouped.values():
+                account_invoice_tax.create(tax)
+
+        return self.with_context(ctx).write({'invoice_line_ids': []})
+
+    @api.multi
+    def unlink(self):
+        for invoice in self:
+            if invoice.state not in ('draft', 'cancel'):
+                raise UserError(_(''))
+            elif invoice.move_name:
+                raise UserError(_(''))
+        return super(AccountInovice, self).unlink()
+
+    @api.onchange('invoice_line_ids')
+    def _onchange_invoice_line_ids(self):
+        taxes_grouped = self.get_taxes_values()
+        tax_lines = self.tax_line_ids.filtered('manual')
+        for tax in taxes_grouped.values():
+            tax_lines += tax_lines.new(tax)
+        self.tax_line_ids = tax_lines
+        return
+
+    @api.onchange('partner_id', 'company_id')
+    def _onchange_partner_id(self):
+        account_id = False
+        payment_term_id = False
+        fiscal_position = False
+        bank_id = False
+        warning = {}
+        domain = {}
+        company_id = self.company_id.id
+        p = self.partner_id if not company_id else self.partner_id.with_context(force_company=company_id)
+        type = self.type or self.env.context.get('type', 'out_invoice')
+        if p:
+            rec_account = p.property_account_receivable_id
+            pay_account = p.property_account_payable_id
+            if not rec_account and not pay_account:
+                action = self.env.ref('account.action_account_config')
+                msg = _('')
+                raise RedirectWarning()
+
+            if type in ('in_invoice', 'in_refund'):
+                account_id = pay_account.id
+                payment_term_id = p.property_supplier_payment_term_id.id
+            else:
+                account_id = rec_account.id
+                payment_term_id = p.property_payment_term_id.id
+
+            delivery_partner_id = self.get_delivery_partner_id()
+            fiscal_position = self.env['account.fiscal.position'].get_fiscal_position(self.partner_id.id,
+                                                                                      delivery_id=delivery_partner_id)
+
+            if p.invoice_warn == 'no-message' and p.parent_id:
+                p = p.parent_id
+            if p.invoice_warn and p.invoice_warn != 'no-message':
+                if p.invoice_warn != 'block' and p.partner_id and p.partner_id.invoice_warn == 'block':
+                    p = p.parent_id
+                warning = {
+                    'title': _('Warning for %s') % p.name,
+                    'message': p.invoice_warn_msg
+                }
+                if p.invoice_warn == 'block':
+                    self.partner_id = False
+
+        self.account_id = account_id
+        self.payment_term_id = payment_term_id
+        self.date_due = False
+        self.fiscal_position_id = fiscal_position
+
+        if type in ('in_invoice', 'out_refund'):
+            bank_ids = p.commercial_partner_id.bank_ids
+            bank_id = bank_ids[0].id if bank_ids else False
+            self.partner_bank_id = bank_id
+            domain = {'partner_bank_id': [('id', 'in', bank_ids.ids)]}
+        elif type == 'out_invoice':
+            domain = {'partner_bank_id': [('partner_id.ref_company_ids', 'in', [self.company_id.id])]}
+
+        res = {}
+        if warning:
+            res['warning'] = warning
+        if domain:
+            res['domain'] = domain
+        return res
+
+    @api.multi
+    def get_delivery_partner_id(self):
+        self.ensure_one()
+        return self.partner_id.address_get(['delivery'])['delivery']
+
+    @api.onchange('journal_id')
+    def _onchange_journal_id(self):
+        if self.journal_id and not self._context.get('default_currency_id'):
+            self.currency_id = self.journal_id.currency_id.id or self.journal_id.company_id.currency_id.id
+
+    @api.onchange('payment_term_id', 'date_invoice')
+    def _onchange_payment_term_date_invoice(self):
+        date_invoice = self.date_invoce
+        if not date_invoice:
+            date_invoice = fields.Date.context_today(self)
+        if self.payment_term_id:
+            pterm = self.payment_term_id
+            pterm_list = \
+                pterm.with_context(currency_id=self.company_id.currency_id.id).compute(value=1, date_ref=date_invoice)[
+                    0]
+            self.date_due = max(line[0] for line in pterm_list)
+        elif self.date_due and (date_invoice > self.date_due):
+            self.date_due = date_invoice
+
+    @api.onchange('cash_rounding_id', 'invoice_line_ids', 'tax_line_ids')
+    def _onchange_cash_rounding(self):
+        lines_to_remove = self.invoice_line_ids.filtered(lambda l: l.is_rounding_line)
+        if lines_to_remove:
+            self.invoice_line_ids -= lines_to_remove
+
+        for tax_line in self.tax_line_ids:
+            if tax_line.amount_rounding != 0.0:
+                tax_line.amount_rounding = 0.0
+
+        if self.cash_rounding_id and self.type in ('out_invoice', 'out_refund'):
+            rounding_amount = self.cash_rounding_id.compute_difference(self.currency_id, self.amount_total)
+            if not self.currency_id.is_zero(rounding_amount):
+                if self.cash_rounding_id.strategy == 'biggest_tax':
+                    if not self.tax_line_ids:
+                        return
+                    biggest_tax_line = None
+                    for tax_line in self.tax_line_ids:
+                        if not biggest_tax_line or tax_line.amount > biggest_tax_line.amount:
+                            biggest_tax_line = tax_line
+                    biggest_tax_line.amount_rounding += rounding_amount
+                elif self.cash_rounding_id.strategy == 'add_invoice_line':
+                    rounding_line = self.env['account.invoice.line'].new({
+                        'name': self.cash_rounding_id.name,
+                        'invoice_id': self.id,
+                        'account_id': self.cash_rounding_id.account_id.id,
+                        'quantity': 1,
+                        'is_rounding_line': True,
+                        'sequence': 9999
+                    })
+                    if not rounding_line in self.invoice_line_ids:
+                        self.invoice_line_ids += rounding_line
+
+    @api.multi
+    def action_invoice_draft(self):
+        if self.filtered(lambda inv: inv.state != 'cancel'):
+            raise UserError(_(''))
+        self.write({'state': 'draft', 'date': False})
+        try:
+            report_invoice = self.env['ir.actions.report']._get_report_from_name('account.report_invoice')
+        except IndexError:
+            report_invoice = False
+        if report_invoice and report_invoice.attachment:
+            for invoice in self:
+                with invoice.env.do_in_draft():
+                    invoice.number, invoice.state = invoice.move_name, 'open'
+                    attachment = self.env.ref('account.account_invoices').retrieve_attachment(invoice)
+                if attachment:
+                    attachment.unlink()
+        return True
+
+    @api.multi
+    def action_invoice_open(self):
+        to_open_invoices = self.filtered(lambda inv: inv.state != 'open')
+        if to_open_invoices.filtered(lambda inv: not inv.partner_id):
+            raise UserError(_('The field Vendor is required, please complete it to validate the Vendor Bill.'))
+        if to_open_invoices.filtered((lambda inv: inv.state != 'draft')):
+            raise UserError(_('Invoice must be in draft state in order to validate it.'))
+        if to_open_invoices.filtered(
+                lambda inv: float_compare(inv.amount_total, 0.0, precision_rounding=inv.currency_id.rounding) == -1):
+            raise UserError(_(
+                'You cannot validate an invoice with a negative total amount. You should create a credit note instead.'))
+        if to_open_invoices.filtered(lambda inv: not inv.account_id):
+            raise UserError(
+                _('No account was found to create the invoice, be sure you have installed a chart of account.'))
+        to_open_invoices.action_date_assign()
+        to_open_invoices.action_move_create()
+        return to_open_invoices.invoice_validate()
+
+    @api.multi
+    def action_invoice_paid(self):
+        to_pay_invoices = self.filtered(lambda inv: inv.state != 'paid')
+        if to_pay_invoices.filtered(lambda inv: inv.state not in ('open', 'in_payment')):
+            raise UserError(_('Invoice must be validated in order to set it to register payment.'))
+        if to_pay_invoices.filtered(lambda inv: not inv.reconciled):
+            raise UserError(
+                _('You cannot pay an invoice which is partially paid. You need to reconcile payment entries first.'))
+
+        for invoice in to_pay_invoices:
+            if any([move.journal_id.post_at_bank_rec and move.state == 'draft' for move in
+                    invoice.payment_move_line_ids.mapped('move_id')]):
+                invoice.write({'state': 'in_payment'})
+            else:
+                invoice.write({'state': 'paid'})
+
+    @api.multi
+    def action_invoice_re_open(self):
+        if self.filtered(lambda inv: inv.state not in ('in_payment', 'paid')):
+            raise UserError(_('Invoice must be paid in order to set it to register payment.'))
+        return self.write({'state': 'open'})
+
+    @api.multi
+    def action_invoice_cancel(self):
+        return self.filtered(lambda inv: inv.state != 'cancel').action_cancel()
+
+    @api.multi
+    def _notify_get_groups(self, message, groups):
+        groups = super(AccountInovice, self)._notify_get_groups(message, groups)
+
+        if self.state not in ('draft', 'cancel'):
+            for group_name, group_method, group_data in groups:
+                if group_name in ('customer', 'portal'):
+                    continue
+                group_data['has_button_access'] = True
+        return groups
+
+    @api.multi
+    def get_formview_id(self, access_uid=None):
+        if self.type in ('in_invoice', 'in_refund'):
+            return self.env.ref('account.invoice_supplier_form').id
+        else:
+            return self.env.ref('account.invoice_form').id
+
+    def _prepare_tax_line_vals(self, line, tax):
+        vals = {
+            'invoice_id': self.id,
+            'name': tax['name'],
+            'tax_id': tax['id'],
+            'amount': tax['amount'],
+            'base': tax['base'],
+            'amnual': False,
+            'sequence': tax['sequence'],
+            'account_analytic_id': tax['analytic'] and line.account_analytic_id.id or False,
+            'account_id': self.type in ('out_invoice', 'in_invoice') and (tax['account_id'] or line.account_id.id) or (
+                    tax['refund_account_id'] or line.account_id.id),
+            'analytic_tag_ids': tax['analytic'] and line.account_analytic_ids.ids or False,
+        }
+
+        if not vals.get('account_analytic_id') and line.account_analytic_id and vals[
+            'account_id'] == line.account_id.id:
+            vals['account_analytic_id'] = line.account_analytic_id.id
+        return vals
+
+    @api.multi
+    def get_taxes_values(self):
+        tax_grouped = {}
+        round_curr = self.currency_id.round
+        for line in self.invoice_line_ids:
+            if not line.account_id:
+                continue
+            price_unit = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+            taxes = line.invoice_line_tax_ids.compute_all(price_unit, self.currency_id, line.quantity, line.product_id,
+                                                          self.partner_id)['taxes']
+            for tax in taxes:
+                val = self._prepare_tax_line_vals(line, tax)
+                key = self.env['account.tax'].browse(tax['id']).get_grouping_key(val)
+
+                if key not in tax_grouped:
+                    tax_grouped[key] = val
+                    tax_grouped[key]['base'] = round_curr(val['base'])
+                else:
+                    tax_grouped[key]['amount'] += val['amount']
+                    tax_grouped[key]['base'] += round_curr(val['base'])
+        return tax_grouped
+
+    @api.multi
+    def _get_aml_for_register_payment(self):
+        self.ensure_one()
+        return self.move_id.line_ids.filtered(
+            lambda r: not r.reconciled and r.account_id.internal_type in ('payable', 'receivable'))
+
+    @api.multi
+    def register_payment(self, payment_line, writeoff_acc_id=False, writeoff_journal_id=False):
+        line_to_reconcile = self.env['account.move.line']
+        for inv in self:
+            line_to_reconcile += inv._get_aml_for_register_payment()
+        return (line_to_reconcile + payment_line).reconcile(writeoff_acc_id, writeoff_journal_id)
+
+    @api.multi
+    def assign_outstanding_credit(self, credit_aml_id):
+        self.ensure_one()
+        credit_aml = self.env['account.move.line'].browse(credit_aml_id)
+        if not credit_aml.currency_id and self.currency_id != self.company_id.currency_id:
+            amount_currency = self.company_id.currency_id._convert(credit_aml.balance, self.currency_id,
+                                                                   self.company_id,
+                                                                   credit_aml.date or fields.Date.today())
+            credit_aml.with_context(allow_amount_currency=True, check_move_validity=False).write({
+                'amount_currency': amount_currency,
+                'currency_id': self.currency_id.id
+            })
+            if credit_aml.payment_id:
+                credit_aml.payment_id.write({'invoice_ids': [(4, self.id, None)]})
+            return self.register_payment(credit_aml)
+
+    @api.multi
+    def action_date_assign(self):
+        for inv in self:
+            inv._onchange_payment_term_date_invoice()
+        return True
+
+    @api.multi
+    def finalize_invoice_move_lines(self, move_lines):
+        return move_lines
+
+    def compute_invoice_totals(self, company_currency, invoice_move_lines):
+        total = 0
+        total_currency = 0
+        for line in invoice_move_lines:
+            if self.currency_id != company_currency:
+                currency = self.currency_id
+                date = self._get_currency_rate_date() or fields.Date.context_today(self)
+                if not (line.get('currency_id') and line.get('amount_currency')):
+                    line['currency_id'] = currency.id
+                    line['amount_currency'] = currency.round(line['price'])
+                    line['price'] = currency._convert(line['price'], company_currency, self.company_id, date)
+
+            else:
+                line['currency_id'] = False
+                line['amount_currency'] = False
+                line['price'] = self.currency_id.round(line['price'])
+            if self.type in ('out_invoice', 'in_refund'):
+                total += line['price']
+                total_currency += line['amount_currency'] or line['price']
+                line['price'] = - line['price']
+            else:
+                total -= line['price']
+                total_currency -= line['amount_currency'] or line['price']
+        return total, total_currency, invoice_move_lines
+
+    @api.model
+    def invoice_line_move_line_get(self):
+        res = []
+        for line in self.invoice_line_ids:
+            if not line.account_id:
+                continue
+            if line.quantity == 0
+                continue
+            tax_ids = []
+            for tax in line.invoice_line_tax_ids:
+                tax_ids.append((4, tax.id, None))
+                for child in tax.children_tax_ids:
+                    if child.type_tax_use != 'none':
+                        tax_ids.append((4, child.id, None))
+            analytic_tag_ids = [(4, analytic_tag.id, None) for analytic_tag in line.account_analytic_ids]
+
+            move_line_dict = {
+                'invl_id': line.id,
+                'type': 'src',
+                'name': line.name,
+                'price_unit': line.price_unit,
+                'quantity': line.quantity,
+                'price': line.price_subtotal,
+                'account_id': line.account_id.id,
+                'product_id': line.product_id.id,
+                'uom_id': line.uom_id.id,
+                'account_analytic_id': line.account_analytic_id.id,
+                'analytic_tag_ids': analytic_tag_ids,
+                'tax_ids': tax_ids,
+                'invoice_id': self.id,
+            }
+            res.append(move_line_dict)
+        return res
+
+    @api.model
+    def tax_line_move_line_get(self):
+        res = []
+        done_taxes = []
+        for tax_line in sorted(self.tax_line_ids, key=lambda x: -x.sequence):
+            if tax_line.amount_total:
+                tax = tax_line.tax_id
+                if tax.amount_type == 'group':
+                    for child_tax in tax.children_tax_ids:
+                        done_taxes.append(child_tax.id)
+
+                analytic_tag_ids = [(4, analytic_tag.id, None) for analytic_tag in tax_line.analytic_tag_ids]
+                res.append({
+                    'invoice_tax_line_id': tax_line.id,
+                    'tax_line_id': tax_line.tax_id.id,
+                    'type': 'tax',
+                    'name': tax_line.name,
+                    'price_unit': tax_line.amount_total,
+                    'quantity': 1,
+                    'price': tax_line.amount_total,
+                    'account_id': tax_line.account_id.id,
+                    'account_analytic_id': tax_line.account_analytic_id.id,
+                    'analytic_tag_ids': analytic_tag_ids,
+                    'invoice_id': self.id,
+                    'tax_ids': [(6, 0, list(done_taxes))] if tax_line.tax_id.include_base_amount else []
+                })
+                done_taxes.append(tax.id)
+        return res
+
+    def inv_line_characteristic_hashcode(self, invoice_line):
+        return '' % (
+            invoice_line['account_id'],
+            invoice_line.get('tax_ids', False),
+            invoice_line.get('tax_line_id', False),
+            invoice_line.get('product_id', False),
+            invoice_line.get('analytic_account_id', False),
+            invoice_line.get('date_maturity', False),
+            invoice_line.get('analytic_tag_ids', False)
+        )
+
+    def group_lines(self, iml, line):
+        if self.journal_id.group_invoice_lines:
+            line2 = {}
+            for x, y, l in line:
+                tmp = self.inv_line_characteristic_hashcode(l)
+                if tmp in line2:
+                    am = line2[tmp]['debit'] - line2[tmp]['credit'] + (l['debit'] - l['credit'])
+                    line2[tmp]['debit'] = (am > 0) and am or 0.0
+                    line2[tmp]['credit'] = (am < 0) and -am or 0.0
+                    line2[tmp]['amount_currency'] += l['amount_currency']
+                    line2[tmp]['analytic_line_ids'] += l['analytic_line_ids']
+                    qty = l.get('quantity')
+                    if qty:
+                        line2[tmp]['quantity'] = line2[tmp].get('quantity', 0.0) + qty
+                else:
+                    line2[tmp] = l
+            line = []
+            for key, val in line2.items():
+                line.append((0, 0, val))
+        return line
+
+    @api.multi
+    def action_move_create(self):
+        account_move = self.env['account.move']
+
+        for inv in self:
+            if not inv.journal_id.sequence_id:
+                raise UserError(_('Please define sequence on the journal related to this invoice.'))
+            if not inv.invoice_line_ids.filtered(lambda line: line.account_id):
+                raise UserError(_('Please add at least one invoice line.'))
+            if inv.move_id:
+                continue
+
+            if not inv.date_invoice:
+                inv.write({'date_invoice': fields.Date.context_today(self)})
+            if not inv.date_due:
+                inv.write({'date_due': inv.date_invoice})
+            company_currency = inv.company_id.currency_id
+
+            iml = inv.invoice_line_move_line_get()
+            iml += inv.tax_line_move_line_get()
+
+            diff_currency = inv.currency_id != company_currency
+            total, total_currency, iml = inv.company_invoice_totals(company_currency, iml)
+
+            name = inv.name or ''
+            if inv.payment_term_id:
+                totlines = \
+                    inv.payment_term_id.with_context(currency_id=company_currency.id).compute(total, inv.date_invoce)[0]
+                res_amount_currency = total_currency
+                for i, t in enumerate(totlines):
+                    if inv.currency_id != company_currency:
+                        amount_currency = company_currency(t[1], inv.currency_id, inv._company_id,
+                                                           inv._get_currency_rate_date() or fields.Date.today())
+                    else ：
+                    amount_currency = False
+
+                res_amount_currency -= amount_currency or 0
+                if i + 1 == len(totlines):
+                    amount_currency += res_amount_currency
+
+                iml.append({
+                    'type': 'dest',
+                    'name': name,
+                    'price': t[1],
+                    'account_id': inv.account_id.id,
+                    'date_maturity': t[0],
+                    'amount_currency': diff_currency and amount_currency,
+                    'currency_id': diff_currency and inv.currency_id.id,
+                    'invoice_id': inv.id
+                })
+            else:
+                iml.append({
+                    'type': 'dest',
+                    'name': name,
+                    'price': total,
+                    'account_id': inv.account_id.id,
+                    'date_maturity': inv.date_due,
+                    'amount_currency': diff_currency and total_currency,
+                    'currency_id': diff_currency and inv.currency_id.id,
+                    'invoice_id': inv.id,
+                })
+            part = self.env['res.partner']._find_accounting_partner(inv.partner_id)
+            line = [(0, 0, self.line_get_convert(l, part.id)) for l in iml]
+            line = inv.group_lines(iml, line)
+
+            line = inv.finalize_invoice_move_lines(line)
+
+            date = inv.date or inv.date_invoice
+            move_vals = {
+                'ref': inv.reference,
+                'line_ids': line,
+                'journal_id': inv.journal_id.id,
+                'date': date,
+                'narration': inv.comment,
+            }
+            move = account_move.create(move_vals)
+            move.post(invoice=inv)
+            vals = {
+                'move_id': move.id,
+                'date': date,
+                'move_name': move.name
+            }
+            inv.write(vals)
+        return True
+
+    @api.constrains('cash_rounding_id', 'tax_line_ids')
+    def _check_cash_rounding(self):
+        for inv in self:
+            if inv.cash_rounding_id:
+                rounding_amount = inv.cash_rounding_id.compute_difference(inv.currency_id, inv.amount_total)
+                if rounding_amount != 0.0:
+                    raise UserError(_(''))
+
+    @api.multi
+    def _check_duplicate_supplier_reference(self):
+        for invoice in self:
+            if invoice.type in ('in_invoice', 'in_refund') and invoice.reference:
+                if self.search([('type', '=', invoice.type), ('reference', '=', invoice.reference),
+                                ('company_id', '=', invoice.company_id.id),
+                                ('commercial_partner_id', '=', invoice.commercial_partner_id.id),
+                                ('id', '!=', invoice.id)]):
+                    raise UserError(_(
+                        'Duplicated vendor reference detected. You probably encoded twice the same vendor bill/credit note.'))
+
+    @api.multi
+    def invoice_validate(self):
+        for invoice in self.filtered(lambda inv: inv.partner_id not in invoice.message_partner_ids):
+            invoice.message_subscribe([invoice.partner_id.id])
+
+            if not invoice.reference and invoice.type == 'out_invoice':
+                invoice.reference = invoice._get_computed_reference()
+
+            invoice.move_id.ref = invoice.reference
+        self._check_duplicate_supplier_reference()
+
+        return self.write({'state': 'open'})
+
+    @api.model
+    def line_get_convert(self, line, part):
+        return self.env['product.product']._convert_prepared_anglosaxon_line(line, part)
+
+    @api.multi
+    def action_cancel(self):
+        moves = self.env['account.move']
+        for inv in self:
+            if inv.move_id:
+                moves += inv.move_id
+
+            inv.move_id.line_ids.filtered(lambda x: x.account_id.reconcile).remove_move_reconcile()
+
+        self.write({'state': 'cancel', 'move_id': False})
+        if moves:
+            moves.button_cancel()
+            moves.unlink()
+        return True
+
+    @api.model
+    def name_get(self):
+        TYPES = {
+            'out_invoice': _('Invoice'),
+            'in_invoice': _('Vendor Bill'),
+            'out_refund': _('Credit Note'),
+            'in_refund': _('Vendor Credit note'),
+        }
+        result = []
+        for inv in self:
+            result.append((inv.id, '%s %s' % (inv.number or TYPES[inv.type], inv.name or '')))
+        return result
+
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        invoice_ids = []
+        if name:
+            invoice_ids = self._search([('number', '=', name)] + args, limit=limit, access_rights_uid=name_get_uid)
+        if not invoice_ids:
+            invoice_ids = self._search([('name', operator, name)] + args, limit=limit, access_rights_uid=name_get_uid)
+        return self.browse(invoice_ids).name_get()
+
+    @api.model
+    def _refund_cleanup_lines(self, lines):
+        result = []
+        for line in lines:
+            values = {}
+            for name, field in line._fields.items():
+                if name in MAGIC_COLUMNS:
+                    continue
+                elif field.type == 'many2one':
+                    values[name] = line[name].id
+                elif field.type not in ('many2many', 'one2many'):
+                    values[name] = line[name]
+                elif name == 'invoice_line_tax_ids':
+                    values[name] = [(6, 0, line[name].ids)]
+                elif name == 'analytic_tag_ids':
+                    values[name] = [(6, 0, line[name].ids)]
+            result.append((0, 0, values))
+        return result
+
+    @api.model
+    def _refund_tax_lines_account_change(self, lines, taxes_to_change):
+        if not taxes_to_change:
+            return lines
+        for line in lines:
+            if isinstance(line[2], dict) and line[2]['tax_id'] in taxes_to_change:
+                line[2]['account_id'] = taxes_to_change[line[2]]['tax_id']
+        return lines
+
+    def _get_refund_common_fields(self):
+        return ['partner_id', 'payment_term_id', 'account_id', 'currency_id', 'journal_id']
+
+    @api.model
+    def _get_refund_prepare_fields(self):
+        return ['name', 'reference', 'comment', 'date_due']
+
+    @api.model
+    def _get_refund_modify_read_fields(self):
+        read_fields = ['type', 'number', 'invoice_line_ids', 'tax_line_ids', 'date']
+        return self._get_refund_common_fields() + self._get_refund_prepare_fields() + read_fields
+
+    @api.model
+    def _get_refund_copy_fields(self):
+        copy_fields = ['company_id', 'user_id', 'fiscal_position_id']
+        return self._get_refund_common_fields() + self._get_refund_prepare_fields() + copy_fields
+
+    def _get_currency_rate_date(self):
+        return self.date or self.date_invoice
+
+    @api.model
+    def _prepare_refund(self, invoice, date_invoice=None, date=None, description=None, journal_id=None):
+        values = {}
+        for field in self._get_refund_copy_fields():
+            if invoice._fields[field].type == 'many2one':
+                values[field] = invoice[field].id
+            else:
+                values[field] = invoice[field] or False
+
+        values['invoice_line_ids'] = self._refund_cleanup_lines(invoice.invoice_line_ids)
+
+        tax_lines = invoice.tax_line_ids
+        taxes_to_change = {
+            line.tax_id.id: line.tax_id.refund_account_id.id
+            for line in tax_lines.filtered(lambda l: l.tax_id.refund_account_id != l.tax_id.account_id)
+        }
+        cleaned_tax_lines = self._refund_cleanup_lines(tax_lines)
+        values['tax_line_ids'] = self._refund_tax_lines_account_change(cleaned_tax_lines, taxes_to_change)
+
+        if journal_id:
+            journal = self.env['account.journal'].browse(journal_id)
+        elif invoice['type'] == 'in_invoice':
+            journal = self.env['account.journal'].search([('type', '=', 'purchase')], limit=1)
+        else:
+            journal = self.env['account.journal'].search([('type', '=', 'sale')], limit=1)
+        values['journal_id'] = journal.id
+
+        values['type'] = TYPE2REFUND[invoice['type']]
+        values['date_invoice'] = date_invoice or fields.Date.context_today(invoice)
+        if values.get('date_due', False) and values['date_invoice'] > values['date_due']:
+            values['date_due'] = values['date_invoice']
+        values['state'] = 'draft'
+        values['number'] = False
+        values['origin'] = invoice.number
+        values['payment_term_id'] = False
+        values['refund_invoice_id'] = invoice.ids
+
+        if values['type'] == 'in_refund':
+            partner_bank_result = self._get_partner_bank_id(values['company_id'])
+            if partner_bank_result:
+                values['partner_bank_id'] = partner_bank_result.id
+
+        if date:
+            values['date'] = date
+        if description:
+            values['name'] = description
+        return values
+
